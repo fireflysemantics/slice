@@ -6,7 +6,7 @@ Lightweight Angular state management
 
 ## Usage
 
-See the [test cases](https://github.com/fireflysemantics/slice/blob/master/src/index.spec.ts).
+See the [test cases](https://github.com/fireflysemantics/slice/).
 
 ## API Documentation
 
