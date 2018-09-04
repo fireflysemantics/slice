@@ -10,4 +10,4 @@ See the [test cases](https://github.com/fireflysemantics/slice/).
 
 ## API Documentation
 
-See [Typedoc API Documentation](https://fireflysemantics.github.io/slice/doc/modules/_index_.html)
+See [Typedoc API Documentation](https://fireflysemantics.github.io/slice/doc/index_.html)
