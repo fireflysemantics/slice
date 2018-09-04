@@ -81,6 +81,21 @@ export abstract class AbstractStore<E> {
   }
 
   /**
+   * Returns true if the entries contain the identified instance.
+   * 
+   * @param guid 
+   * @returns true if the instance identified by the guid exists, false otherwise.
+   * 
+   * @example
+     <pre>
+     let contains:boolean = source.contains(guid);
+     </pre>
+   */
+  contains(guid:string) {
+    return this.entries[guid] ? true : false; 
+  }
+
+  /**
    * Find an instance by the attached uuid.
    *
    * @param uuid
