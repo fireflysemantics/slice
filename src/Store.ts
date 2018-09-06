@@ -68,9 +68,7 @@ export class Store<E> extends AbstractStore<E> {
    */
   constructor(private elements?: E[]) {
     super();
-    elements.forEach((e: E) => {
-      this.post(e);
-    });
+    elements && this.postA(elements);
   }
 
   /**

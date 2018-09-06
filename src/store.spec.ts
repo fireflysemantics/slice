@@ -133,3 +133,36 @@ describe("Deleteting store elements", () => {
     expect(slice.contains(id)).to.be.false;
   });
 });
+
+describe("Reading empty store metadata", () => {
+  let store: Store<Todo> = new Store<Todo>();
+
+  it("should be an empty store", () => {
+    expect(store.isEmpty()).to.be.true;
+    expect(store.count()).to.equal(0);
+  });
+  store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
+
+  it("should be an empty slice", () => {
+    expect(store.getSlice(TodoSlices.COMPLETE).isEmpty()).to.be.true;
+    expect(store.count()).to.equal(0);
+  });
+
+});
+
+describe("Reading non empty store metadata", () => {
+  let store: Store<Todo> = new Store<Todo>();
+
+  store.putA(todos);
+
+  it("should not be an empty store", () => {
+    expect(store.isEmpty()).to.be.false;
+    expect(store.count()).to.equal(2);
+  });
+  store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
+
+  it("should not be an empty slice", () => {
+    expect(store.getSlice(TodoSlices.COMPLETE).isEmpty()).to.be.false;
+    expect(store.getSlice(TodoSlices.COMPLETE).count()).to.equal(1);
+  });
+});

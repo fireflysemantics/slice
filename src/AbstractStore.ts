@@ -113,7 +113,7 @@ export abstract class AbstractStore<E> {
   }
 
   /**
-   * Check whether the slice is empty.
+   * Check whether the number of entries is zero.
    * 
    * @example
      <pre>
@@ -122,5 +122,12 @@ export abstract class AbstractStore<E> {
    */
   isEmpty() {
     return values(this.entries).length == 0;
+  }
+
+  /**
+   * Returns the number of entries contained.
+   */
+  count() {
+    return values(this.entries).length;
   }
 }
