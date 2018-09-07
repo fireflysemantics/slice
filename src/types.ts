@@ -1,4 +1,5 @@
 import { Slice } from "@fs/Slice";
+import { ReplaySubject } from 'rxjs';
 
 /**
  * Interface representing the indexed entities.
@@ -23,4 +24,18 @@ export const enum ActionTypes {
 export interface Delta<E> {
   type: ActionTypes;
   entries: E[];
+}
+
+/**
+ * Interface representing key value pairs.
+ */
+export interface IKeyValue {
+  [id: string]: any;
+}
+
+/**
+ * Interface representing key value pairs.
+ */
+export interface IKeyReplaySubject {
+  [id: string]: ReplaySubject<any>;
 }
