@@ -23,7 +23,7 @@ describe("Storing values in the store", () => {
   it("should return an observable of the value", () => {
     o.subscribe(value => {
       expect(value).to.equal("value");
-      store.patch("key", "valuepart2");
+      store.put("key", "valuepart2");
       o.subscribe(value => {
         expect(value).to.equal("valuepart2");
       });

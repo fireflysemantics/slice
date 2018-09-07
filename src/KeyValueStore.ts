@@ -34,7 +34,7 @@ export class KeyValueStore {
      * @param key 
      * @param value 
      */
-    public patch(key:string, value:any) {
+    public put(key:string, value:any) {
         this.entries[key] = value;
         this.subjects[key].next(value);
     }
