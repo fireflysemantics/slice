@@ -23,24 +23,24 @@ export abstract class AbstractStore<E> {
   protected notifyDelta = new ReplaySubject<Delta<E>>(1);
 
   /**
-   * Subscribe to receive entry updates.
+   * Observe entry updates.
    * @example
      <pre>
-     let todos$ = source.subscribe();
+     let todos$ = source.observe();
      </pre>
    */
-  public subscribe(): Observable<E[]> {
+  public observe(): Observable<E[]> {
     return this.notify.asObservable();
   }
 
   /**
-   * Subscribe to receive delta slice updates.
+   * Observe delta updates.
    * @example
      <pre>
      let todos$ = source.subscribeDelta();
      </pre>
    */
-  public subscribeDelta(): Observable<Delta<E>> {
+  public observeDelta(): Observable<Delta<E>> {
     return this.notifyDelta.asObservable();
   }
 

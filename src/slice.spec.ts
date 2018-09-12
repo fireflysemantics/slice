@@ -33,14 +33,14 @@ describe("Creating a slice", () => {
 
 describe("Subscribing to a slice", () => {
   it("should have 1 incomplete todo element", () => {
-    let incomplete$ = incompleteSlice.subscribe();
+    let incomplete$ = incompleteSlice.observe();
     incomplete$.subscribe((todos:Todo[]) => {
       expect(todos.length).to.equal(1);
       expect(todos[0].complete).to.be.false;
     });
   });
   it("should have 1 complete todo element", () => {
-    let complete$ = completeSlice.subscribe();
+    let complete$ = completeSlice.observe();
     complete$.subscribe((todos:Todo[]) => {
       expect(todos.length).to.equal(1);
       expect(todos[0].complete).to.be.true;
@@ -50,14 +50,14 @@ describe("Subscribing to a slice", () => {
 
 describe("Subscribing for slice delta updates", () => {
   it("should have 1 incomplete todo element", () => {
-    let incomplete$ = incompleteSlice.subscribeDelta();
+    let incomplete$ = incompleteSlice.observeDelta();
     incomplete$.subscribe(delta => {
       expect(delta.entries.length).to.equal(1);
       expect(delta.entries[0].complete).to.be.false;
     });
   });
   it("should have 1 complete todo element", () => {
-    let complete$ = completeSlice.subscribeDelta();
+    let complete$ = completeSlice.observeDelta();
     complete$.subscribe(delta => {
       expect(delta.entries.length).to.equal(1);
       expect(delta.entries[0].complete).to.be.true;

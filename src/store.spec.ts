@@ -44,7 +44,7 @@ describe("Posting elements to the store", () => {
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
   store.post(new Todo(true, "You had me at hello!"));
 
-  let todos$ = store.subscribe();
+  let todos$ = store.observe();
 
   it("should have 3 entries in the store after post", () => {
     expect(values(store.entries).length).to.equal(3);
@@ -60,8 +60,8 @@ describe("Subscribing to the store", () => {
   let store: Store<Todo> = new Store<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
 
-  let todos1$ = store.subscribe();
-  let todos2$ = store.subscribe();
+  let todos1$ = store.observe();
+  let todos2$ = store.observe();
 
   it("should multicast the elements stored", () => {
     todos1$.subscribe(todos => {
@@ -77,8 +77,8 @@ describe("Subscribing to the store slice", () => {
   let store: Store<Todo> = new Store<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
 
-  let todos1$ = store.getSlice(TodoSlices.COMPLETE).subscribe();
-  let todos2$ = store.getSlice(TodoSlices.COMPLETE).subscribe();
+  let todos1$ = store.getSlice(TodoSlices.COMPLETE).observe();
+  let todos2$ = store.getSlice(TodoSlices.COMPLETE).observe();
 
   it("should multicast the elements stored", () => {
     todos1$.subscribe(todos => {
