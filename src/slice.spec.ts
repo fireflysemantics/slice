@@ -34,14 +34,14 @@ describe("Creating a slice", () => {
 describe("Subscribing to a slice", () => {
   it("should have 1 incomplete todo element", () => {
     let incomplete$ = incompleteSlice.subscribe();
-    incomplete$.subscribe(todos => {
+    incomplete$.subscribe((todos:Todo[]) => {
       expect(todos.length).to.equal(1);
       expect(todos[0].complete).to.be.false;
     });
   });
   it("should have 1 complete todo element", () => {
     let complete$ = completeSlice.subscribe();
-    complete$.subscribe(todos => {
+    complete$.subscribe((todos:Todo[]) => {
       expect(todos.length).to.equal(1);
       expect(todos[0].complete).to.be.true;
     });
