@@ -28,9 +28,9 @@ export abstract class AbstractStore<E> {
    * @param sort Optional sorting function yielding a sorted observable.
    * @example
      <pre>
-     let todos$ = source.observe();
-     </pre>
-   */
+    let todos$ = source.observe();
+    </pre>
+  */
   public observe(sort?: (a:any, b:any)=>number): Observable<E[]> {
     if (sort) {
       return this.notify.pipe(map((e:E[])=>e.sort(sort)));
