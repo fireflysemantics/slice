@@ -56,7 +56,7 @@ describe("Posting elements to the store", () => {
   });
 });
 
-describe("Subscribing to the store", () => {
+describe("Observing to the store", () => {
   let store: Store<Todo> = new Store<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
 
@@ -71,9 +71,22 @@ describe("Subscribing to the store", () => {
       expect(todos.length).to.equal(2);
     });
   });
+
+  it("should sort observed", () => {
+    let sort1: (a:Todo, b:Todo)=>number =  (a, b)=>(a.title > b.title ? -1 : 1);
+    let sort2: (a:Todo, b:Todo)=>number =  (a, b)=>(a.title < b.title ? -1 : 1);
+    let todos3$ = store.observe(sort1);
+    todos3$.subscribe(todos => {
+      expect(todos[0].complete).to.be.false;
+    });
+    let todos4$ = store.observe(sort2);
+    todos4$.subscribe(todos => {
+      expect(todos[0].complete).to.be.true;
+    });
+  });
 });
 
-describe("Subscribing to the store slice", () => {
+describe("Observing a store slice", () => {
   let store: Store<Todo> = new Store<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
 

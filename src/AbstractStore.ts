@@ -1,7 +1,8 @@
 import { Predicate } from "@fs/utilities";
 import { IEntityIndex, ISliceIndex } from "@fs/types";
 import { Delta } from "@fs/types";
-import { ReplaySubject, Observable, of } from "rxjs";
+import { ReplaySubject, Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 const { values } = Object;
 
@@ -24,12 +25,16 @@ export abstract class AbstractStore<E> {
 
   /**
    * Observe entry updates.
+   * @param sort Optional sorting function yielding a sorted observable.
    * @example
      <pre>
      let todos$ = source.observe();
      </pre>
    */
-  public observe(): Observable<E[]> {
+  public observe(sort?: (a:any, b:any)=>number): Observable<E[]> {
+    if (sort) {
+      return this.notify.pipe(map((e:E[])=>e.sort(sort)));
+    } 
     return this.notify.asObservable();
   }
 
@@ -98,7 +103,7 @@ export abstract class AbstractStore<E> {
   /**
    * Find an instance by the attached uuid.
    *
-   * @param uuid
+   * @param guid
    * @return The model instance if it is sliced, null otherwise.
    * 
    * @example 
@@ -108,8 +113,8 @@ export abstract class AbstractStore<E> {
      expect(sametodo).equal(todo);
      </pre>
    */
-  selectGUID(uuid: string): E {
-    return this.entries[uuid];
+  selectGUID(guid: string): E {
+    return this.entries[guid];
   }
 
   /**
