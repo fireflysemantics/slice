@@ -83,6 +83,8 @@ export class EStore<E> extends AbstractStore<E> {
     });
     let v: E[] = [...Object.values(this.entries)];
     this.notify.next(v);
+    this.notifyEmptyState.next(v);
+    this.notifyEntryCount.next(v);
     const delta: Delta<E> = { type: ActionTypes.POST, entries: [e] };
     this.notifyDelta.next(delta);
   }
@@ -101,6 +103,8 @@ export class EStore<E> extends AbstractStore<E> {
     });
     let v: E[] = [...Object.values(this.entries)];
     this.notify.next(v);
+    this.notifyEmptyState.next(v);
+    this.notifyEntryCount.next(v);
     const delta: Delta<E> = { type: ActionTypes.POST, entries: e };
     this.notifyDelta.next(delta);
   }
@@ -119,6 +123,8 @@ export class EStore<E> extends AbstractStore<E> {
     });
     let v: E[] = [...Object.values(this.entries)];
     this.notify.next(v);
+    this.notifyEmptyState.next(v);
+    this.notifyEntryCount.next(v);
     const delta: Delta<E> = { type: ActionTypes.POST, entries: e };
     this.notifyDelta.next(delta);
   }
@@ -175,6 +181,8 @@ export class EStore<E> extends AbstractStore<E> {
     });
     let v: E[] = [...Object.values(this.entries)];
     this.notify.next(v);
+    this.notifyEmptyState.next(v);
+    this.notifyEntryCount.next(v);
     const delta: Delta<E> = { type: ActionTypes.DELETE, entries: [e] };
     this.notifyDelta.next(delta);
   }
@@ -190,6 +198,8 @@ export class EStore<E> extends AbstractStore<E> {
     });
     let v: E[] = [...Object.values(this.entries)];
     this.notify.next(v);
+    this.notifyEmptyState.next(v);
+    this.notifyEntryCount.next(v);
     const delta: Delta<E> = { type: ActionTypes.DELETE, entries: e };
     this.notifyDelta.next(delta);
   }
@@ -205,6 +215,8 @@ export class EStore<E> extends AbstractStore<E> {
     });
     let v: E[] = [...Object.values(this.entries)];
     this.notify.next(v);
+    this.notifyEmptyState.next(v);
+    this.notifyEntryCount.next(v);
     const delta: Delta<E> = { type: ActionTypes.DELETE, entries: e };
     this.notifyDelta.next(delta);
   }
@@ -224,6 +236,8 @@ export class EStore<E> extends AbstractStore<E> {
     });
     let v: E[] = [...Object.values(this.entries)];
     this.notify.next(v);
+    this.notifyEmptyState.next(v);
+    this.notifyEntryCount.next(v);
     const delta: Delta<E> = { type: ActionTypes.DELETE, entries: d };
     this.notifyDelta.next(delta);
   }
