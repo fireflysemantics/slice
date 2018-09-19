@@ -3,12 +3,12 @@ import { attachGUID, attachGUIDs, Predicate } from "@fs/utilities";
 import { ISliceIndex } from "@fs/types";
 import { GUID } from "@fs/constants";
 import { AbstractStore } from "@fs/AbstractStore";
-import { Delta } from "./types";
-import { ActionTypes } from "./types";
+import { Delta } from "@fs/types";
+import { ActionTypes } from "@fs/types";
 
 const { values } = Object;
 
-export class Store<E> extends AbstractStore<E> {
+export class EStore<E> extends AbstractStore<E> {
   /**
    * Store slices
    */
@@ -22,7 +22,7 @@ export class Store<E> extends AbstractStore<E> {
    * 
    * @example
      <pre>
-     source.addSlice(p, 'TODO_COMPLETE');
+     source.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
      </pre>
    * 
    */

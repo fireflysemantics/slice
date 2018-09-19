@@ -1,5 +1,5 @@
 import { Predicate } from "@fs/utilities";
-import { IEntityIndex, ISliceIndex } from "@fs/types";
+import { IEntityIndex } from "@fs/types";
 import { Delta } from "@fs/types";
 import { ReplaySubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
@@ -16,6 +16,16 @@ export abstract class AbstractStore<E> {
    * the entire set of entries.
    */
   protected notify = new ReplaySubject<E[]>(1);
+
+  /**
+   * Notifies observers when the store is empty.
+   */
+  protected notifyEmptyState = new ReplaySubject<E[]>(1);
+
+ /**
+   * Notifies observers of changes to the number of entries in the store.
+   */
+  protected notifyEntryCount = new ReplaySubject<E[]>(1);
 
   /**
    * Create notifications that broacast
@@ -118,21 +128,24 @@ export abstract class AbstractStore<E> {
   }
 
   /**
-   * Check whether the number of entries is zero.
+   * Check whether the store is empty.
+   * 
+   * @return A hot {@link Observable<boolean>} that indicates whether the store is empty.
    * 
    * @example
      <pre>
-     source.isEmpty();
-     </pre>
-   */
-  isEmpty() {
-    return values(this.entries).length == 0;
-  }
+    source.isEmpty();
+    </pre>
+  */
+  isEmpty():Observable<boolean> {
+  return this.notifyEmptyState.pipe(
+    map((entries:E[]) => entries.length == 0));
+}  
 
   /**
    * Returns the number of entries contained.
    */
-  count() {
-    return values(this.entries).length;
+  count():Observable<number> {
+    return this.notifyEntryCount.pipe(map((entries:E[]) => entries.length));
   }
 }

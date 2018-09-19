@@ -4,13 +4,13 @@ import "mocha";
 import { TodoSlices } from "../test/setup";
 import { Todo, todos } from "../test/setup";
 import { GUID } from "./constants";
-import { Store } from "./Store";
+import { EStore } from "@fs/EStore";
 import { Slice } from "./Slice";
 
 const { values } = Object;
 
 describe("Creating a store", () => {
-  let store: Store<Todo> = new Store<Todo>(todos);
+  let store: EStore<Todo> = new EStore<Todo>(todos);
 
   it("should be created with 2 todo elements", () => {
     expect(values(store.entries).length).to.equal(2);
@@ -18,7 +18,7 @@ describe("Creating a store", () => {
 });
 
 describe("Adding a slice to the store", () => {
-  let store: Store<Todo> = new Store<Todo>(todos);
+  let store: EStore<Todo> = new EStore<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
 
   it("should be created with 1 complete todo element", () => {
@@ -29,7 +29,7 @@ describe("Adding a slice to the store", () => {
 });
 
 describe("Removing a slice from the store", () => {
-  let store: Store<Todo> = new Store<Todo>(todos);
+  let store: EStore<Todo> = new EStore<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
   store.removeSlice(TodoSlices.COMPLETE);
 
@@ -39,7 +39,7 @@ describe("Removing a slice from the store", () => {
 });
 
 describe("Posting elements to the store", () => {
-  let store: Store<Todo> = new Store<Todo>(todos);
+  let store: EStore<Todo> = new EStore<Todo>(todos);
 
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
   store.post(new Todo(true, "You had me at hello!"));
@@ -57,7 +57,7 @@ describe("Posting elements to the store", () => {
 });
 
 describe("Observing to the store", () => {
-  let store: Store<Todo> = new Store<Todo>(todos);
+  let store: EStore<Todo> = new EStore<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
 
   let todos1$ = store.observe();
@@ -87,7 +87,7 @@ describe("Observing to the store", () => {
 });
 
 describe("Observing a store slice", () => {
-  let store: Store<Todo> = new Store<Todo>(todos);
+  let store: EStore<Todo> = new EStore<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
 
   let todos1$ = store.getSlice(TodoSlices.COMPLETE).observe();
@@ -104,7 +104,7 @@ describe("Observing a store slice", () => {
 });
 
 describe("Patching store elements", () => {
-  let store: Store<Todo> = new Store<Todo>(todos);
+  let store: EStore<Todo> = new EStore<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
 
   let todo = todos[1];
@@ -127,7 +127,7 @@ describe("Patching store elements", () => {
 });
 
 describe("Deleteting store elements", () => {
-  let store: Store<Todo> = new Store<Todo>(todos);
+  let store: EStore<Todo> = new EStore<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
 
   let todo = todos[1];
@@ -148,34 +148,47 @@ describe("Deleteting store elements", () => {
 });
 
 describe("Reading empty store metadata", () => {
-  let store: Store<Todo> = new Store<Todo>();
-
+  let store: EStore<Todo> = new EStore<Todo>();
   it("should be an empty store", () => {
-    expect(store.isEmpty()).to.be.true;
-    expect(store.count()).to.equal(0);
+    store.isEmpty().subscribe(empty=>{
+      expect(empty).to.be.true;
+    });
+    store.count().subscribe(c=>{
+      expect(c).to.equal(0);
+    });
   });
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
-
   it("should be an empty slice", () => {
-    expect(store.getSlice(TodoSlices.COMPLETE).isEmpty()).to.be.true;
-    expect(store.count()).to.equal(0);
+    store.getSlice(TodoSlices.COMPLETE).isEmpty().subscribe(empty=>{
+      expect(empty).to.be.true;
+    });
+    store.getSlice(TodoSlices.COMPLETE).count().subscribe(c=>{
+      expect(c).to.equal(0);
+    });    
   });
-
 });
 
 describe("Reading non empty store metadata", () => {
-  let store: Store<Todo> = new Store<Todo>();
+  let store: EStore<Todo> = new EStore<Todo>();
 
   store.putA(todos);
 
   it("should not be an empty store", () => {
-    expect(store.isEmpty()).to.be.false;
-    expect(store.count()).to.equal(2);
+    store.isEmpty().subscribe(empty=>{
+      expect(store.isEmpty()).to.be.false;
+    });
+    store.count().subscribe(c=>{
+      expect(c).to.equal(2);
+    });
   });
   store.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
 
   it("should not be an empty slice", () => {
-    expect(store.getSlice(TodoSlices.COMPLETE).isEmpty()).to.be.false;
-    expect(store.getSlice(TodoSlices.COMPLETE).count()).to.equal(1);
+    store.getSlice(TodoSlices.COMPLETE).isEmpty().subscribe(empty=>{
+      expect(empty).to.be.false;
+    });
+    store.getSlice(TodoSlices.COMPLETE).count().subscribe(c=>{
+      expect(c).to.equal(1);
+    });
   });
 });

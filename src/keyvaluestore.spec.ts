@@ -2,12 +2,12 @@ import { expect } from "chai";
 import "mocha";
 import { Observable } from "rxjs";
 
-import { KeyValueStore } from "@fs/KeyValueStore";
+import { OStore } from "@fs/OStore";
 
 const { values } = Object;
 
 describe("Creating a key value store", () => {
-  let store: KeyValueStore = new KeyValueStore();
+  let store: OStore = new OStore();
 
   it("should create an empty key value store", () => {
     expect(store.isEmpty()).to.be.true;
@@ -16,7 +16,7 @@ describe("Creating a key value store", () => {
 });
 
 describe("Storing values in the store", () => {
-  let store: KeyValueStore = new KeyValueStore();
+  let store: OStore = new OStore();
   store.post("key", "value");
   let o: Observable<any> = store.select("key");
 
@@ -32,7 +32,7 @@ describe("Storing values in the store", () => {
 });
 
 describe("Deleting store values", () => {
-  let store: KeyValueStore = new KeyValueStore();
+  let store: OStore = new OStore();
   store.post("key", "value");
 
   it("should delete a key entry", () => {

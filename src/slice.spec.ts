@@ -68,16 +68,16 @@ describe("Subscribing for slice delta updates", () => {
 describe("Checking whether the slice is empty", () => {
   it("should be empty", () => {
     const slice = new Slice<Todo>(TodoSlices.COMPLETE, todo => todo.complete);
-    expect(slice.isEmpty()).to.be.true;
-    slice.add(new Todo(false, "You complete me!"));
-    expect(slice.isEmpty()).to.be.true;
-    slice.add(new Todo(true, "You completed me!"));
-    expect(slice.isEmpty()).to.be.false;
+    slice.isEmpty().subscribe(empty=>{
+      expect(empty).to.be.true;
+    });    
   });
   it("should not be empty", () => {
     const slice = new Slice<Todo>(TodoSlices.COMPLETE, todo => todo.complete);
     slice.add(new Todo(true, "You completed me!"));
-    expect(slice.isEmpty()).to.be.false;
+    slice.isEmpty().subscribe(empty=>{
+      expect(empty).to.be.false;
+    });    
   });
 });
 

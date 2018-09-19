@@ -1,9 +1,9 @@
-import { IKeyValue, IKeyReplaySubject } from './types';
+import { IKeyValue, IKeyReplaySubject } from '@fs/types';
 import { ReplaySubject } from 'rxjs';
 
 let { values } = Object;
 
-export class KeyValueStore {
+export class OStore {
 
     /**
      * Key Value pair entries
