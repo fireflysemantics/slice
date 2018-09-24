@@ -1,14 +1,13 @@
-import { Predicate } from "@fs/utilities";
-import { IEntityIndex } from "@fs/types";
-import { Delta } from "@fs/types";
+import { Predicate, Delta, IEntityIndex } from "@fs/types";
 import { ReplaySubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
-const { values } = Object;
+const {values} = Object;
 
 export abstract class AbstractStore<E> {
-  
-  /* The slice element entries */
+
+  /* Primary index for the stores elements.
+   */
   public entries: IEntityIndex<E> = {};
 
   /**
@@ -22,29 +21,44 @@ export abstract class AbstractStore<E> {
    */
   protected notifyEmptyState = new ReplaySubject<E[]>(1);
 
- /**
+  /**
    * Notifies observers of changes to the number of entries in the store.
    */
   protected notifyEntryCount = new ReplaySubject<E[]>(1);
 
   /**
    * Create notifications that broacast
-   * delta increments to the slice.
+   * store or slice delta state changes.
    */
   protected notifyDelta = new ReplaySubject<Delta<E>>(1);
 
   /**
-   * Observe entry updates.
+   * Call all the notifiers at once.
+   * 
+   * @param v 
+   * @param delta 
+   */
+  protected notifyAll(v:E[], delta:Delta<E>) {
+    this.notify.next(v);
+    this.notifyEmptyState.next(v);
+    this.notifyEntryCount.next(v);
+    this.notifyDelta.next(delta);
+  }  
+
+  /**
+   * Observe store state changes.
    * @param sort Optional sorting function yielding a sorted observable.
    * @example
      <pre>
     let todos$ = source.observe();
+    or with a sort function
+    let todos$ = source.observe((a, b)=>(a.title > b.title ? -1 : 1));
     </pre>
   */
-  public observe(sort?: (a:any, b:any)=>number): Observable<E[]> {
+  public observe(sort?: (a: any, b: any) => number): Observable<E[]> {
     if (sort) {
-      return this.notify.pipe(map((e:E[])=>e.sort(sort)));
-    } 
+      return this.notify.pipe(map((e: E[]) => e.sort(sort)));
+    }
     return this.notify.asObservable();
   }
 
@@ -60,39 +74,26 @@ export abstract class AbstractStore<E> {
   }
 
   /**
-   * Select the entries that match the predicate.
-   *
-   * @param p The predicate used to query for the selection.
-   * @return An array containing the elements that match the predicate.
+   * Check whether the store is empty.
    * 
-   * @example 
-   * @example 
-     <pre>
-     let todos:Observable<Todo[]>=slice.select(todo=>todo.title.length>100);
-     </pre>
-   */
-  select(p: Predicate<E>): E[] {
-    const selected: E[] = [];
-    values(this.entries).forEach(e => {
-      if (p(e)) {
-        selected.push(e);
-      }
-    });
-    return selected;
-  }
-
-  /**
-   * Select all entries
-   * 
-   * @return Observable of all the slice entries.
+   * @return A hot {@link Observable<boolean>} that indicates whether the store is empty.
    * 
    * @example
      <pre>
-     let selectedTodos:Todo[] = source.selectAll();
-     </pre>
+    source.isEmpty();
+    </pre>
+  */
+  isEmpty(): Observable<boolean> {
+    return this.notifyEmptyState.pipe(
+      map((entries: E[]) => entries.length == 0)
+    );
+  }
+
+  /**
+   * Returns the number of entries contained.
    */
-  selectAll(): E[] {
-    return values(this.entries);
+  count(): Observable<number> {
+    return this.notifyEntryCount.pipe(map((entries: E[]) => entries.length));
   }
 
   /**
@@ -108,44 +109,52 @@ export abstract class AbstractStore<E> {
    */
   contains(guid:string) {
     return this.entries[guid] ? true : false; 
-  }
+  }  
 
   /**
-   * Find an instance by the attached uuid.
-   *
-   * @param guid
-   * @return The model instance if it is sliced, null otherwise.
+   * Find and return the entity identified by the GUID parameter
+   * if it exists and return it.  
    * 
-   * @example 
-     <pre>
-     const id = todo[GUID];
-     const sametodo:Todo = selectGUID(id);
-     expect(sametodo).equal(todo);
-     </pre>
+   * @param guid 
+   * @return The entity instance if it exists, null otherwise
    */
-  selectGUID(guid: string): E {
+  findOne(guid:string):E {
     return this.entries[guid];
   }
 
   /**
-   * Check whether the store is empty.
+   * Select a snapshot of the entries that match the predicate.
+   *
+   * @param p The predicate used to query for the selection.
+   * @return A snapshot array containing the entities that match the predicate.
    * 
-   * @return A hot {@link Observable<boolean>} that indicates whether the store is empty.
+   * @example 
+   * @example 
+     <pre>
+     let todos:Todo[]=slice.select(todo=>todo.title.length>100);
+     </pre>
+   */
+  select(p: Predicate<E>): E[] {
+    const selected: E[] = [];
+    values(this.entries).forEach(e => {
+      if (p(e)) {
+        selected.push(e);
+      }
+    });
+    return selected;
+  }
+
+  /**
+   * Select a snapshot of all entries.
+   * 
+   * @return Snapshot array of all the elements the entities the store contains.
    * 
    * @example
      <pre>
-    source.isEmpty();
-    </pre>
-  */
-  isEmpty():Observable<boolean> {
-  return this.notifyEmptyState.pipe(
-    map((entries:E[]) => entries.length == 0));
-}  
-
-  /**
-   * Returns the number of entries contained.
+     let selectedTodos:Todo[] = source.selectAll();
+     </pre>
    */
-  count():Observable<number> {
-    return this.notifyEntryCount.pipe(map((entries:E[]) => entries.length));
+  selectAll(): E[] {
+    return values(this.entries);
   }
 }

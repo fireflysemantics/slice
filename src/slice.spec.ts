@@ -1,24 +1,26 @@
-import { attachGUIDs, attachGUID } from "./utilities";
-
 import { expect } from "chai";
 import "mocha";
 
 import { Slice } from "@fs/Slice";
-import { TodoSlices } from "../test/setup";
-import { Todo, todos } from "../test/setup";
-import { GUID } from "./constants";
+import { StoreConfig } from "@fs/EStore";
+import { TodoSliceEnum } from "@test/setup";
+import { Todo, todosFactory, attachGUIDs, attachGUID } from "@test/setup";
 
+let todos = todosFactory();
 attachGUIDs(todos);
+let c = new StoreConfig();
 
 let completeSlice = new Slice<Todo>(
-  TodoSlices.COMPLETE,
+  TodoSliceEnum.COMPLETE,
   todo => todo.complete,
+  null,
   todos
 );
 
 let incompleteSlice = new Slice<Todo>(
-  TodoSlices.INCOMPLETE,
+  TodoSliceEnum.INCOMPLETE,
   todo => !todo.complete,
+  null,
   todos
 );
 
@@ -67,13 +69,13 @@ describe("Subscribing for slice delta updates", () => {
 
 describe("Checking whether the slice is empty", () => {
   it("should be empty", () => {
-    const slice = new Slice<Todo>(TodoSlices.COMPLETE, todo => todo.complete);
+    const slice = new Slice<Todo>(TodoSliceEnum.COMPLETE, todo => todo.complete);
     slice.isEmpty().subscribe(empty=>{
       expect(empty).to.be.true;
     });    
   });
   it("should not be empty", () => {
-    const slice = new Slice<Todo>(TodoSlices.COMPLETE, todo => todo.complete);
+    const slice = new Slice<Todo>(TodoSliceEnum.COMPLETE, todo => todo.complete);
     slice.add(new Todo(true, "You completed me!"));
     slice.isEmpty().subscribe(empty=>{
       expect(empty).to.be.false;
@@ -86,14 +88,15 @@ describe("Select slice elements", () => {
     let todo = new Todo(false, "You complete me!");
     attachGUID(todo);
 
-    let id: string = (<any>todo)[GUID];
+    let id: string = (<any>todo)[c.guidKey];
 
     const slice = new Slice<Todo>(
-      TodoSlices.INCOMPLETE,
+      TodoSliceEnum.INCOMPLETE,
       todo => !todo.complete,
+      null,
       [todo]
     );
-    let selectedTodo: Todo = slice.selectGUID(id);
+    let selectedTodo: Todo = slice.findOne(id);
     expect(selectedTodo).to.equal(todo);
   });
   it("should select slice element by predicate", () => {
@@ -103,8 +106,9 @@ describe("Select slice elements", () => {
     attachGUIDs(todos);
 
     const slice = new Slice<Todo>(
-      TodoSlices.INCOMPLETE,
+      TodoSliceEnum.INCOMPLETE,
       todo => !todo.complete,
+      null,
       todos
     );
     let selectedTodos: Todo[] = slice.select(todo =>
@@ -119,8 +123,9 @@ describe("Select slice elements", () => {
     attachGUIDs(todos);
 
     const slice = new Slice<Todo>(
-      TodoSlices.INCOMPLETE,
+      TodoSliceEnum.INCOMPLETE,
       todo => !todo.complete,
+      null,
       todos
     );
     let selectedTodos: Todo[] = slice.selectAll();

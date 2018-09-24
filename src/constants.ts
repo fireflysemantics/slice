@@ -1,1 +1,1 @@
-export const GUID = Symbol("GUID");
+export const S = Symbol("S");

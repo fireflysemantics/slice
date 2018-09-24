@@ -80,5 +80,4 @@ export class OStore {
     public count() {
         return values(this.entries).length;
     }
-
 }

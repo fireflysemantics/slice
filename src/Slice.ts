@@ -1,10 +1,14 @@
-import { GUID } from "@fs/constants";
-import { Delta, ActionTypes } from "@fs/types";
+import { Delta, ActionTypes, IEntityIndex } from "@fs/types";
+import { StoreConfig } from "@fs/EStore"; 
 import { AbstractStore } from "@fs/AbstractStore";
 
 const { values } = Object;
 
 export class Slice<E> extends AbstractStore<E> {
+  
+  /* The element entries */
+  public entries: IEntityIndex<E> = {};
+
   /**
    * @param label The slice label
    * @param predicate The slice predicate
@@ -24,14 +28,16 @@ export class Slice<E> extends AbstractStore<E> {
   constructor(
     public label: string,
     public predicate: (e: E) => boolean,
-    private elements?: E[]
+    private sc?: StoreConfig,
+    elements?: E[]
   ) {
     super();
+    this.sc = sc ? sc : new StoreConfig();
     elements &&
       elements.forEach((e: E) => {
         this.add(e);
       });
-  }
+   }
 
   /**
    * Add the element if it satisfies the predicate
@@ -41,7 +47,7 @@ export class Slice<E> extends AbstractStore<E> {
    */
   add(e: E) {
     if (this.predicate(e)) {
-      const id = (<any>e)[GUID];
+      const id = (<any>e)[this.sc.guidKey];
       this.entries[id] = e;
       this.notify.next([...Object.values(this.entries)]);
       const delta: Delta<E> = { type: ActionTypes.POST, entries: [e] };
@@ -59,7 +65,7 @@ export class Slice<E> extends AbstractStore<E> {
     const d: E[] = [];
     e.forEach(e => {
       if (this.predicate(e)) {
-        const id = (<any>e)[GUID];
+        const id = (<any>e)[this.sc.guidKey];
         this.entries[id] = e;
         d.push(e);
       }
@@ -81,7 +87,7 @@ export class Slice<E> extends AbstractStore<E> {
     const d: E[] = [];
     e.forEach(e => {
       if (this.predicate(e)) {
-        const id = (<any>e)[GUID];
+        const id = (<any>e)[this.sc.guidKey];
         this.entries[id] = e;
       }
     });
@@ -99,7 +105,7 @@ export class Slice<E> extends AbstractStore<E> {
    */
   delete(e: E) {
     if (this.predicate(e)) {
-      const id = (<any>e)[GUID];
+      const id = (<any>e)[this.sc.guidKey];
       delete this.entries[id];
       this.notify.next([...Object.values(this.entries)]);
       const delta: Delta<E> = { type: ActionTypes.DELETE, entries: [e] };
@@ -114,7 +120,7 @@ export class Slice<E> extends AbstractStore<E> {
     const d: E[] = [];
     e.forEach(e => {
       if (this.predicate(e)) {
-        const id = (<any>e)[GUID];
+        const id = (<any>e)[this.sc.guidKey];
         d.push(this.entries[id]);
         delete this.entries[id];
       }
@@ -133,7 +139,7 @@ export class Slice<E> extends AbstractStore<E> {
     const d: E[] = [];
     e.forEach(e => {
       if (this.predicate(e)) {
-        const id = (<any>e)[GUID];
+        const id = (<any>e)[this.sc.guidKey];
         d.push(this.entries[id]);
         delete this.entries[id];
       }
@@ -151,7 +157,7 @@ export class Slice<E> extends AbstractStore<E> {
    * @param e The element to be deleted if it satisfies the predicate
    */
   put(e: E) {
-    const id = (<any>e)[GUID];
+    const id = (<any>e)[this.sc.guidKey];
     if (this.entries[id]) {
       if (this.predicate(e)) {
         this.notify.next([...Object.values(this.entries)]);
@@ -169,7 +175,7 @@ export class Slice<E> extends AbstractStore<E> {
   putN(...e: E[]) {
     const p: E[] = [];
     e.forEach(e => {
-      const id = (<any>e)[GUID];
+      const id = (<any>e)[this.sc.guidKey];
       if (this.entries[id]) {
         if (this.predicate(e)) {
           p.push(this.entries[id]);
@@ -191,7 +197,7 @@ export class Slice<E> extends AbstractStore<E> {
   putA(e: E[]) {
     const p: E[] = [];
     e.forEach(e => {
-      const id = (<any>e)[GUID];
+      const id = (<any>e)[this.sc.guidKey];
       if (this.entries[id]) {
         if (this.predicate(e)) {
           p.push(this.entries[id]);
@@ -205,5 +211,17 @@ export class Slice<E> extends AbstractStore<E> {
       const delta: Delta<E> = { type: ActionTypes.DELETE, entries: p };
       this.notifyDelta.next(delta);
     }
+  }
+  
+  /**
+   * Resets the slice to empty.
+   * 
+   * Also perform delta notification that sends all current store entries.
+   * The ActionType.RESET code is sent with the delta notification.
+   */
+  reset() {
+    const delta: Delta<E> = { type: ActionTypes.RESET, entries: values(this.entries) };
+    this.notifyAll([], delta);
+    this.entries = {};
   }
 }

@@ -7,11 +7,11 @@ import { OStore } from "@fs/OStore";
 const { values } = Object;
 
 describe("Creating a key value store", () => {
-  let store: OStore = new OStore();
+  let ostore: OStore = new OStore();
 
   it("should create an empty key value store", () => {
-    expect(store.isEmpty()).to.be.true;
-    expect(store.count()).to.equal(0);
+    expect(ostore.isEmpty()).to.be.true;
+    expect(ostore.count()).to.equal(0);
   });
 });
 
