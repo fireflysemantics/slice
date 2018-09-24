@@ -8,7 +8,7 @@ Lightweight Angular state management
 
 This is a lightweight minimal API built on top of `RxJS` for creating central updates / `Observable` notifcations for Javascript applications.  
 
-It offers to types of observable stores for your data:
+It offers two types of observable stores for your data:
 - Entity stores for structured entity like data (Customer, Product, User, ...)
 - Object store (Key value store) for unstructured data
 
@@ -28,7 +28,7 @@ and should be kept over the entities life time until it is permanently deleted f
 - Comparison of entities 
 - CRUD operations on individual entities
 
-In addition the `EStore<E>` supports an addition confirable `id` property that can be assigned by an external persistance store, such as a database, and this `id` could change over the lifetime of the entity.  
+The `EStore<E>` also supports an additional configurable `id` property that can be assigned by an external persistance store, such as a database, and this `id` could change over the lifetime of the entity.  
 
 For the full API see the [Slice Typedoc API Documentation](https://fireflysemantics.github.io/slice/doc/).
 
@@ -55,9 +55,9 @@ export class Todo {
 }
 
 //Sample data
-let todoIncmplete:Todo = new Todo(false, "You complete me!")
+let todoIncomplete:Todo = new Todo(false, "You complete me!")
 let todoComplete = new Todo(true, "You completed me!");
-export let todos = [todoIncmplete, todoCmplete];
+export let todos = [todoIncomplete, todoComplete];
 ```
 
 ### Store Creation
