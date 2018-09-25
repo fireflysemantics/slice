@@ -91,8 +91,15 @@ export abstract class AbstractStore<E> {
 
   /**
    * Returns the number of entries contained.
+   * @param p The predicate to apply in order to filter the count  
    */
-  count(): Observable<number> {
+  count(p?: Predicate<E>): Observable<number> {
+    if (p) {
+      return this.notifyEntryCount.pipe(map((e: E[]) => e.reduce(
+        (total, e) => total + (p(e) ? 1 : 0),
+        0
+      )));
+    }
     return this.notifyEntryCount.pipe(map((entries: E[]) => entries.length));
   }
 

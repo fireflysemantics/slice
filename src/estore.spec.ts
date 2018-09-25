@@ -184,6 +184,9 @@ describe("Reading non empty store metadata", () => {
     store.count().subscribe(c=>{
       expect(c).to.equal(2);
     });
+    store.count(todo => todo.complete).subscribe(c=>{
+      expect(c).to.equal(1);
+    });
   });
   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
 

@@ -19,10 +19,14 @@ Even though we will be using Angular for prototype applications, it should work 
 
 ### Entity Stores
 
-For `Entity` data (Structured class based types such as `Product` or `Customer`) Slice provides a `EStore<E>` type.  Add all the Entity instances that you wish to track to the store and retrieve `Observable<E[]>` instances by calling `EStore.observe()` or `EStore.observe(sortFn)`.  The `EStore<E>` implementation returns `Observable` references which can be used to update the visual state of your application.
+For `Entity` data (Structured class based types such as `Product` or `Customer`) Slice provides a `EStore<E>` type.  
+
+Add all the Entity instances that you wish to track to the store and retrieve `Observable<E[]>` instances by calling `EStore.observe()` or `EStore.observe(sortFn)`.  
+
+The `EStore<E>` implementation returns RxJS `Observable` references which can be used to update the visual state of your application.
 
 All entities have a configurable property that is assigned a [GUID](https://en.wikipedia.org/wiki/Universally_unique_identifier)
-at the time the entity is posted to the store.  This id should be considered immutable
+at the time the entity is posted to the store.  The [GUID](https://en.wikipedia.org/wiki/Universally_unique_identifier) id should be considered immutable
 and should be kept over the entities life time until it is permanently deleted from the world.  This is done in order to facilitate:
 - Indexing / Lookup by id
 - Comparison of entities 
