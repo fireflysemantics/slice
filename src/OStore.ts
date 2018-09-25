@@ -59,8 +59,18 @@ export class OStore {
      * @param key 
      * @return An {@link Observable} of the value
      */
-    public select(key:string) {
+    public observe(key:string) {
         return this.subjects[key].asObservable();
+    }
+
+    /**
+     * Observe changes to the values.
+     * 
+     * @param key 
+     * @return A snapshot of the value corresponding to the key.
+     */
+    public select(key:string):any {
+        return this.entries[key];
     }
 
 
