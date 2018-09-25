@@ -15,7 +15,7 @@ describe("Creating a key value store", () => {
   });
 });
 
-describe("Storing values in the store", () => {
+describe("Posting values to the store", () => {
   let store: OStore = new OStore();
   store.post("key", "value");
   let o: Observable<any> = store.select("key");
@@ -23,10 +23,19 @@ describe("Storing values in the store", () => {
   it("should return an observable of the value", () => {
     o.subscribe(value => {
       expect(value).to.equal("value");
-      store.put("key", "valuepart2");
-      o.subscribe(value => {
-        expect(value).to.equal("valuepart2");
-      });
+    });
+  });
+});
+
+describe("Put(ing) / updating store values", () => {
+  let store: OStore = new OStore();
+  store.post("key", "value");
+  let o: Observable<any> = store.select("key");
+
+  it("should return an observable of the value", () => {
+    store.put("key", "valuepart2");
+    o.subscribe(value => {
+      expect(value).to.equal("valuepart2");
     });
   });
 });

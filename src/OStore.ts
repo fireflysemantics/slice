@@ -53,7 +53,6 @@ export class OStore {
         delete this.subjects[key];
     }
 
-
     /**
      * Observe changes to the values.
      * 
