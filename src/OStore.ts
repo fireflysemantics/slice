@@ -26,6 +26,7 @@ export class OStore {
     public post(key:string, value:any) {
         this.entries[key] = value;
         this.subjects[key] = new ReplaySubject(1);
+        this.subjects[key].next(value);
     }
 
     /**

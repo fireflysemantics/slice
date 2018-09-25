@@ -4,6 +4,7 @@ const cpy = require("cpy");
 require("mkdirp").sync("dist");
 cpy("package.json", "dist");
 cpy("README.md", "dist");
+cpy("src/index.ts", "dist");
 const options = { overwrite: true };
 const rc = require("recursive-copy");
 rc("target/src/", "dist", options).then(() => {
