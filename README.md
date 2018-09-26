@@ -40,6 +40,8 @@ For the full API see the [Slice Typedoc API Documentation](https://fireflysemant
 
 The `OStore` class is for data that is not structured.  It stores `key values` pairs, and is great for tracking things like the user session or the value of a `select` user interface component.
 
+This is a [minimal object store demo](https://stackblitz.com/edit/slice-filter) that logs the selected value to the console.
+
 For the full API see the [Slice Typedoc API Documentation](https://fireflysemantics.github.io/slice/doc/).
 
 ## Usage
