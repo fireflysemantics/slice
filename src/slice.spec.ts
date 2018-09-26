@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import "mocha";
 
-import { Slice } from "@fs/Slice";
-import { StoreConfig } from "@fs/EStore";
+import { Slice } from "./Slice";
+import { StoreConfig } from "./EStore";
 import { TodoSliceEnum } from "@test/setup";
 import { Todo, todosFactory, attachGUIDs, attachGUID } from "@test/setup";
 

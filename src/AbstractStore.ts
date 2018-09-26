@@ -1,4 +1,4 @@
-import { Predicate, Delta, IEntityIndex } from "@fs/types";
+import { Predicate, Delta, IEntityIndex } from "./types";
 import { ReplaySubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 

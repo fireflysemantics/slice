@@ -1,8 +1,7 @@
 import v1 from "uuid/v1";
-import { AbstractStore } from "@fs/AbstractStore";
-import { Delta } from "@fs/types";
-import { ActionTypes, IEntityIndex, Predicate, ISliceIndex } from "@fs/types";
-import { Slice } from "@fs/Slice";
+import { AbstractStore } from "./AbstractStore";
+import { ActionTypes, IEntityIndex, Predicate, ISliceIndex, Delta } from "./types";
+import { Slice } from "./Slice";
 
 const { values } = Object;
 

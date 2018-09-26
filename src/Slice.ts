@@ -1,6 +1,6 @@
-import { Delta, ActionTypes, IEntityIndex } from "@fs/types";
-import { StoreConfig } from "@fs/EStore"; 
-import { AbstractStore } from "@fs/AbstractStore";
+import { Delta, ActionTypes, IEntityIndex } from "./types";
+import { StoreConfig } from "./EStore"; 
+import { AbstractStore } from "./AbstractStore";
 
 const { values } = Object;
 

@@ -2,7 +2,7 @@ import { expect } from "chai";
 import "mocha";
 import { Observable } from "rxjs";
 
-import { OStore } from "@fs/OStore";
+import { OStore } from "./OStore";
 
 const { values } = Object;
 

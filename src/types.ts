@@ -1,4 +1,4 @@
-import { Slice } from "@fs/Slice";
+import { Slice } from "./Slice";
 import { ReplaySubject } from 'rxjs';
 
 export type Predicate<E> = (e: E) => boolean;

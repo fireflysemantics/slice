@@ -1,4 +1,4 @@
-import { IKeyValue, IKeyReplaySubject } from '@fs/types';
+import { IKeyValue, IKeyReplaySubject } from './types';
 import { ReplaySubject } from 'rxjs';
 
 let { values } = Object;
