@@ -152,6 +152,9 @@ export class EStore<E> extends AbstractStore<E> {
     this.notify.next(v);
     const delta: Delta<E> = { type: ActionTypes.PUT, entries: [e] };
     this.notifyDelta.next(delta);
+    values(this.slices).forEach(s => {
+      s.put(e);
+    });
   }
 
   /**
@@ -159,15 +162,7 @@ export class EStore<E> extends AbstractStore<E> {
    * @param e
    */
   putN(...e: E[]) {
-    e.forEach(e => {
-      let id: string = (<any>e)[this.config.guidKey];
-      this.entries[id] = e;
-      this.updateIDEntry(e);
-    });
-    let v: E[] = [...Object.values(this.entries)];
-    this.notify.next(v);
-    const delta: Delta<E> = { type: ActionTypes.PUT, entries: e };
-    this.notifyDelta.next(delta);
+    this.putA(e);
   }
 
   /**
@@ -184,6 +179,9 @@ export class EStore<E> extends AbstractStore<E> {
     this.notify.next(v);
     const delta: Delta<E> = { type: ActionTypes.PUT, entries: e };
     this.notifyDelta.next(delta);
+    values(this.slices).forEach(s => {
+      s.putA(e);
+    });    
   }
 
   delete(e: E) {
@@ -196,6 +194,9 @@ export class EStore<E> extends AbstractStore<E> {
     let v: E[] = [...values(this.entries)];
     const delta: Delta<E> = { type: ActionTypes.DELETE, entries: [e] };
     this.notifyAll(v, delta);
+    values(this.slices).forEach(s => {
+      s.delete(e);
+    });
   }
 
   deleteN(...e: E[]) {
@@ -210,6 +211,9 @@ export class EStore<E> extends AbstractStore<E> {
     let v: E[] = [...values(this.entries)];
     const delta: Delta<E> = { type: ActionTypes.DELETE, entries: e };
     this.notifyAll(v, delta);
+    values(this.slices).forEach(s => {
+      s.deleteA(e);
+    });    
   }
 
   deleteA(e: E[]) {
@@ -224,6 +228,9 @@ export class EStore<E> extends AbstractStore<E> {
     let v: E[] = [...values(this.entries)];
     const delta: Delta<E> = { type: ActionTypes.DELETE, entries: e };
     this.notifyAll(v, delta);
+    values(this.slices).forEach(s => {
+      s.deleteA(e);
+    });
   }
 
   deleteP(p: Predicate<E>) {
@@ -234,15 +241,14 @@ export class EStore<E> extends AbstractStore<E> {
         const id = (<any>e)[this.config.guidKey];
         delete this.entries[id];
         this.deleteIDEntry(e);
-
-        values(this.slices).forEach(s => {
-          delete s.entries[id];
-        });
       }
     });
     let v: E[] = [...values(this.entries)];
     const delta: Delta<E> = { type: ActionTypes.DELETE, entries: d };
     this.notifyAll(v, delta);
+    values(this.slices).forEach(s => {
+      s.deleteA(d);
+    });
   }
 
   private updateIDEntry(e: E) {
