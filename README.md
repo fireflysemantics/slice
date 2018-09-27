@@ -19,6 +19,8 @@ Even though we will be using Angular for prototype applications, it should work 
 
 ### Entity Stores
 
+A demo was just add for a [Todo application here](https://stackblitz.com/edit/slice-todo).
+
 For `Entity` data (Structured class based types such as `Product` or `Customer`) Slice provides a `EStore<E>` type.  
 
 Add all the Entity instances that you wish to track to the store and retrieve `Observable<E[]>` instances by calling `EStore.observe()` or `EStore.observe(sortFn)`.  
