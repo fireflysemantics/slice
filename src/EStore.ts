@@ -10,6 +10,8 @@ export const STORE_CONFIG_DEFAULT: StoreConfig = {
   guidKey: "gid"
 };
 
+Object.freeze(STORE_CONFIG_DEFAULT);
+
 export class StoreConfig {
   public idKey: string;
   public guidKey: string;
@@ -23,13 +25,24 @@ export class StoreConfig {
 export class EStore<E> extends AbstractStore<E> {
   /**
    * Store constructor (Initialization with element is optional)
-   *
-   * @param elements
+   * 
+   * perform initial notification to all observers,
+   * such that function like {@link combineLatest}{}
+   * will execute at least once.
+   * @param entities
    */
-  constructor(private elements?: E[], public config?: StoreConfig) {
+  constructor(private entities?: E[], public config?: StoreConfig) {
     super();
     this.config = config ? config : new StoreConfig();
-    elements && this.postA(elements);
+    if (entities) {
+      this.postA(entities);
+      const delta: Delta<E> = { type: ActionTypes.INTIALIZE, entries: entities };
+      this.notifyAll(entities, delta);  
+    }
+    else {
+      const delta: Delta<E> = { type: ActionTypes.INTIALIZE, entries: [] };
+      this.notifyAll([], delta);    
+    }
   }
 
   /**
@@ -49,9 +62,8 @@ export class EStore<E> extends AbstractStore<E> {
      </pre>
    */
   addSlice(p: Predicate<E>, label: string) {
-    const slice: Slice<E> = new Slice(label, p, this.config);
+    const slice: Slice<E> = new Slice(label, p, this.config, values(this.entries));
     this.slices[slice.label] = slice;
-    values(this.entries).forEach(e => slice.add(e));
   }
 
   /**
@@ -158,7 +170,8 @@ export class EStore<E> extends AbstractStore<E> {
   }
 
   /**
-   * Put (Update) an element.
+   * Put (Update) an element or add an element that was read from a persistence source
+   * and thus already has an assigned global id`.
    * @param e
    */
   putN(...e: E[]) {

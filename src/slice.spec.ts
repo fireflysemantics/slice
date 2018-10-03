@@ -76,7 +76,7 @@ describe("Checking whether the slice is empty", () => {
   });
   it("should not be empty", () => {
     const slice = new Slice<Todo>(TodoSliceEnum.COMPLETE, todo => todo.complete);
-    slice.add(new Todo(true, "You completed me!"));
+    slice.add(new Todo(true, "You completed me!", "1"));
     slice.isEmpty().subscribe(empty=>{
       expect(empty).to.be.false;
     });    
@@ -96,8 +96,10 @@ describe("Select slice elements", () => {
       null,
       [todo]
     );
+
     let selectedTodo: Todo = slice.findOne(id);
     expect(selectedTodo).to.equal(todo);
+
   });
   it("should select slice element by predicate", () => {
     let todo1 = new Todo(false, "You complete me!");

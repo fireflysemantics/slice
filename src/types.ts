@@ -28,6 +28,7 @@ export const enum ActionTypes {
   POST = "Post",
   PUT = "Put",
   DELETE = "Delete",
+  INTIALIZE = "Initialize",
   RESET = "Reset"
 }
 

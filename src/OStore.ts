@@ -26,6 +26,8 @@ export class OStore {
     public post(key:string, value:any) {
         this.entries[key] = value;
         this.subjects[key] = new ReplaySubject(1);
+        //Emit immediately so that Observers can receive 
+        //the value straight away.
         this.subjects[key].next(value);
     }
 

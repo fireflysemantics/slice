@@ -130,7 +130,7 @@ describe("Put operations on the store cascade to slice", () => {
       .subscribe(todos => {
         expect(todos.length).to.equal(2);
       });
-  });  
+  });
 });
 
 describe("Patching store elements", () => {
@@ -204,19 +204,10 @@ describe("Reading empty store metadata", () => {
 });
 
 describe("Reading non empty store metadata", () => {
-  let store: EStore<Todo> = new EStore<Todo>();
-
-  it("should be an empty store", () => {
-    store.isEmpty().subscribe(empty => {
-      expect(store.isEmpty()).to.be.true;
-    });
-  });
-
-  store.putA(todosFactory());
-
+  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   it("should not be an empty store", () => {
     store.isEmpty().subscribe(empty => {
-      expect(store.isEmpty()).to.be.false;
+      expect(empty).to.be.false;
     });
     store.count().subscribe(c => {
       expect(c).to.equal(2);
@@ -225,21 +216,16 @@ describe("Reading non empty store metadata", () => {
       expect(c).to.equal(1);
     });
   });
-  store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
 
   it("should not be an empty slice", () => {
-    store
-      .getSlice(TodoSliceEnum.COMPLETE)
-      .isEmpty()
-      .subscribe(empty => {
-        expect(empty).to.be.false;
-      });
-    store
-      .getSlice(TodoSliceEnum.COMPLETE)
-      .count()
-      .subscribe(c => {
-        expect(c).to.equal(1);
-      });
+    store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
+    let s: Slice<Todo> = store.getSlice(TodoSliceEnum.COMPLETE);
+    s.isEmpty().subscribe(empty => {
+      expect(empty).to.be.false;
+    });
+    s.count().subscribe(c => {
+      expect(c).to.equal(1);
+    });
   });
 
   it("should return an observable count", () => {

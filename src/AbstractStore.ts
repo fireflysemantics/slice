@@ -1,5 +1,5 @@
-import { Predicate, Delta, IEntityIndex } from "./types";
-import { ReplaySubject, Observable } from "rxjs";
+import { Predicate, Delta, IEntityIndex, ActionTypes } from "./types";
+import { ReplaySubject, Observable, combineLatest } from "rxjs";
 import { map } from "rxjs/operators";
 
 const {values} = Object;

@@ -1,4 +1,4 @@
-import { Delta, ActionTypes, IEntityIndex } from "./types";
+import { Delta, ActionTypes, IEntityIndex, Predicate } from "./types";
 import { StoreConfig } from "./EStore";
 import { AbstractStore } from "./AbstractStore";
 
@@ -9,9 +9,15 @@ export class Slice<E> extends AbstractStore<E> {
   public entries: IEntityIndex<E> = {};
 
   /**
+   * 
+   * perform initial notification to all observers,
+   * such that function like {@link combineLatest}{}
+   * will execute at least once.
+   * 
+   * @param entities
    * @param label The slice label
    * @param predicate The slice predicate
-   * @param elements Elements to be considered for slicing
+   * @param entities Elements to be considered for slicing
    * 
    * @example 
      <pre>
@@ -28,14 +34,19 @@ export class Slice<E> extends AbstractStore<E> {
     public label: string,
     public predicate: (e: E) => boolean,
     private sc?: StoreConfig,
-    elements?: E[]
+    entities?: E[]
   ) {
     super();
     this.sc = sc ? sc : new StoreConfig();
-    elements &&
-      elements.forEach((e: E) => {
-        this.add(e);
-      });
+    if (entities) {
+      let passed: E[] = this.test(predicate, entities);
+      this.addA(passed);
+      const delta: Delta<E> = { type: ActionTypes.INTIALIZE, entries: passed };
+      this.notifyAll(passed, delta);
+    } else {
+      const delta: Delta<E> = { type: ActionTypes.INTIALIZE, entries: [] };
+      this.notifyAll([], delta);
+    }
   }
 
   /**
@@ -50,7 +61,7 @@ export class Slice<E> extends AbstractStore<E> {
       this.entries[id] = e;
       this.notify.next([...Object.values(this.entries)]);
       const delta: Delta<E> = { type: ActionTypes.POST, entries: [e] };
-      this.notifyDelta.next(delta);
+      this.notifyAll([...values(this.entries)], delta);
     }
   }
 
@@ -82,7 +93,7 @@ export class Slice<E> extends AbstractStore<E> {
     if (d.length > 0) {
       this.notify.next([...Object.values(this.entries)]);
       const delta: Delta<E> = { type: ActionTypes.POST, entries: d };
-      this.notifyDelta.next(delta);
+      this.notifyAll(d, delta);
     }
   }
 
@@ -95,9 +106,8 @@ export class Slice<E> extends AbstractStore<E> {
     if (this.predicate(e)) {
       const id = (<any>e)[this.sc.guidKey];
       delete this.entries[id];
-      this.notify.next([...Object.values(this.entries)]);
       const delta: Delta<E> = { type: ActionTypes.DELETE, entries: [e] };
-      this.notifyDelta.next(delta);
+      this.notifyAll(values(this.entries), delta);
     }
   }
 
@@ -121,9 +131,8 @@ export class Slice<E> extends AbstractStore<E> {
       }
     });
     if (d.length > 0) {
-      this.notify.next([...Object.values(this.entries)]);
       const delta: Delta<E> = { type: ActionTypes.DELETE, entries: d };
-      this.notifyDelta.next(delta);
+      this.notifyAll([...values(this.entries)], delta);
     }
   }
 
@@ -136,17 +145,16 @@ export class Slice<E> extends AbstractStore<E> {
     const id = (<any>e)[this.sc.guidKey];
     if (this.entries[id]) {
       if (!this.predicate(e)) {
+        //Note that this is a ActionTypes.DELETE because we are removing the
+        //entity from the slice.
         const delta: Delta<E> = { type: ActionTypes.DELETE, entries: [e] };
-        this.notifyDelta.next(delta);
         delete this.entries[id];
-        this.notify.next([...Object.values(this.entries)]);
+        this.notifyAll([...values(this.entries)], delta);
       }
-    }
-    else if (this.predicate(e)) {
+    } else if (this.predicate(e)) {
       this.entries[id] = e;
-      this.notify.next([...Object.values(this.entries)]);
       const delta: Delta<E> = { type: ActionTypes.PUT, entries: [e] };
-      this.notifyDelta.next(delta);
+      this.notifyAll([...values(this.entries)], delta);
     }
   }
 
@@ -163,49 +171,69 @@ export class Slice<E> extends AbstractStore<E> {
    * @param e The elements to be deleted if they satisfy the predicate
    */
   putA(e: E[]) {
-    const d: E[] = [];
-    const a: E[] = [];
+    const d: E[] = []; //instances to delete
+    const u: E[] = []; //instances to update
     e.forEach(e => {
       const id = (<any>e)[this.sc.guidKey];
       if (this.entries[id]) {
         if (!this.predicate(e)) {
           d.push(this.entries[id]);
         }
-      }
-      else if (this.predicate(e)) {
-        a.push(e);
+      } else if (this.predicate(e)) {
+        u.push(e);
       }
     });
     if (d.length > 0) {
+      //Note that this is a ActionTypes.DELETE because we are removing the
+      //entity from the slice.
       const delta: Delta<E> = { type: ActionTypes.DELETE, entries: d };
-      this.notifyDelta.next(delta);
-      d.forEach(e=>{
+      d.forEach(e => {
         delete this.entries[(<any>e)[this.sc.guidKey]];
-      })
-      this.notify.next([...Object.values(this.entries)]);
+      });
+      this.notifyAll([...values(this.entries)], delta);
     }
-    if (a.length > 0) {
-      const delta: Delta<E> = { type: ActionTypes.PUT, entries: a };
-      this.notifyDelta.next(delta);
-      a.forEach(e=>{
+    if (u.length > 0) {
+      const delta: Delta<E> = { type: ActionTypes.PUT, entries: u };
+      u.forEach(e => {
         this.entries[(<any>e)[this.sc.guidKey]] = e;
-      })
-      this.notify.next([...Object.values(this.entries)]);
+      });
+      this.notifyAll([...values(this.entries)], delta);
     }
   }
 
   /**
    * Resets the slice to empty.
-   *
-   * Also perform delta notification that sends all current store entries.
-   * The ActionType.RESET code is sent with the delta notification.
+   * 
    */
   reset() {
-    const delta: Delta<E> = {
+    let delta: Delta<E> = {
       type: ActionTypes.RESET,
-      entries: values(this.entries)
+      entries: [...values(this.entries)]
     };
     this.notifyAll([], delta);
     this.entries = {};
+  }
+
+  /**
+   * Utility method that applies the predicate to an array
+   * of entities and return the ones that pass the test.
+   *
+   * This can be used to create an initial set of values
+   * that should be part of the slice, such that the Slices
+   * notifier performs a notification with this set of values
+   * as soon as the slice is instantiated.
+   *
+   * @param p
+   * @param e
+   * @return The the array of entities that pass the predicate test.
+   */
+  public test(p: Predicate<E>, e: E[]): E[] {
+    let v: E[] = [];
+    e.forEach((e: E) => {
+      if (p(e)) {
+        v.push(e);
+      }
+    });
+    return v;
   }
 }
