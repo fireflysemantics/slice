@@ -1,6 +1,3 @@
-import { expect } from "chai";
-import "mocha";
-
 import { Slice } from "./Slice";
 import { StoreConfig } from "./EStore";
 import { TodoSliceEnum } from "@test/setup";
@@ -26,10 +23,10 @@ let incompleteSlice = new Slice<Todo>(
 
 describe("Creating a slice", () => {
   it("should have 1 incomplete todo element", () => {
-    expect(Object.keys(incompleteSlice.entries).length).to.equal(1);
+    expect(Object.keys(incompleteSlice.entries).length).toEqual(1);
   });
   it("should have complete todo element", () => {
-    expect(Object.keys(incompleteSlice.entries).length).to.equal(1);
+    expect(Object.keys(incompleteSlice.entries).length).toEqual(1);
   });
 });
 
@@ -37,15 +34,15 @@ describe("Subscribing to a slice", () => {
   it("should have 1 incomplete todo element", () => {
     let incomplete$ = incompleteSlice.observe();
     incomplete$.subscribe((todos:Todo[]) => {
-      expect(todos.length).to.equal(1);
-      expect(todos[0].complete).to.be.false;
+      expect(todos.length).toEqual(1);
+      expect(todos[0].complete).toBeFalsy();
     });
   });
   it("should have 1 complete todo element", () => {
     let complete$ = completeSlice.observe();
     complete$.subscribe((todos:Todo[]) => {
-      expect(todos.length).to.equal(1);
-      expect(todos[0].complete).to.be.true;
+      expect(todos.length).toEqual(1);
+      expect(todos[0].complete).toBeTruthy();
     });
   });
 });
@@ -54,15 +51,15 @@ describe("Subscribing for slice delta updates", () => {
   it("should have 1 incomplete todo element", () => {
     let incomplete$ = incompleteSlice.observeDelta();
     incomplete$.subscribe(delta => {
-      expect(delta.entries.length).to.equal(1);
-      expect(delta.entries[0].complete).to.be.false;
+      expect(delta.entries.length).toEqual(1);
+      expect(delta.entries[0].complete).toBeFalsy();
     });
   });
   it("should have 1 complete todo element", () => {
     let complete$ = completeSlice.observeDelta();
     complete$.subscribe(delta => {
-      expect(delta.entries.length).to.equal(1);
-      expect(delta.entries[0].complete).to.be.true;
+      expect(delta.entries.length).toEqual(1);
+      expect(delta.entries[0].complete).toBeTruthy();
     });
   });
 });
@@ -71,14 +68,14 @@ describe("Checking whether the slice is empty", () => {
   it("should be empty", () => {
     const slice = new Slice<Todo>(TodoSliceEnum.COMPLETE, todo => todo.complete);
     slice.isEmpty().subscribe(empty=>{
-      expect(empty).to.be.true;
+      expect(empty).toBeTruthy();
     });    
   });
   it("should not be empty", () => {
     const slice = new Slice<Todo>(TodoSliceEnum.COMPLETE, todo => todo.complete);
     slice.add(new Todo(true, "You completed me!", "1"));
     slice.isEmpty().subscribe(empty=>{
-      expect(empty).to.be.false;
+      expect(empty).toBeFalsy();
     });    
   });
 });
@@ -98,7 +95,7 @@ describe("Select slice elements", () => {
     );
 
     let selectedTodo: Todo = slice.findOne(id);
-    expect(selectedTodo).to.equal(todo);
+    expect(selectedTodo).toEqual(todo);
 
   });
   it("should select slice element by predicate", () => {
@@ -116,7 +113,7 @@ describe("Select slice elements", () => {
     let selectedTodos: Todo[] = slice.select(todo =>
       todo.title.includes("hello")
     );
-    expect(selectedTodos[0]).to.equal(todo2);
+    expect(selectedTodos[0]).toEqual(todo2);
   });
   it("should select all slice elements", () => {
     let todo1 = new Todo(false, "You complete me!");
@@ -131,6 +128,6 @@ describe("Select slice elements", () => {
       todos
     );
     let selectedTodos: Todo[] = slice.selectAll();
-    expect(selectedTodos.length).to.equal(2);
+    expect(selectedTodos.length).toEqual(2);
   });
 });

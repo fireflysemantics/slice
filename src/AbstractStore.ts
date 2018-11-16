@@ -138,7 +138,7 @@ export abstract class AbstractStore<E> {
    * @example 
    * @example 
      <pre>
-     let todos:Todo[]=slice.select(todo=>todo.title.length>100);
+     let todos:Todo[]=store.select(todo=>todo.title.length>100);
      </pre>
    */
   select(p: Predicate<E>): E[] {

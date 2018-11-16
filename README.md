@@ -4,6 +4,12 @@
 
 Lightweight Angular state management
 
+## Features
+
+- Dynamic creation of both object and entity stores
+- REST like API for CRUD Operations
+- Predicate<E> Support for `EStore` (Entity Store) slice definitions
+
 ## Introduction
 
 This is a lightweight minimal API built on top of `RxJS` for creating central updates / `Observable` notifcations for Javascript applications.  
