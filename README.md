@@ -7,7 +7,9 @@ Lightweight Angular state management
 ## Features
 
 - Dynamic creation of both object and entity stores
+- Delta for Entities
 - REST like API for CRUD Operations
+- Real time application of Slice `Predicate<E>` filtering
 - Predicate<E> Support for `EStore` (Entity Store) slice definitions
 
 ## Introduction
