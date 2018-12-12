@@ -6,9 +6,9 @@ Lightweight Angular state management
 
 ## Features
 
+- RESTful API for performing CRUD operations
 - Dynamic creation of both object and entity stores
-- Delta for Entities
-- REST like API for CRUD Operations
+- Observable delta updates for Entities
 - Real time application of Slice `Predicate<E>` filtering
 - Predicate<E> Support for `EStore` (Entity Store) slice definitions
 
@@ -53,6 +53,9 @@ The `OStore` class is for data that is not structured.  It stores `key values` p
 This is a [minimal object store demo](https://stackblitz.com/edit/slice-filter) that logs the selected value to the console.
 
 For the full API see the [Slice Typedoc API Documentation](https://fireflysemantics.github.io/slice/doc/).
+
+Related blog articles:
+- [Storing Reactive Layout State in Slice](https://medium.com/@ole.ersoy/storing-reactive-layout-state-in-slice-dbc7fb09850c)
 
 ## Usage
 

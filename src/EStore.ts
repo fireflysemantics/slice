@@ -1,31 +1,30 @@
 import v1 from "uuid/v1";
 import { AbstractStore } from "./AbstractStore";
-import { ActionTypes, IEntityIndex, Predicate, ISliceIndex, Delta } from "./types";
+import {
+  ActionTypes,
+  IEntityIndex,
+  Predicate,
+  ISliceIndex,
+  Delta
+} from "./types";
 import { Slice } from "./Slice";
 
-const { values } = Object;
+const { values, freeze } = Object;
 
-export const STORE_CONFIG_DEFAULT: StoreConfig = {
-  idKey: "id",
-  guidKey: "gid"
+export type StoreConfig = {
+  idKey: string;
+  guidKey: string;
 };
 
-Object.freeze(STORE_CONFIG_DEFAULT);
-
-export class StoreConfig {
-  public idKey: string;
-  public guidKey: string;
-  constructor(c?: Partial<StoreConfig>) {
-    let config = Object.assign({ ...STORE_CONFIG_DEFAULT }, c);
-    this.idKey = config.idKey;
-    this.guidKey = config.guidKey;
-  }
-}
+export const STORE_CONFIG_DEFAULT: StoreConfig = freeze({
+  idKey: "id",
+  guidKey: "gid"
+});
 
 export class EStore<E> extends AbstractStore<E> {
   /**
    * Store constructor (Initialization with element is optional)
-   * 
+   *
    * perform initial notification to all observers,
    * such that function like {@link combineLatest}{}
    * will execute at least once.
@@ -33,15 +32,20 @@ export class EStore<E> extends AbstractStore<E> {
    */
   constructor(private entities?: E[], public config?: StoreConfig) {
     super();
-    this.config = config ? config : new StoreConfig();
+    this.config = config
+      ? freeze({ ...STORE_CONFIG_DEFAULT, ...config })
+      : STORE_CONFIG_DEFAULT;
+
     if (entities) {
       this.postA(entities);
-      const delta: Delta<E> = { type: ActionTypes.INTIALIZE, entries: entities };
-      this.notifyAll(entities, delta);  
-    }
-    else {
+      const delta: Delta<E> = {
+        type: ActionTypes.INTIALIZE,
+        entries: entities
+      };
+      this.notifyAll(entities, delta);
+    } else {
       const delta: Delta<E> = { type: ActionTypes.INTIALIZE, entries: [] };
-      this.notifyAll([], delta);    
+      this.notifyAll([], delta);
     }
   }
 
@@ -62,7 +66,12 @@ export class EStore<E> extends AbstractStore<E> {
      </pre>
    */
   addSlice(p: Predicate<E>, label: string) {
-    const slice: Slice<E> = new Slice(label, p, this.config, values(this.entries));
+    const slice: Slice<E> = new Slice(
+      label,
+      p,
+      this.config,
+      values(this.entries)
+    );
     this.slices[slice.label] = slice;
   }
 
@@ -138,18 +147,7 @@ export class EStore<E> extends AbstractStore<E> {
    * @param e
    */
   postA(e: E[]) {
-    e.forEach(e => {
-      const guid: string = v1();
-      (<any>e)[this.config.guidKey] = guid;
-      this.entries[guid] = e;
-      this.updateIDEntry(e);
-    });
-    values(this.slices).forEach(s => {
-      s.addA(e);
-    });
-    let v: E[] = [...values(this.entries)];
-    const delta: Delta<E> = { type: ActionTypes.POST, entries: e };
-    this.notifyAll(v, delta);
+    this.postN(...e);
   }
 
   /**
@@ -194,7 +192,7 @@ export class EStore<E> extends AbstractStore<E> {
     this.notifyDelta.next(delta);
     values(this.slices).forEach(s => {
       s.putA(e);
-    });    
+    });
   }
 
   delete(e: E) {
@@ -226,7 +224,7 @@ export class EStore<E> extends AbstractStore<E> {
     this.notifyAll(v, delta);
     values(this.slices).forEach(s => {
       s.deleteA(e);
-    });    
+    });
   }
 
   deleteA(e: E[]) {
@@ -264,11 +262,24 @@ export class EStore<E> extends AbstractStore<E> {
     });
   }
 
+  /**
+   * If the entity has the `id` key initialized with a value,
+   * then also add the entity to the `idEntries`.
+   *
+   * @param e The element to be added to the `idEntries`.
+   */
   private updateIDEntry(e: E) {
     if ((<any>e)[this.config.idKey]) {
       this.idEntries[(<any>e)[this.config.idKey]] = e;
     }
   }
+
+  /**
+   * If the entity has the `id` key initialized with a value,
+   * then also delete the entity to the `idEntries`.
+   *
+   * @param e The element to be added to the `idEntries`.
+   */
   private deleteIDEntry(e: E) {
     if ((<any>e)[this.config.idKey]) {
       delete this.idEntries[(<any>e)[this.config.idKey]];
@@ -282,11 +293,14 @@ export class EStore<E> extends AbstractStore<E> {
    * send their own delta notification.
    */
   reset() {
-    const delta: Delta<E> = { type: ActionTypes.RESET, entries: values(this.entries) };
+    const delta: Delta<E> = {
+      type: ActionTypes.RESET,
+      entries: values(this.entries)
+    };
     this.notifyAll([], delta);
     this.entries = {};
     values(this.slices).forEach(s => {
       s.reset();
     });
-  }      
+  }
 }

@@ -28,6 +28,20 @@ describe("Posting values to the store", () => {
   });
 });
 
+describe("Checking whether a value exists for the given key", () => {
+  let store: OStore = new OStore();
+  it("should throw an exception when no subject exists", () => {
+    expect(()=>{store.exists('key')}).toThrow(Error);
+  });
+
+  it("should return an observable of the value", () => {
+    store.post("key", "value");
+    let o: Observable<any> = store.observe("key");
+    expect(()=>{store.exists('key')}).toBeTruthy();
+  });
+});
+
+
 describe("Put(ing) / updating store values", () => {
   let store: OStore = new OStore();
   store.post("key", "value");

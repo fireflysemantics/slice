@@ -1,11 +1,11 @@
 import { Slice } from "./Slice";
-import { StoreConfig } from "./EStore";
+import { StoreConfig, STORE_CONFIG_DEFAULT } from "./EStore";
 import { TodoSliceEnum } from "@test/setup";
 import { Todo, todosFactory, attachGUIDs, attachGUID } from "@test/setup";
 
 let todos = todosFactory();
 attachGUIDs(todos);
-let c = new StoreConfig();
+let c = STORE_CONFIG_DEFAULT;
 
 let completeSlice = new Slice<Todo>(
   TodoSliceEnum.COMPLETE,

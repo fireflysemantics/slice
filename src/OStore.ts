@@ -1,5 +1,6 @@
-import { IKeyValue, IKeyReplaySubject } from './types';
+import { IKeyValue, IReplaySubjectIndex } from './types';
 import { ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators'
 
 let { values } = Object;
 
@@ -13,7 +14,7 @@ export class OStore {
     /**
      * Key Value pair entries
      */
-    private subjects: IKeyReplaySubject = {};
+    private subjects: IReplaySubjectIndex = {};
 
     /**
      * Set create a key value pair entry and creates a 
@@ -64,6 +65,20 @@ export class OStore {
     public observe(key:string) {
         return this.subjects[key].asObservable();
     }
+
+   /**
+     * Check whether a value exists.
+     * 
+     * @param key 
+     * @return An {@link Observable<boolean>} indicating whether the value exists.
+     */
+    public exists(key:string) {
+        if (!this.subjects[key]) {
+            throw new Error(`No subject exists for the key ${key}`);
+        }
+        return this.subjects[key].asObservable().pipe(map(v => v != null));
+    }
+
 
     /**
      * Observe changes to the values.

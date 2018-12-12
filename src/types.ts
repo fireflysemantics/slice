@@ -40,6 +40,6 @@ export interface Delta<E> {
 /**
  * Interface representing key value pairs.
  */
-export interface IKeyReplaySubject {
+export interface IReplaySubjectIndex {
   [id: string]: ReplaySubject<any>;
 }

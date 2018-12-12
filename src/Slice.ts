@@ -1,8 +1,8 @@
 import { Delta, ActionTypes, IEntityIndex, Predicate } from "./types";
-import { StoreConfig } from "./EStore";
+import { StoreConfig, STORE_CONFIG_DEFAULT } from "./EStore";
 import { AbstractStore } from "./AbstractStore";
 
-const { values } = Object;
+const { values, freeze } = Object;
 
 export class Slice<E> extends AbstractStore<E> {
   /* The element entries */
@@ -37,7 +37,10 @@ export class Slice<E> extends AbstractStore<E> {
     entities?: E[]
   ) {
     super();
-    this.sc = sc ? sc : new StoreConfig();
+    this.sc = sc
+    ? freeze({ ...STORE_CONFIG_DEFAULT, ...sc })
+    : STORE_CONFIG_DEFAULT;
+
     if (entities) {
       let passed: E[] = this.test(predicate, entities);
       this.addA(passed);
