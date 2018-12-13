@@ -1,6 +1,7 @@
 import { Todo, TodoSliceEnum, todosFactory } from "@test/setup";
 import { EStore } from "@fs/EStore";
 import { Slice } from "@fs/Slice";
+import { Observable } from "rxjs";
 
 const { values } = Object;
 
@@ -11,6 +12,44 @@ describe("Creating a store", () => {
     expect(values(store.entries).length).toEqual(2);
   });
 });
+
+describe("Setting active state", () => {
+  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+
+  it("should be created with 2 todo elements", () => {
+    expect(values(store.entries).length).toEqual(2);
+  });
+  it("should have no active state", () => {
+    expect(store.active).toBeNull();
+  });
+  it("should have active state", () => {
+    expect(store.active).toBeNull();
+    let todo1:Todo = new Todo(false, "The first Todo!");
+    let todo2:Todo = new Todo(false, "The first Todo!");
+    store.active = todo1;
+    expect(store.active).toEqual(todo1);
+    let a:Observable<Todo> = store.observeActive(); 
+    a.subscribe(active=> {
+      expect(active).toEqual(todo1);
+    });
+  });
+});
+
+describe("Setting loading state", () => {
+  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+
+  it("should have loading set to false", () => {
+    expect(store.loading).toBeFalsy();
+  });
+  it("should have loading set to true", () => {
+    store.loading = true;
+    let l:Observable<boolean> = store.observeLoading(); 
+    l.subscribe(loading=> {
+      expect(loading).toEqual(true);
+    });
+  });
+});
+
 
 describe("Adding a slice to the store", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());

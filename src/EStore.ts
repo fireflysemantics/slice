@@ -8,6 +8,7 @@ import {
   Delta
 } from "./types";
 import { Slice } from "./Slice";
+import { ReplaySubject } from "rxjs";
 
 const { values, freeze } = Object;
 
@@ -47,6 +48,71 @@ export class EStore<E> extends AbstractStore<E> {
       const delta: Delta<E> = { type: ActionTypes.INTIALIZE, entries: [] };
       this.notifyAll([], delta);
     }
+  }
+
+  /**
+   * Notifies observers when the store is empty.
+   */
+  private notifyActive = new ReplaySubject<E>(1);
+
+  /** The currently active entity. */
+  private _active: E = null;
+
+  /**
+   * Set the currently active entity and notify observers.
+   */
+  set active(active: E) {
+    this._active = active;
+    this.notifyActive.next(this._active);
+  }
+
+  /**
+   * @return A snapshot of the currently active entity.
+   */
+  get active() {
+    return this._active;
+  }
+
+  /**
+   * Observe the active entity.
+   * @example
+     <pre>
+    let active$ = source.observeActive();
+    </pre>
+  */
+  public observeActive() {
+    return this.notifyActive.asObservable();
+  }
+
+  /**
+   * Notifies observers when the store is loading.
+   */
+  private notifyLoading = new ReplaySubject<boolean>(1);
+
+  /** The current loading state. */
+  private _loading: boolean = false;
+
+  set loading(loading: boolean) {
+    this._loading = loading;
+    this.notifyLoading.next(this._loading);
+  }
+
+  /**
+   * @return A snapshot of the loading state.
+   */
+  get loading() {
+    return this._loading;
+  }
+
+  /**
+   * Observe the active entity.
+   * @example
+     <pre>
+    let active$ = source.observeActive();
+    </pre>
+  */
+  public observeLoading() {
+    return this.notifyLoading.asObservable();
   }
 
   /**
