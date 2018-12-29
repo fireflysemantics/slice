@@ -31,6 +31,22 @@ describe("Testing whether the store contains the entity", () => {
   });
 });
 
+describe("Toggling an entity", () => {
+  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+  let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
+
+  it("should be created with 2 todo elements", () => {
+    store.toggle(todoOrNotTodo);
+    expect(values(store.entries).length).toEqual(3);
+    expect(store.contains(todoOrNotTodo)).toBeTruthy();
+    store.toggle(todoOrNotTodo);
+    expect(values(store.entries).length).toEqual(2);
+    expect(store.contains(todoOrNotTodo)).toBeFalsy();
+  });
+});
+
+
+
 describe("Setting active state", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
 

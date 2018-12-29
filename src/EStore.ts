@@ -37,6 +37,24 @@ export class EStore<E> extends AbstractStore<E> {
       this.notifyAll([], delta);
     }
   }
+
+  /**
+   * Toggles the entity:
+   * 
+   * If the store contains the entity
+   * it will be deleted.  If the store 
+   * does not contains the entity,
+   * it is added.
+   * @param e 
+   */
+  public toggle(e:E) {
+    if (this.contains(e)) {
+      this.delete(e);
+    }
+    else {
+      this.post(e);
+    }
+  }
   
   /**
    * Notifies observers when the store is empty.

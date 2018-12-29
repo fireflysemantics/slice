@@ -155,7 +155,6 @@ export abstract class AbstractStore<E> {
     const guid:string = (<any>target)[this.config.guidKey];
     return this.entries[guid] ? true : false; 
   }  
-
   
   /**
    * Find and return the entity identified by the GUID parameter
