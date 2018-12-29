@@ -1,11 +1,10 @@
 import { Slice } from "./Slice";
-import { StoreConfig, STORE_CONFIG_DEFAULT } from "./EStore";
+import { ESTORE_CONFIG_DEFAULT } from "./AbstractStore";
 import { TodoSliceEnum } from "@test/setup";
 import { Todo, todosFactory, attachGUIDs, attachGUID } from "@test/setup";
 
 let todos = todosFactory();
 attachGUIDs(todos);
-let c = STORE_CONFIG_DEFAULT;
 
 let completeSlice = new Slice<Todo>(
   TodoSliceEnum.COMPLETE,
@@ -85,7 +84,7 @@ describe("Select slice elements", () => {
     let todo = new Todo(false, "You complete me!");
     attachGUID(todo);
 
-    let id: string = (<any>todo)[c.guidKey];
+    let id: string = (<any>todo)[ESTORE_CONFIG_DEFAULT.guidKey];
 
     const slice = new Slice<Todo>(
       TodoSliceEnum.INCOMPLETE,

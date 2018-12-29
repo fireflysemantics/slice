@@ -1,5 +1,7 @@
 import v1 from "uuid/v1";
 import { AbstractStore } from "./AbstractStore";
+import { StoreConfig } from './StoreConfig';
+
 import {
   ActionTypes,
   IEntityIndex,
@@ -10,17 +12,7 @@ import {
 import { Slice } from "./Slice";
 import { ReplaySubject } from "rxjs";
 
-const { values, freeze } = Object;
-
-export type StoreConfig = {
-  idKey: string;
-  guidKey: string;
-};
-
-export const STORE_CONFIG_DEFAULT: StoreConfig = freeze({
-  idKey: "id",
-  guidKey: "gid"
-});
+const { values } = Object;
 
 export class EStore<E> extends AbstractStore<E> {
   /**
@@ -31,12 +23,8 @@ export class EStore<E> extends AbstractStore<E> {
    * will execute at least once.
    * @param entities
    */
-  constructor(private entities?: E[], public config?: StoreConfig) {
-    super();
-    this.config = config
-      ? freeze({ ...STORE_CONFIG_DEFAULT, ...config })
-      : STORE_CONFIG_DEFAULT;
-
+  constructor(private entities?: E[], config?: StoreConfig) {
+    super(config);
     if (entities) {
       this.postA(entities);
       const delta: Delta<E> = {
@@ -49,7 +37,7 @@ export class EStore<E> extends AbstractStore<E> {
       this.notifyAll([], delta);
     }
   }
-
+  
   /**
    * Notifies observers when the store is empty.
    */
@@ -277,20 +265,7 @@ export class EStore<E> extends AbstractStore<E> {
   }
 
   deleteN(...e: E[]) {
-    e.forEach(e => {
-      const id = (<any>e)[this.config.guidKey];
-      delete this.entries[id];
-      this.deleteIDEntry(e);
-      values(this.slices).forEach(s => {
-        delete s.entries[id];
-      });
-    });
-    let v: E[] = [...values(this.entries)];
-    const delta: Delta<E> = { type: ActionTypes.DELETE, entries: e };
-    this.notifyAll(v, delta);
-    values(this.slices).forEach(s => {
-      s.deleteA(e);
-    });
+    this.deleteA(e);
   }
 
   deleteA(e: E[]) {

@@ -13,6 +13,24 @@ describe("Creating a store", () => {
   });
 });
 
+describe("Testing whether the store contains the entity", () => {
+  let todos = todosFactory();
+  let todo0 = todos[0];
+  let todo1 = todos[1];
+  let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
+
+  let store: EStore<Todo> = new EStore<Todo>(todos);
+
+  it("should be created with 2 todo elements", () => {
+    expect(store.contains(todo0)).toBeTruthy();
+    expect(store.contains(todo1)).toBeTruthy();
+    expect(store.contains(todo0.gid)).toBeTruthy();
+    expect(store.contains(todo1.gid)).toBeTruthy();
+    expect(store.contains(todoOrNotTodo)).toBeFalsy();
+    expect(store.contains(todoOrNotTodo.gid)).toBeFalsy();    
+  });
+});
+
 describe("Setting active state", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
 
@@ -29,8 +47,14 @@ describe("Setting active state", () => {
     store.active = todo1;
     expect(store.active).toEqual(todo1);
     let a:Observable<Todo> = store.observeActive(); 
-    a.subscribe(active=> {
+    let s = a.subscribe(active=> {
       expect(active).toEqual(todo1);
+    });
+    s.unsubscribe();
+    store.active = todo2;
+    a = store.observeActive(); 
+    a.subscribe(active=> {
+      expect(active).toEqual(todo2);
     });
   });
 });

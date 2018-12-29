@@ -1,10 +1,44 @@
 import { Predicate, Delta, IEntityIndex, ActionTypes } from "./types";
 import { ReplaySubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import {StoreConfig} from './StoreConfig';
 
-const {values} = Object;
+const { values, freeze } = Object;
+
+const ESTORE_DEFAULT_ID_KEY = 'id';
+const ESTORE_DEFAULT_GID_KEY = 'gid';
+
+export const ESTORE_CONFIG_DEFAULT: StoreConfig = freeze({
+  idKey: ESTORE_DEFAULT_ID_KEY,
+  guidKey: ESTORE_DEFAULT_GID_KEY
+});
 
 export abstract class AbstractStore<E> {
+  /**
+   * The configuration for the store.
+   */
+  public config:StoreConfig;
+
+  constructor(config?:StoreConfig) {
+    this.config = config
+    ? freeze({ ...ESTORE_CONFIG_DEFAULT, ...config })
+    : ESTORE_CONFIG_DEFAULT;
+  }
+
+    /**
+   * The current id key for the EStore instance.
+   * @return this.config.idKey;
+   */
+  get ID_KEY(): string {
+    return this.config.idKey;
+  }
+  /**
+   * The current guid key for the EStore instance.
+   * @return this.config.guidKey;
+   */
+  get GUID_KEY(): string {
+    return this.config.guidKey;
+  }
 
   /* Primary index for the stores elements.
    */
@@ -106,7 +140,7 @@ export abstract class AbstractStore<E> {
   /**
    * Returns true if the entries contain the identified instance.
    * 
-   * @param guid 
+   * @param target Either an instance of type `E` or a `guid` identifying the instance. 
    * @returns true if the instance identified by the guid exists, false otherwise.
    * 
    * @example
@@ -114,10 +148,15 @@ export abstract class AbstractStore<E> {
      let contains:boolean = source.contains(guid);
      </pre>
    */
-  contains(guid:string) {
+  contains(target: E | string) {
+    if ( typeof target === 'string' ) {
+      return this.entries[target] ? true : false; 
+    }
+    const guid:string = (<any>target)[this.config.guidKey];
     return this.entries[guid] ? true : false; 
   }  
 
+  
   /**
    * Find and return the entity identified by the GUID parameter
    * if it exists and return it.  

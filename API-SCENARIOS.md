@@ -9,6 +9,28 @@ Then the client can call `reset` on the instance to completely
 empty the store 
 And notify all observers.
 
+## Throwaway / Dynamic Entity Stores 
+
+Scenario: The client needs to throwaway the store and instantiate a new one
+
+Given that the client has a new set of entities that are mutually exclusive
+froma previous set, the client wishes to throwaway the current entity store
+and place the new set in a new `EStore` while also updating the application observers with the new entity set.
+
+## Loading
+
+Scenario: The client needs marker state indicating that it is waiting for entities that are inflight
+
+Given that the client has initiated a request for data and is waiting for it to arrive
+Then the client can set `loading` to true on the `EStore` 
+
+## Active
+
+Scenario: The client needs to indicate which entity is active.
+
+Given that user has selected an entity in the ui 
+Then the client can set `active` on the `EStore` instance.
+
 ## Presentation 
 
 Scenario: The client has a presentation component that interfaces with an entity store

@@ -1,6 +1,8 @@
 import { Delta, ActionTypes, IEntityIndex, Predicate } from "./types";
-import { StoreConfig, STORE_CONFIG_DEFAULT } from "./EStore";
+import { ESTORE_CONFIG_DEFAULT } from "./AbstractStore";
 import { AbstractStore } from "./AbstractStore";
+import { StoreConfig } from './StoreConfig';
+import { combineLatest } from 'rxjs';
 
 const { values, freeze } = Object;
 
@@ -11,7 +13,7 @@ export class Slice<E> extends AbstractStore<E> {
   /**
    * 
    * perform initial notification to all observers,
-   * such that function like {@link combineLatest}{}
+   * such that operations like {@link combineLatest}{}
    * will execute at least once.
    * 
    * @param entities
@@ -38,8 +40,8 @@ export class Slice<E> extends AbstractStore<E> {
   ) {
     super();
     this.sc = sc
-    ? freeze({ ...STORE_CONFIG_DEFAULT, ...sc })
-    : STORE_CONFIG_DEFAULT;
+    ? freeze({ ...ESTORE_CONFIG_DEFAULT, ...sc })
+    : ESTORE_CONFIG_DEFAULT;
 
     if (entities) {
       let passed: E[] = this.test(predicate, entities);
