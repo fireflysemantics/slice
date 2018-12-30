@@ -31,6 +31,19 @@ describe("Testing whether the store contains the entity", () => {
   });
 });
 
+describe("Finding an entity by its id property", () => {
+  let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
+  todoOrNotTodo.id = '1';
+  let store: EStore<Todo> = new EStore<Todo>();
+  store.post(todoOrNotTodo);
+
+  it("should be able to find todoOrNotTodo by id", () => {
+    expect(store.findOneByID('1').complete).toBeFalsy();
+    expect(store.findOneByID('1').id).toEqual('1');
+  });
+});
+
+
 describe("Toggling an entity", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   let todoOrNotTodo = new Todo(false, "This is not in the store", '1');

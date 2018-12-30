@@ -6,7 +6,7 @@ export const enum TodoSliceEnum {
 }
 
 export class Todo {
-  constructor(public complete: boolean, public title: string,public gid?:string) {}
+  constructor(public complete: boolean, public title: string,public gid?:string, public id?:string) {}
 }
 
 export let todos = [new Todo(false, "You complete me!"), new Todo(true, "You completed me!")];

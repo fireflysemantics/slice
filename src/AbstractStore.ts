@@ -40,9 +40,17 @@ export abstract class AbstractStore<E> {
     return this.config.guidKey;
   }
 
-  /* Primary index for the stores elements.
+  /**
+   * Primary index for the stores elements.
    */
   public entries: IEntityIndex<E> = {};
+
+  /**
+   * The element entries that are keyed by 
+   * an id generated on the server.
+   */
+  public idEntries: IEntityIndex<E> = {};
+
 
   /**
    * Create notifications that broacast
@@ -165,6 +173,17 @@ export abstract class AbstractStore<E> {
    */
   findOne(guid:string):E {
     return this.entries[guid];
+  }
+
+    /**
+   * Find and return the entity identified by the ID parameter
+   * if it exists and return it.  
+   * 
+   * @param id 
+   * @return The entity instance if it exists, null otherwise
+   */
+  findOneByID(id:string):E {
+    return this.idEntries[id];
   }
 
   /**

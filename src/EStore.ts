@@ -175,9 +175,6 @@ export class EStore<E> extends AbstractStore<E> {
     return this.slices[label];
   }
 
-  /* The element entries that are keyed by an id generated on the server */
-  public idEntries: IEntityIndex<E> = {};
-
   /**
    * Post (Add a new) element to the store.
    * @param e
