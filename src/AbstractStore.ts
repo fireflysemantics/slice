@@ -149,6 +149,7 @@ export abstract class AbstractStore<E> {
    * Returns true if the entries contain the identified instance.
    * 
    * @param target Either an instance of type `E` or a `guid` identifying the instance. 
+   * @param byId Whether the lookup should be performed with the `id` key rather than the `guid`.
    * @returns true if the instance identified by the guid exists, false otherwise.
    * 
    * @example
@@ -156,12 +157,21 @@ export abstract class AbstractStore<E> {
      let contains:boolean = source.contains(guid);
      </pre>
    */
-  contains(target: E | string) {
-    if ( typeof target === 'string' ) {
-      return this.entries[target] ? true : false; 
+  contains(target: E | string, byId?: boolean) {
+    if (!byId) {
+      if ( typeof target === 'string' ) {
+        return this.entries[target] ? true : false; 
+      }
+      const guid:string = (<any>target)[this.config.guidKey];
+      return this.entries[guid] ? true : false;   
     }
-    const guid:string = (<any>target)[this.config.guidKey];
-    return this.entries[guid] ? true : false; 
+    else {
+      if ( typeof target === 'string' ) {
+        return this.idEntries[target] ? true : false; 
+      }
+      const id:string = (<any>target)[this.config.idKey];
+      return this.idEntries[id] ? true : false;
+    }
   }  
   
   /**

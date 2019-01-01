@@ -79,7 +79,6 @@ export class OStore {
         return this.subjects[key].asObservable().pipe(map(v => v != null));
     }
 
-
     /**
      * Observe changes to the values.
      * 
