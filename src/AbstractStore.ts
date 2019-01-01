@@ -1,12 +1,12 @@
 import { Predicate, Delta, IEntityIndex, ActionTypes } from "./types";
 import { ReplaySubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import {StoreConfig} from './StoreConfig';
+import { StoreConfig } from "./StoreConfig";
 
 const { values, freeze } = Object;
 
-const ESTORE_DEFAULT_ID_KEY = 'id';
-const ESTORE_DEFAULT_GID_KEY = 'gid';
+const ESTORE_DEFAULT_ID_KEY = "id";
+const ESTORE_DEFAULT_GID_KEY = "gid";
 
 export const ESTORE_CONFIG_DEFAULT: StoreConfig = freeze({
   idKey: ESTORE_DEFAULT_ID_KEY,
@@ -17,15 +17,15 @@ export abstract class AbstractStore<E> {
   /**
    * The configuration for the store.
    */
-  public config:StoreConfig;
+  public config: StoreConfig;
 
-  constructor(config?:StoreConfig) {
+  constructor(config?: StoreConfig) {
     this.config = config
-    ? freeze({ ...ESTORE_CONFIG_DEFAULT, ...config })
-    : ESTORE_CONFIG_DEFAULT;
+      ? freeze({ ...ESTORE_CONFIG_DEFAULT, ...config })
+      : ESTORE_CONFIG_DEFAULT;
   }
 
-    /**
+  /**
    * The current id key for the EStore instance.
    * @return this.config.idKey;
    */
@@ -46,11 +46,10 @@ export abstract class AbstractStore<E> {
   public entries: IEntityIndex<E> = {};
 
   /**
-   * The element entries that are keyed by 
+   * The element entries that are keyed by
    * an id generated on the server.
    */
   public idEntries: IEntityIndex<E> = {};
-
 
   /**
    * Create notifications that broacast
@@ -76,16 +75,16 @@ export abstract class AbstractStore<E> {
 
   /**
    * Call all the notifiers at once.
-   * 
-   * @param v 
-   * @param delta 
+   *
+   * @param v
+   * @param delta
    */
-  protected notifyAll(v:E[], delta:Delta<E>) {
+  protected notifyAll(v: E[], delta: Delta<E>) {
     this.notify.next(v);
     this.notifyEmptyState.next(v);
     this.notifyEntryCount.next(v);
     this.notifyDelta.next(delta);
-  }  
+  }
 
   /**
    * Observe store state changes.
@@ -133,14 +132,13 @@ export abstract class AbstractStore<E> {
 
   /**
    * Returns the number of entries contained.
-   * @param p The predicate to apply in order to filter the count  
+   * @param p The predicate to apply in order to filter the count
    */
   count(p?: Predicate<E>): Observable<number> {
     if (p) {
-      return this.notifyEntryCount.pipe(map((e: E[]) => e.reduce(
-        (total, e) => total + (p(e) ? 1 : 0),
-        0
-      )));
+      return this.notifyEntryCount.pipe(
+        map((e: E[]) => e.reduce((total, e) => total + (p(e) ? 1 : 0), 0))
+      );
     }
     return this.notifyEntryCount.pipe(map((entries: E[]) => entries.length));
   }
@@ -157,42 +155,52 @@ export abstract class AbstractStore<E> {
      let contains:boolean = source.contains(guid);
      </pre>
    */
-  contains(target: E | string, byId?: boolean) {
-    if (!byId) {
-      if ( typeof target === 'string' ) {
-        return this.entries[target] ? true : false; 
-      }
-      const guid:string = (<any>target)[this.config.guidKey];
-      return this.entries[guid] ? true : false;   
+  contains(target: E | string) {
+    if (typeof target === "string") {
+      return this.entries[target] ? true : false;
     }
-    else {
-      if ( typeof target === 'string' ) {
-        return this.idEntries[target] ? true : false; 
-      }
-      const id:string = (<any>target)[this.config.idKey];
-      return this.idEntries[id] ? true : false;
+    const guid: string = (<any>target)[this.config.guidKey];
+    return this.entries[guid] ? true : false;
+  }
+
+  /**
+   * Returns true if the entries contain the identified instance.
+   * 
+   * @param target Either an instance of type `E` or a `id` identifying the instance. 
+   * @returns true if the instance identified by the `id` exists, false otherwise.
+   * 
+   * @example
+     <pre>
+     let contains:boolean = source.contains(guid);
+     </pre>
+   */
+  containsById(target: E | string) {
+    if (typeof target === "string") {
+      return this.idEntries[target] ? true : false;
     }
-  }  
-  
+    const id: string = (<any>target)[this.config.idKey];
+    return this.idEntries[id] ? true : false;
+  }
+
   /**
    * Find and return the entity identified by the GUID parameter
-   * if it exists and return it.  
-   * 
-   * @param guid 
+   * if it exists and return it.
+   *
+   * @param guid
    * @return The entity instance if it exists, null otherwise
    */
-  findOne(guid:string):E {
+  findOne(guid: string): E {
     return this.entries[guid];
   }
 
-    /**
+  /**
    * Find and return the entity identified by the ID parameter
-   * if it exists and return it.  
-   * 
-   * @param id 
+   * if it exists and return it.
+   *
+   * @param id
    * @return The entity instance if it exists, null otherwise
    */
-  findOneByID(id:string):E {
+  findOneByID(id: string): E {
     return this.idEntries[id];
   }
 

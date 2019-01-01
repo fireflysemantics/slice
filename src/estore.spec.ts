@@ -33,8 +33,8 @@ describe("Testing whether the store contains the entity", () => {
   let todoByIDAlso= new Todo(false, "This is not in the store", null, '2');
   store.post(todoByID);
   it("should be created with 2 todo elements", () => {
-    expect(store.contains(todoByID, true)).toBeTruthy();    
-    expect(store.contains(todoByIDAlso, true)).toBeFalsy();    
+    expect(store.containsById(todoByID)).toBeTruthy();    
+    expect(store.containsById(todoByIDAlso)).toBeFalsy();    
   });
 });
 
