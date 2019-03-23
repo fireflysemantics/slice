@@ -4,7 +4,8 @@ import { ReplaySubject } from 'rxjs';
 export type Predicate<E> = (e: E) => boolean;
 
 /**
- * Interface representing the indexed entities.
+ * Interface representing the entities
+ * indexed by `id`.
  */
 export interface IEntityIndex<E> {
   [id: string]: E;
