@@ -32,7 +32,6 @@ export function distinct<E>(entities:E[], property:keyof E):E[] {
     entities.forEach((e:E)=>{
         map.set(e[property], e);
     });
-    console.log("THE LENGTH IS: ", Array.from(map.values()).length);
     return Array.from(map.values());
 }
 /**
