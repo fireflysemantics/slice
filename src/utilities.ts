@@ -27,12 +27,9 @@
 
  ```
  */
-export function distinct<E>(entities:E[], property:keyof E):E[] {
-    let map:Map<any, E> = new Map();
-    entities.forEach((e:E)=>{
-        map.set(e[property], e);
-    });
-    return Array.from(map.values());
+export function distinct<E, K extends keyof E>(entities: E[], property: K): E[] {
+  const entitiesByProperty = new Map(entities.map(e => [e[property], e] as [E[K], E]));
+  return Array.from(entitiesByProperty.values());
 }
 /**
  * Returns true if all the entities are distinct by the 
