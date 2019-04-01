@@ -1,10 +1,9 @@
-import v1 from "uuid/v1";
 import { AbstractStore } from "./AbstractStore";
 import { StoreConfig } from './StoreConfig';
+import { GUID } from './utilities';
 
 import {
   ActionTypes,
-  IEntityIndex,
   Predicate,
   ISliceIndex,
   Delta
@@ -14,6 +13,28 @@ import { ReplaySubject } from "rxjs";
 
 const { values } = Object;
 
+/**
+ * This `todoFactory` code will be used to illustrate the API examples.  The following
+ * utilities are used in the tests and the API Typedoc examples contained here.
+ * @example
+```
+export const enum TodoSliceEnum {
+  COMPLETE = "Complete",
+  INCOMPLETE = "Incomplete"
+}
+
+export class Todo {
+  constructor(public complete: boolean, public title: string,public gid?:string, public id?:string) {}
+}
+
+export let todos = [new Todo(false, "You complete me!"), new Todo(true, "You completed me!")];
+
+export function todosFactory():Todo[] {
+  return [new Todo(false, "You complete me!"), new Todo(true, "You completed me!")];
+}
+ ``` 
+ */
+
 export class EStore<E> extends AbstractStore<E> {
   /**
    * Store constructor (Initialization with element is optional)
@@ -22,6 +43,16 @@ export class EStore<E> extends AbstractStore<E> {
    * such that function like {@link combineLatest}{}
    * will execute at least once.
    * @param entities
+   * @example
+   * Dynamic EStore<Todo> Creation 
+   ```
+class Todo {
+  constructor(public complete: boolean, public title: string,public gid?:string, public id?:string) {}
+}
+
+let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+
+   ```
    */
   constructor(private entities?: E[], config?: StoreConfig) {
     super(config);
@@ -180,13 +211,14 @@ export class EStore<E> extends AbstractStore<E> {
    * @param e
    */
   post(e: E) {
-    const guid: string = v1();
+    const guid:string = (<any>e)[this.config.guidKey]  ? (<any>e)[this.config.guidKey] : GUID();
     (<any>e)[this.config.guidKey] = guid;
     this.entries[guid] = e;
     this.updateIDEntry(e);
     values(this.slices).forEach(s => {
       s.add(e);
     });
+    //Create a new array reference to trigger Angular change detection.
     let v: E[] = [...values(this.entries)];
     const delta: Delta<E> = { type: ActionTypes.POST, entries: [e] };
     this.notifyAll(v, delta);
@@ -198,7 +230,7 @@ export class EStore<E> extends AbstractStore<E> {
    */
   postN(...e: E[]) {
     e.forEach(e => {
-      const guid: string = v1();
+      const guid:string = (<any>e)[this.config.guidKey]  ? (<any>e)[this.config.guidKey] : GUID();
       (<any>e)[this.config.guidKey] = guid;
       this.entries[guid] = e;
       this.updateIDEntry(e);
@@ -206,6 +238,7 @@ export class EStore<E> extends AbstractStore<E> {
     values(this.slices).forEach(s => {
       s.addA(e);
     });
+    //Create a new array reference to trigger Angular change detection.
     let v: E[] = [...values(this.entries)];
     const delta: Delta<E> = { type: ActionTypes.POST, entries: e };
     this.notifyAll(v, delta);
@@ -251,10 +284,11 @@ export class EStore<E> extends AbstractStore<E> {
    */
   putA(e: E[]) {
     e.forEach(e => {
-      let id: string = (<any>e)[this.config.guidKey];
-      this.entries[id] = e;
+      let guid: string = (<any>e)[this.config.guidKey];
+      this.entries[guid] = e;
       this.updateIDEntry(e);
     });
+    //Create a new array reference to trigger Angular change detection.
     let v: E[] = [...values(this.entries)];
     this.notify.next(v);
     const delta: Delta<E> = { type: ActionTypes.PUT, entries: e };
@@ -265,12 +299,13 @@ export class EStore<E> extends AbstractStore<E> {
   }
 
   delete(e: E) {
-    const id = (<any>e)[this.config.guidKey];
-    delete this.entries[id];
+    const guid = (<any>e)[this.config.guidKey];
+    delete this.entries[guid];
     this.deleteIDEntry(e);
     values(this.slices).forEach(s => {
-      delete s.entries[id];
+      delete s.entries[guid];
     });
+    //Create a new array reference to trigger Angular change detection.
     let v: E[] = [...values(this.entries)];
     const delta: Delta<E> = { type: ActionTypes.DELETE, entries: [e] };
     this.notifyAll(v, delta);
@@ -285,13 +320,14 @@ export class EStore<E> extends AbstractStore<E> {
 
   deleteA(e: E[]) {
     e.forEach(e => {
-      const id = (<any>e)[this.config.guidKey];
-      delete this.entries[id];
+      const guid = (<any>e)[this.config.guidKey];
+      delete this.entries[guid];
       this.deleteIDEntry(e);
       values(this.slices).forEach(s => {
-        delete s.entries[id];
+        delete s.entries[guid];
       });
     });
+    //Create a new array reference to trigger Angular change detection.
     let v: E[] = [...values(this.entries)];
     const delta: Delta<E> = { type: ActionTypes.DELETE, entries: e };
     this.notifyAll(v, delta);
@@ -310,6 +346,7 @@ export class EStore<E> extends AbstractStore<E> {
         this.deleteIDEntry(e);
       }
     });
+    //Create a new array reference to trigger Angular change detection.
     let v: E[] = [...values(this.entries)];
     const delta: Delta<E> = { type: ActionTypes.DELETE, entries: d };
     this.notifyAll(v, delta);
@@ -358,5 +395,25 @@ export class EStore<E> extends AbstractStore<E> {
     values(this.slices).forEach(s => {
       s.reset();
     });
+  }
+
+  /** 
+   * Compare entities by GUID 
+   * @param e1 The first entity
+   * @param e2 The second entity
+   * @return true if the two entities have equal GUID ids
+   */
+  equalsByGUID(e1:any, e2:any) {
+    return e1[this.config.guidKey] == e2[this.config.guidKey];
+  }
+
+  /**
+   * Compare entities by ID 
+   * @param e1 The first entity
+   * @param e2 The second entity
+   * @return true if the two entities have equal ID ids
+   */
+  equalsByID(e1:any, e2:any) {
+    return e1[this.config.idKey] == e2[this.config.idKey];
   }
 }

@@ -1,5 +1,5 @@
-export type StoreConfig = {
-    idKey: string;
-    guidKey: string;
+export class StoreConfig {
+    idKey: string = 'id';
+    guidKey: string = 'guid';
 };
   

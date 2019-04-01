@@ -1,3 +1,5 @@
+import v1 from "uuid/v1";
+
 /**
  * Returns all the entities are distinct by the 
  * `property` value argument.  
@@ -58,4 +60,15 @@ export function distinct<E, K extends keyof E>(entities: E[], property: K): E[] 
  */
 export function unique<E>(entities:E[], property:keyof E) {
     return entities.length == distinct(entities, property).length ? true : false;
+}
+
+/**
+ * Create a global ID
+ * @return The global id.
+ * 
+ * @example
+ * let e.guid = GUID();
+ */
+export function GUID() {
+  return v1();
 }

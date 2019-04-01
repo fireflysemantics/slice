@@ -1,4 +1,5 @@
 import { Todo, TodoSliceEnum, todosFactory } from "@test/setup";
+import { GUID } from './utilities';
 import { EStore } from "@fs/EStore";
 import { Slice } from "@fs/Slice";
 import { Observable } from "rxjs";
@@ -47,6 +48,25 @@ describe("Finding an entity by its id property", () => {
   it("should be able to find todoOrNotTodo by id", () => {
     expect(store.findOneByID('1').complete).toBeFalsy();
     expect(store.findOneByID('1').id).toEqual('1');
+  });
+});
+
+describe("Testing whether two entties are equal", () => {
+  const guid = GUID();
+  let todoOrNotTodo1 = new Todo(false, "This is not in the store", guid, '1');
+  let todoOrNotTodo2 = new Todo(false, "This is not in the store", guid, '1');
+
+  let store: EStore<Todo> = new EStore<Todo>();
+  store.post(todoOrNotTodo1);
+  store.post(todoOrNotTodo2);
+
+  it("should not assign a new gid", () => {
+    expect(todoOrNotTodo1.gid).toEqual(guid);
+  });
+
+  it("should show that they are equal", () => {
+    expect(store.equalsByGUID(todoOrNotTodo1, todoOrNotTodo2)).toBeTruthy();
+    expect(store.equalsByID(todoOrNotTodo1, todoOrNotTodo2)).toBeTruthy();
   });
 });
 
