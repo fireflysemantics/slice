@@ -43,11 +43,8 @@ export class EStore<E> extends AbstractStore<E> {
    * such that function like {@link combineLatest}{}
    * will execute at least once.
    * @param entities
-   * @example Dynamic EStore<Todo> Creation 
+   * @example Dynamic `EStore<Todo>` Creation 
 ```
-class Todo {
-  constructor(public complete: boolean, public title: string,public gid?:string, public id?:string) {}
-}
 // Initialize the Store
 let store: EStore<Todo> = new EStore<Todo>(todosFactory());
 ```
@@ -75,8 +72,8 @@ let store: EStore<Todo> = new EStore<Todo>(todosFactory());
    * does not contains the entity,
    * it is added.
    * @param e 
-   * @example Toggle the Todo instance
- ```
+   * @example Toggle the `Todo` instance
+```
 estore.post(todo);
 // Remove todo
 estore.toggle(todo);
@@ -99,7 +96,11 @@ estore.toggle(todo);
    */
   private notifyActive = new ReplaySubject<Map<string,E>>(1);
 
-  /** The currently active entity. */
+  /** 
+   * `Map` of active entties. The instance is public and can be used
+   * directly to add and remove active entities, however we recommend
+   * using the {@link addActive} and {@link deleteActive} methods. 
+  */
   public active: Map<string,E> = new Map();
 
   /**
@@ -145,9 +146,18 @@ deleteActive(todo2);
    */
   private notifyLoading = new ReplaySubject<boolean>(1);
 
-  /** The current loading state. */
+  /** 
+   * The current loading state.  Use loading when fetching new 
+   * data for the store.  The default loading state is `false`.
+   * 
+   * Loading could be based on a composite response.  For example
+   * when the stock and mutual funds have loaded, set loading to `false`.
+   */
   private _loading: boolean = false;
 
+  /**
+   * Sets the current loading state and notifies observers.
+   */
   set loading(loading: boolean) {
     this._loading = loading;
     this.notifyLoading.next(this._loading);
@@ -182,10 +192,10 @@ deleteActive(todo2);
    * @param p
    * @param label
    * 
-   * @example
-     <pre>
-     source.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
-     </pre>
+   * @example Setup a Todo Slice for COMPLETE Todos
+```
+source.addSlice(todo => todo.complete, TodoSlices.COMPLETE);
+```
    */
   addSlice(p: Predicate<E>, label: string) {
     const slice: Slice<E> = new Slice(
@@ -201,11 +211,10 @@ deleteActive(todo2);
    * Remove a slice
    * @param label The label identifying the slice
    * 
-   * @example
-     <pre>
-     source.removeSlice(p, 'TODO_COMPLETE');
-     </pre>
-   * 
+   * @example Remove the TodoSlices.COMPLETE Slice
+```
+source.removeSlice(TodoSlices.COMPLETE);
+```
    */
   removeSlice(label: string) {
     delete this.slices[label];
@@ -215,11 +224,10 @@ deleteActive(todo2);
    * Get a slice
    * @param label The label identifying the slice
    * 
-   * @example
-     <pre>
-     source.getSlice('TODO_COMPLETE');
-     </pre>
-   * 
+   * @example Get the TodoSlices.COMPLETE slice
+```
+source.getSlice(TodoSlices.COMPLETE);
+```
    */
   getSlice(label: string): Slice<E> {
     return this.slices[label];
@@ -228,6 +236,10 @@ deleteActive(todo2);
   /**
    * Post (Add a new) element to the store.
    * @param e
+   * @example Post a `todo`.
+```
+store.post(todo);
+```
    */
   post(e: E) {
     const guid:string = (<any>e)[this.config.guidKey]  ? (<any>e)[this.config.guidKey] : GUID();
@@ -245,7 +257,11 @@ deleteActive(todo2);
 
   /**
    * Post elements to the store.
-   * @param e
+   * @param ...e
+   * @example Post two `Todo` instances.
+```
+store.post(todo1, todo2);
+```
    */
   postN(...e: E[]) {
     e.forEach(e => {
@@ -266,6 +282,10 @@ deleteActive(todo2);
   /**
    * Post (Add) an array of elements to the store.
    * @param e
+   * @example Post a `Todo` array.
+```
+store.post([todo1, todo2]);
+```
    */
   postA(e: E[]) {
     this.postN(...e);
@@ -274,6 +294,10 @@ deleteActive(todo2);
   /**
    * Put (Update) an element.
    * @param e
+   * @example Put a Todo instance.
+```
+store.put(todo1);
+```
    */
   put(e: E) {
     let id: string = (<any>e)[this.config.guidKey];
@@ -292,6 +316,10 @@ deleteActive(todo2);
    * Put (Update) an element or add an element that was read from a persistence source
    * and thus already has an assigned global id`.
    * @param e
+   * @example Put Todo instances.
+```
+store.put(todo1, todo2);
+```
    */
   putN(...e: E[]) {
     this.putA(e);
@@ -300,6 +328,10 @@ deleteActive(todo2);
   /**
    * Put (Update) the array of elements.
    * @param e
+   * @example Put Todo instances.
+```
+store.put([todo1, todo2]);
+```
    */
   putA(e: E[]) {
     e.forEach(e => {
@@ -317,6 +349,14 @@ deleteActive(todo2);
     });
   }
 
+  /**
+   * Delete (Update) the array of elements.
+   * @param e
+   * @example Delete todo1.
+```
+store.delete(todo1]);
+```
+   */
   delete(e: E) {
     const guid = (<any>e)[this.config.guidKey];
     delete this.entries[guid];
@@ -333,10 +373,26 @@ deleteActive(todo2);
     });
   }
 
+  /**
+   * Delete N elements.
+   * @param ...e
+   * @example Put Todo instances.
+```
+store.delete(todo1, todo2);
+```
+   */
   deleteN(...e: E[]) {
     this.deleteA(e);
   }
 
+  /**
+   * Delete N elements.
+   * @param ...e
+   * @example Put Todo instances.
+```
+store.delete(todo1, todo2);
+```
+   */
   deleteA(e: E[]) {
     e.forEach(e => {
       const guid = (<any>e)[this.config.guidKey];
@@ -355,6 +411,14 @@ deleteActive(todo2);
     });
   }
 
+  /**
+   * Delete elements by {@link Predicate}.
+   * @param p The predicate.
+   * @example Put Todo instances.
+```
+store.delete(todo1, todo2);
+```
+   */
   deleteP(p: Predicate<E>) {
     const d: E[] = [];
     values(this.entries).forEach(e => {
@@ -403,6 +467,11 @@ deleteActive(todo2);
    * Also perform delta notification that sends all current store entries.
    * The ActionType.RESET code is sent with the delta notification.  Slices
    * send their own delta notification.
+   * 
+   * @example Reset the store.
+```
+store.reset();
+```
    */
   reset() {
     const delta: Delta<E> = {
@@ -421,6 +490,10 @@ deleteActive(todo2);
    * @param e1 The first entity
    * @param e2 The second entity
    * @return true if the two entities have equal GUID ids
+   * @example Compare `todo1` with `todo2` by `gid`.
+```
+if (equalsByGUID(todo1, todo2)){...};
+```
    */
   equalsByGUID(e1:any, e2:any) {
     return e1[this.config.guidKey] == e2[this.config.guidKey];
@@ -431,6 +504,10 @@ deleteActive(todo2);
    * @param e1 The first entity
    * @param e2 The second entity
    * @return true if the two entities have equal ID ids
+   * @example Compare `todo1` with `todo2` by `id`.
+```
+if (equalsByID(todo1, todo2)){...};
+```
    */
   equalsByID(e1:any, e2:any) {
     return e1[this.config.idKey] == e2[this.config.idKey];

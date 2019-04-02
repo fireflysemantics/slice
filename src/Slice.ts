@@ -11,7 +11,6 @@ export class Slice<E> extends AbstractStore<E> {
   public entries: IEntityIndex<E> = {};
 
   /**
-   * 
    * perform initial notification to all observers,
    * such that operations like {@link combineLatest}{}
    * will execute at least once.
