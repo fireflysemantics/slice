@@ -1,4 +1,5 @@
 import v1 from "uuid/v1";
+import { ESTORE_CONFIG_DEFAULT } from "./AbstractStore";
 
 /**
  * Returns all the entities are distinct by the 
@@ -80,7 +81,7 @@ export function GUID() {
  * @param gid The name of the `gid` property.  If not specified it defaults to `gid`.
  */
 export function attachGUID<E>(e: E, gid?:string): string {
-  const guid = gid ? gid : 'gid';
+  const guid = gid ? gid : ESTORE_CONFIG_DEFAULT.guidKey;
   let id: string = v1();
   (<any>e)[guid] = id;
   return id;
