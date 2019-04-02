@@ -1,7 +1,8 @@
 import { Slice } from "./Slice";
 import { ESTORE_CONFIG_DEFAULT } from "./AbstractStore";
 import { TodoSliceEnum } from "@test/setup";
-import { Todo, todosFactory, attachGUIDs, attachGUID } from "@test/setup";
+import { Todo, todosFactory } from "@test/setup";
+import { attachGUIDs, attachGUID } from '@fs/utilities';
 
 let todos = todosFactory();
 attachGUIDs(todos);

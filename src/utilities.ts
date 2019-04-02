@@ -72,3 +72,28 @@ export function unique<E>(entities:E[], property:keyof E) {
 export function GUID() {
   return v1();
 }
+
+/**
+ * Set the global identfication property on the instance.
+ * 
+ * @param e Entity we want to set the global identifier on.
+ * @param gid The name of the `gid` property.  If not specified it defaults to `gid`.
+ */
+export function attachGUID<E>(e: E, gid?:string): string {
+  const guid = gid ? gid : 'gid';
+  let id: string = v1();
+  (<any>e)[guid] = id;
+  return id;
+}
+
+/**
+ * Set the global identfication property on the instance.
+ * 
+ * @param e[] Entity array we want to set the global identifiers on.
+ * @param gid The name of the `gid` property.  If not specified it defaults to `gid`.
+ */
+export function attachGUIDs<E>(e: E[], gid?:string) {
+  e.forEach(e => {
+    attachGUID(e);
+  });
+}

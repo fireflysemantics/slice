@@ -18,15 +18,3 @@ export function todosFactory():Todo[] {
 export function todosClone():Todo[] {
   return todos.map(obj => ({...obj}));
 }
-
-export function attachGUID<E>(e: E): string {
-  let id: string = v1();
-  (<any>e)['gid'] = id;
-  return id;
-}
-
-export function attachGUIDs<E>(e: E[]) {
-  e.forEach(e => {
-    attachGUID(e);
-  });
-}
