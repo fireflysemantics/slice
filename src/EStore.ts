@@ -16,7 +16,7 @@ const { values } = Object;
 /**
  * This `todoFactory` code will be used to illustrate the API examples.  The following
  * utilities are used in the tests and the API Typedoc examples contained here.
- * @example
+ * @example Utilities for API Examples
 ```
 export const enum TodoSliceEnum {
   COMPLETE = "Complete",
@@ -43,16 +43,14 @@ export class EStore<E> extends AbstractStore<E> {
    * such that function like {@link combineLatest}{}
    * will execute at least once.
    * @param entities
-   * @example
-   * Dynamic EStore<Todo> Creation 
-   ```
+   * @example Dynamic EStore<Todo> Creation 
+```
 class Todo {
   constructor(public complete: boolean, public title: string,public gid?:string, public id?:string) {}
 }
-
+// Initialize the Store
 let store: EStore<Todo> = new EStore<Todo>(todosFactory());
-
-   ```
+```
    */
   constructor(private entities?: E[], config?: StoreConfig) {
     super(config);
@@ -77,6 +75,15 @@ let store: EStore<Todo> = new EStore<Todo>(todosFactory());
    * does not contains the entity,
    * it is added.
    * @param e 
+   * @example Toggle the Todo instance
+ ```
+estore.post(todo);
+// Remove todo
+estore.toggle(todo);
+// Add it back
+estore.toggle(todo);
+
+```
    */
   public toggle(e:E) {
     if (this.contains(e)) {
@@ -90,25 +97,37 @@ let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   /**
    * Notifies observers when the store is empty.
    */
-  private notifyActive = new ReplaySubject<E>(1);
+  private notifyActive = new ReplaySubject<Map<string,E>>(1);
 
   /** The currently active entity. */
-  private _active: E = null;
+  public active: Map<string,E> = new Map();
 
   /**
-   * Set the currently active entity and notify observers.
+   * Add multiple entity entities.
+   * @example Add a `todo1` and `todo2` as active
+```
+addActive(todo1);
+addActive(todo2);
+```
    */
-  set active(active: E) {
-    this._active = active;
-    this.notifyActive.next(this._active);
+  addActive(e: E) {
+    this.active.set((<any>e).gid, e);
+    this.notifyActive.next(this.active);
   }
 
   /**
-   * @return A snapshot of the currently active entity.
+   * Delete an entity as active.
+   * @example Mark a `todo` instance as active
+  ```
+deleteActive(todo1);
+deleteActive(todo2);
+  ```
    */
-  get active() {
-    return this._active;
+  deleteActive(e: E) {
+    this.active.delete((<any>e).gid);
+    this.notifyActive.next(this.active);
   }
+
 
   /**
    * Observe the active entity.

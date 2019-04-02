@@ -14,6 +14,24 @@ describe("Creating a store", () => {
   });
 });
 
+describe("Toggling an entity", () => {
+  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+  let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
+
+  it("should be created with 2 todo elements", () => {
+    store.toggle(todoOrNotTodo);
+    expect(values(store.entries).length).toEqual(3);
+    expect(store.contains(todoOrNotTodo)).toBeTruthy();
+    store.toggle(todoOrNotTodo);
+    expect(values(store.entries).length).toEqual(2);
+    expect(store.contains(todoOrNotTodo)).toBeFalsy();
+    store.toggle(todoOrNotTodo);
+    expect(values(store.entries).length).toEqual(3);
+    expect(store.contains(todoOrNotTodo)).toBeTruthy();
+  });
+});
+
+
 describe("Testing whether the store contains the entity", () => {
   let todos = todosFactory();
   let todo0 = todos[0];
@@ -71,47 +89,31 @@ describe("Testing whether two entties are equal", () => {
 });
 
 
-describe("Toggling an entity", () => {
-  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
-  let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
-
-  it("should be created with 2 todo elements", () => {
-    store.toggle(todoOrNotTodo);
-    expect(values(store.entries).length).toEqual(3);
-    expect(store.contains(todoOrNotTodo)).toBeTruthy();
-    store.toggle(todoOrNotTodo);
-    expect(values(store.entries).length).toEqual(2);
-    expect(store.contains(todoOrNotTodo)).toBeFalsy();
-  });
-});
-
-
-
 describe("Setting active state", () => {
-  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+  let store: EStore<Todo> = new EStore<Todo>();
 
-  it("should be created with 2 todo elements", () => {
-    expect(values(store.entries).length).toEqual(2);
-  });
   it("should have no active state", () => {
-    expect(store.active).toBeNull();
+    expect(store.active.size).toEqual(0);
   });
   it("should have active state", () => {
-    expect(store.active).toBeNull();
-    let todo1:Todo = new Todo(false, "The first Todo!");
-    let todo2:Todo = new Todo(false, "The first Todo!");
-    store.active = todo1;
-    expect(store.active).toEqual(todo1);
-    let a:Observable<Todo> = store.observeActive(); 
+    let todo1:Todo = new Todo(false, "The first Todo!", GUID());
+    let todo2:Todo = new Todo(false, "The first Todo!", GUID());
+    store.post(todo1);
+    store.post(todo2);
+    store.addActive(todo1);
+    expect(store.active.size).toEqual(1);
+    store.addActive(todo2);
+    let a:Observable<Map<string, Todo>> = store.observeActive(); 
     let s = a.subscribe(active=> {
-      expect(active).toEqual(todo1);
+      expect(active.get(todo1.gid)).toEqual(todo1);
+      expect(active.get(todo2.gid)).toEqual(todo2);
     });
     s.unsubscribe();
-    store.active = todo2;
-    a = store.observeActive(); 
-    a.subscribe(active=> {
-      expect(active).toEqual(todo2);
-    });
+    store.deleteActive(todo1);
+    expect(store.active.size).toEqual(1);
+    store.deleteActive(todo2);
+    expect(store.active.size).toEqual(0);
+    expect(values(store.entries).length).toEqual(2);
   });
 });
 
