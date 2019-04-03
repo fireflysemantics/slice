@@ -6,70 +6,100 @@ import { Observable } from "rxjs";
 
 const { values } = Object;
 
-describe("Creating a store", () => {
-  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
 
-  it("should be created with 2 todo elements", () => {
-    expect(values(store.entries).length).toEqual(2);
+it("should be created with 2 todo elements", () => {
+  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+  expect(values(store.entries).length).toEqual(2);
+});
+it("should toggle the loading indicator and make it observable", () => {
+  let store: EStore<Todo> = new EStore<Todo>();
+  store.loading = true;
+  expect(store.loading).toBeTruthy();
+  store.loading = false;
+  expect(store.loading).toBeFalsy();
+  store.loading = true;
+  let l:Observable<boolean> = store.observeLoading(); 
+  l.subscribe(loading=> {
+    expect(loading).toEqual(true);
   });
 });
 
-describe("Toggling an entity", () => {
+it("should have no active state", () => {
+  let store: EStore<Todo> = new EStore<Todo>();
+  expect(store.active.size).toEqual(0);
+});
+
+it("should add and delete active state", () => {
+  let store: EStore<Todo> = new EStore<Todo>();
+  let todo1:Todo = new Todo(false, "The first Todo!", GUID());
+  let todo2:Todo = new Todo(false, "The first Todo!", GUID());
+  store.post(todo1);
+  store.post(todo2);
+  store.addActive(todo1);
+  expect(store.active.size).toEqual(1);
+  store.addActive(todo2);
+  let a:Observable<Map<string, Todo>> = store.observeActive(); 
+  let s = a.subscribe(active=> {
+    expect(active.get(todo1.gid)).toEqual(todo1);
+    expect(active.get(todo2.gid)).toEqual(todo2);
+  });
+  s.unsubscribe();
+  store.deleteActive(todo1);
+  expect(store.active.size).toEqual(1);
+  store.deleteActive(todo2);
+  expect(store.active.size).toEqual(0);
+  expect(values(store.entries).length).toEqual(2);
+});
+
+it("should create a store with 2 todo elements", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
-
-  it("should be created with 2 todo elements", () => {
     store.toggle(todoOrNotTodo);
-    expect(values(store.entries).length).toEqual(3);
-    expect(store.contains(todoOrNotTodo)).toBeTruthy();
-    store.toggle(todoOrNotTodo);
-    expect(values(store.entries).length).toEqual(2);
-    expect(store.contains(todoOrNotTodo)).toBeFalsy();
-    store.toggle(todoOrNotTodo);
-    expect(values(store.entries).length).toEqual(3);
-    expect(store.contains(todoOrNotTodo)).toBeTruthy();
-  });
+  expect(values(store.entries).length).toEqual(3);
+  expect(store.contains(todoOrNotTodo)).toBeTruthy();
+  store.toggle(todoOrNotTodo);
+  expect(values(store.entries).length).toEqual(2);
+  expect(store.contains(todoOrNotTodo)).toBeFalsy();
+  store.toggle(todoOrNotTodo);
+  expect(values(store.entries).length).toEqual(3);
+  expect(store.contains(todoOrNotTodo)).toBeTruthy();
 });
 
-
-describe("Testing whether the store contains the entity", () => {
+it("should return correct results for contain operations", () => {
   let todos = todosFactory();
   let todo0 = todos[0];
   let todo1 = todos[1];
   let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
 
   let store: EStore<Todo> = new EStore<Todo>(todos);
-
-  it("should be created with 2 todo elements", () => {
-    expect(store.contains(todo0)).toBeTruthy();
-    expect(store.contains(todo1)).toBeTruthy();
-    expect(store.contains(todo0.gid)).toBeTruthy();
-    expect(store.contains(todo1.gid)).toBeTruthy();
-    expect(store.contains(todoOrNotTodo)).toBeFalsy();
-    expect(store.contains(todoOrNotTodo.gid)).toBeFalsy();    
-  });
-  let todoByID= new Todo(false, "This is not in the store", null, '1');
-  let todoByIDAlso= new Todo(false, "This is not in the store", null, '2');
-  store.post(todoByID);
-  it("should be created with 2 todo elements", () => {
-    expect(store.containsById(todoByID)).toBeTruthy();    
-    expect(store.containsById(todoByIDAlso)).toBeFalsy();    
-  });
+  expect(store.contains(todo0)).toBeTruthy();
+  expect(store.contains(todo1)).toBeTruthy();
+  expect(store.contains(todo0.gid)).toBeTruthy();
+  expect(store.contains(todo1.gid)).toBeTruthy();
+  expect(store.contains(todoOrNotTodo)).toBeFalsy();
+  expect(store.contains(todoOrNotTodo.gid)).toBeFalsy();    
 });
 
-describe("Finding an entity by its id property", () => {
+it("should return correct results when containById is evaluated", () => {
+  let todoByID= new Todo(false, "This is not in the store", null, '1');
+  let todoByIDAlso= new Todo(false, "This is not in the store", null, '2');
+  let store: EStore<Todo> = new EStore<Todo>();
+  store.post(todoByID);
+    expect(store.containsById(todoByID)).toBeTruthy();    
+  expect(store.containsById(todoByIDAlso)).toBeFalsy();    
+});
+
+
+it("should be able to find todoOrNotTodo by its id property using findOneById", () => {
   let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
   todoOrNotTodo.id = '1';
   let store: EStore<Todo> = new EStore<Todo>();
   store.post(todoOrNotTodo);
-
-  it("should be able to find todoOrNotTodo by id", () => {
-    expect(store.findOneByID('1').complete).toBeFalsy();
-    expect(store.findOneByID('1').id).toEqual('1');
-  });
+  expect(store.findOneByID('1').complete).toBeFalsy();
+  expect(store.findOneByID('1').id).toEqual('1');
 });
 
-describe("Testing whether two entties are equal", () => {
+it("should show that two entities are using both equalsByGUID and equalsByID", () => {
   const guid = GUID();
   let todoOrNotTodo1 = new Todo(false, "This is not in the store", guid, '1');
   let todoOrNotTodo2 = new Todo(false, "This is not in the store", guid, '1');
@@ -77,181 +107,113 @@ describe("Testing whether two entties are equal", () => {
   let store: EStore<Todo> = new EStore<Todo>();
   store.post(todoOrNotTodo1);
   store.post(todoOrNotTodo2);
-
-  it("should not assign a new gid", () => {
     expect(todoOrNotTodo1.gid).toEqual(guid);
-  });
-
-  it("should show that they are equal", () => {
-    expect(store.equalsByGUID(todoOrNotTodo1, todoOrNotTodo2)).toBeTruthy();
-    expect(store.equalsByID(todoOrNotTodo1, todoOrNotTodo2)).toBeTruthy();
-  });
+  expect(store.equalsByGUID(todoOrNotTodo1, todoOrNotTodo2)).toBeTruthy();
+  expect(store.equalsByID(todoOrNotTodo1, todoOrNotTodo2)).toBeTruthy();
 });
 
-
-describe("Setting active state", () => {
-  let store: EStore<Todo> = new EStore<Todo>();
-
-  it("should have no active state", () => {
-    expect(store.active.size).toEqual(0);
-  });
-  it("should have active state", () => {
-    let todo1:Todo = new Todo(false, "The first Todo!", GUID());
-    let todo2:Todo = new Todo(false, "The first Todo!", GUID());
-    store.post(todo1);
-    store.post(todo2);
-    store.addActive(todo1);
-    expect(store.active.size).toEqual(1);
-    store.addActive(todo2);
-    let a:Observable<Map<string, Todo>> = store.observeActive(); 
-    let s = a.subscribe(active=> {
-      expect(active.get(todo1.gid)).toEqual(todo1);
-      expect(active.get(todo2.gid)).toEqual(todo2);
-    });
-    s.unsubscribe();
-    store.deleteActive(todo1);
-    expect(store.active.size).toEqual(1);
-    store.deleteActive(todo2);
-    expect(store.active.size).toEqual(0);
-    expect(values(store.entries).length).toEqual(2);
-  });
-});
-
-describe("Setting loading state", () => {
-  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
-
-  it("should have loading set to false", () => {
-    expect(store.loading).toBeFalsy();
-  });
-  it("should have loading set to true", () => {
-    store.loading = true;
-    let l:Observable<boolean> = store.observeLoading(); 
-    l.subscribe(loading=> {
-      expect(loading).toEqual(true);
-    });
-  });
-});
-
-
-describe("Adding a slice to the store", () => {
+it("should add a slice to the storebe created with 1 complete todo element", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
-
-  it("should be created with 1 complete todo element", () => {
     expect(
-      values(store.getSlice(TodoSliceEnum.COMPLETE).entries).length
-    ).toEqual(1);
-  });
+    values(store.getSlice(TodoSliceEnum.COMPLETE).entries).length
+  ).toEqual(1);
 });
 
-describe("Removing a slice from the store", () => {
+it("should remove a slice from the store ", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
   store.removeSlice(TodoSliceEnum.COMPLETE);
-
-  it("should have deleted todosFactory()lices.COMPLETE", () => {
     expect(store.getSlice(TodoSliceEnum.COMPLETE)).toBeUndefined();
-  });
 });
 
-describe("Posting elements to the store", () => {
+it("should have 2 completed slice elements", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
 
   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
   store.post(new Todo(true, "You had me at hello!"));
 
   let todos$ = store.observe();
-
-  it("should have 3 entries in the store after post", () => {
     expect(values(store.entries).length).toEqual(3);
-  });
-  it("should have 2 completed slice elements", () => {
-    expect(
-      values(store.getSlice(TodoSliceEnum.COMPLETE).entries).length
-    ).toEqual(2);
-  });
+  expect(
+    values(store.getSlice(TodoSliceEnum.COMPLETE).entries).length
+  ).toEqual(2);
 });
 
-describe("Observing to the store", () => {
+it("should multicast the elements stored as observables", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
 
   let todos1$ = store.observe();
   let todos2$ = store.observe();
-
-  it("should multicast the elements stored", () => {
     todos1$.subscribe(todos => {
-      expect(todos.length).toEqual(2);
-    });
-    todos2$.subscribe(todos => {
-      expect(todos.length).toEqual(2);
-    });
+    expect(todos.length).toEqual(2);
   });
-
-  it("should sort observed", () => {
-    let sort1: (a: Todo, b: Todo) => number = (a, b) =>
-      a.title > b.title ? -1 : 1;
-    let sort2: (a: Todo, b: Todo) => number = (a, b) =>
-      a.title < b.title ? -1 : 1;
-    let todos3$ = store.observe(sort1);
-    todos3$.subscribe(todos => {
-      expect(todos[0].complete).toBeTruthy();
-    });
-    let todos4$ = store.observe(sort2);
-    todos4$.subscribe(todos => {
-      expect(todos[0].complete).toBeFalsy();
-    });
+  todos2$.subscribe(todos => {
+    expect(todos.length).toEqual(2);
   });
 });
 
-describe("Observing a store slice", () => {
+it("should sort observed", () => {
+  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+  let sort1: (a: Todo, b: Todo) => number = (a, b) =>
+    a.title > b.title ? -1 : 1;
+  let sort2: (a: Todo, b: Todo) => number = (a, b) =>
+    a.title < b.title ? -1 : 1;
+  let todos3$ = store.observe(sort1);
+  todos3$.subscribe(todos => {
+    expect(todos[0].complete).toBeTruthy();
+  });
+  let todos4$ = store.observe(sort2);
+  todos4$.subscribe(todos => {
+    expect(todos[0].complete).toBeFalsy();
+  });
+});
+
+it("should multicast the slices", () => {
   let todos = todosFactory();
   let store: EStore<Todo> = new EStore<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
 
-  let todos1$ = store.getSlice(TodoSliceEnum.COMPLETE).observe();
-  let todos2$ = store.getSlice(TodoSliceEnum.COMPLETE).observe();
-
-  it("should multicast the elements stored", () => {
-    todos1$.subscribe(todos => {
-      expect(todos.length).toEqual(1);
-    });
-    todos2$.subscribe(todos => {
-      expect(todos.length).toEqual(1);
-    });
+  let todos1Slice$ = store.getSlice(TodoSliceEnum.COMPLETE).observe();
+  let todos2Slice$ = store.getSlice(TodoSliceEnum.COMPLETE).observe();
+  todos1Slice$.subscribe(todos => {
+  expect(todos.length).toEqual(1);
+  });
+  todos2Slice$.subscribe(todos => {
+    expect(todos.length).toEqual(1);
   });
 });
 
-describe("Put operations on the store cascade to slice", () => {
-  it("should remove all elements from the slice", () => {
-    let todos = todosFactory();
-    let store: EStore<Todo> = new EStore<Todo>(todos);
-    store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
-    todos.forEach(e => (e.complete = false));
-    store.putA(todos);
-    store
-      .getSlice(TodoSliceEnum.COMPLETE)
-      .observe()
-      .subscribe(todos => {
-        expect(todos.length).toEqual(0);
-      });
-  });
-  it("should put all store elements in the slice", () => {
-    let todos = todosFactory();
-    let store: EStore<Todo> = new EStore<Todo>(todos);
-    store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
-    todos.forEach(e => (e.complete = true));
-    store.putA(todos);
-    store
-      .getSlice(TodoSliceEnum.COMPLETE)
-      .observe()
-      .subscribe(todos => {
-        expect(todos.length).toEqual(2);
-      });
-  });
+it("should cascade put opertions to the slice", () => {
+  let todos = todosFactory();
+  let store: EStore<Todo> = new EStore<Todo>(todos);
+  store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
+  todos.forEach(e => (e.complete = false));
+  store.putA(todos);
+  store
+    .getSlice(TodoSliceEnum.COMPLETE)
+    .observe()
+    .subscribe(todos => {
+      expect(todos.length).toEqual(0);
+    });
 });
 
-describe("Patching store elements", () => {
+it("should put all store elements in the slice", () => {
+  let todos = todosFactory();
+  let store: EStore<Todo> = new EStore<Todo>(todos);
+  store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
+  todos.forEach(e => (e.complete = true));
+  store.putA(todos);
+  store
+    .getSlice(TodoSliceEnum.COMPLETE)
+    .observe()
+    .subscribe(todos => {
+      expect(todos.length).toEqual(2);
+    });
+});
+
+it("should return an update instance post patching", () => {
   let todos = todosFactory();
   let store: EStore<Todo> = new EStore<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
@@ -259,96 +221,78 @@ describe("Patching store elements", () => {
   let todo = todos[1];
   todo.title = "I just called to say I love you!";
   store.put(todo);
-
-  it("should return an update instance post patching", () => {
     expect(store.findOne(todo["gid"]).title).toContain("I love you!");
-    expect(store.contains(todo.gid)).toBeTruthy();
-    expect(values(store.selectAll()).length).toEqual(2);
-  });
-
+  expect(store.contains(todo.gid)).toBeTruthy();
+  expect(values(store.selectAll()).length).toEqual(2);
   let slice: Slice<Todo> = store.getSlice(TodoSliceEnum.COMPLETE);
-
-  it("should also patch the slice", () => {
-    expect(slice.findOne(todo.gid).title).toContain("I love you!");
-  });
+  expect(slice.findOne(todo.gid).title).toContain("I love you!");
 });
 
-describe("Deleteting store elements", () => {
-  let todos = todosFactory();
-  let store: EStore<Todo> = new EStore<Todo>(todos);
-  store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
+ it("should delete the element", () => {
+   let todos = todosFactory();
+   let store: EStore<Todo> = new EStore<Todo>(todos);
+   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
+ 
+   let todo = todos[1];
+   store.delete(todo);
+     expect(store.contains(todo.gid)).toBeFalsy();
+   expect(values(store.selectAll()).length).toEqual(1);
+   let slice: Slice<Todo> = store.getSlice(TodoSliceEnum.COMPLETE);
+   expect(slice.findOne(todo.gid)).toBeUndefined();
+   expect(slice.contains(todo.gid)).toBeFalsy();
+ });
 
-  let todo = todos[1];
-  store.delete(todo);
+ it("should be an empty store", () => {
+   let store: EStore<Todo> = new EStore<Todo>();
+   store.isEmpty().subscribe(empty => {
+     expect(empty).toBeTruthy();
+   });
+   store.count().subscribe(c => {
+     expect(c).toEqual(0);
+   });
+   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
+   store
+     .getSlice(TodoSliceEnum.COMPLETE)
+     .isEmpty()
+     .subscribe(empty => {
+       expect(empty).toBeTruthy();
+     });
+   store
+     .getSlice(TodoSliceEnum.COMPLETE)
+     .count()
+     .subscribe(c => {
+       expect(c).toEqual(0);
+     });
+ });
 
-  it("should delete the element", () => {
-    expect(store.contains(todo.gid)).toBeFalsy();
-    expect(values(store.selectAll()).length).toEqual(1);
-  });
-
-  let slice: Slice<Todo> = store.getSlice(TodoSliceEnum.COMPLETE);
-
-  it("should also delete it from the the slice", () => {
-    expect(slice.findOne(todo.gid)).toBeUndefined();
-    expect(slice.contains(todo.gid)).toBeFalsy();
-  });
-});
-
-describe("Reading empty store metadata", () => {
-  let store: EStore<Todo> = new EStore<Todo>();
-  it("should be an empty store", () => {
-    store.isEmpty().subscribe(empty => {
-      expect(empty).toBeTruthy();
-    });
-    store.count().subscribe(c => {
-      expect(c).toEqual(0);
-    });
-  });
-  store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
-  it("should be an empty slice", () => {
-    store
-      .getSlice(TodoSliceEnum.COMPLETE)
-      .isEmpty()
-      .subscribe(empty => {
-        expect(empty).toBeTruthy();
-      });
-    store
-      .getSlice(TodoSliceEnum.COMPLETE)
-      .count()
-      .subscribe(c => {
-        expect(c).toEqual(0);
-      });
-  });
-});
-
-describe("Reading non empty store metadata", () => {
+ it("should not be an empty store", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
-  it("should not be an empty store", () => {
-    store.isEmpty().subscribe(empty => {
-      expect(empty).toBeFalsy();
-    });
-    store.count().subscribe(c => {
-      expect(c).toEqual(2);
-    });
-    store.count(todo => todo.complete).subscribe(c => {
-      expect(c).toEqual(1);
-    });
+  store.isEmpty().subscribe(empty => {
+    expect(empty).toBeFalsy();
   });
-
-  it("should not be an empty slice", () => {
-    store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
-    let s: Slice<Todo> = store.getSlice(TodoSliceEnum.COMPLETE);
-    s.isEmpty().subscribe(empty => {
-      expect(empty).toBeFalsy();
-    });
-    s.count().subscribe(c => {
-      expect(c).toEqual(1);
-    });
+  store.count().subscribe(c => {
+    expect(c).toEqual(2);
   });
+  store.count(todo => todo.complete).subscribe(c => {
+    expect(c).toEqual(1);
+  });
+});
 
-  it("should return an observable count", () => {
-    store.count().subscribe(c => {
-      expect(c).toEqual(2);
-    });
+it("should not be an empty slice", () => {
+  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+  store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
+  let s: Slice<Todo> = store.getSlice(TodoSliceEnum.COMPLETE);
+  s.isEmpty().subscribe(empty => {
+    expect(empty).toBeFalsy();
+  });
+  s.count().subscribe(c => {
+    expect(c).toEqual(1);
+  });
+});
+
+it("should return an observable count", () => {
+  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+  store.count().subscribe(c => {
+    expect(c).toEqual(2);
   });
 });
