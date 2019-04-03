@@ -155,7 +155,7 @@ let todos$ = source.observe((a, b)=>(a.title > b.title ? -1 : 1));
      let contains:boolean = source.contains(guid);
      </pre>
    */
-  contains(target: E | string) {
+  contains(target: E | string):boolean {
     if (typeof target === "string") {
       return this.entries[target] ? true : false;
     }
@@ -174,7 +174,7 @@ let todos$ = source.observe((a, b)=>(a.title > b.title ? -1 : 1));
      let contains:boolean = source.contains(guid);
      </pre>
    */
-  containsById(target: E | string) {
+  containsById(target: E | string):boolean {
     if (typeof target === "string") {
       return this.idEntries[target] ? true : false;
     }

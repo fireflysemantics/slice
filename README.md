@@ -2,7 +2,7 @@
 
 # @fireflysemantics/slice
 
-Lightweight Web Application State Management Built with RxJS and Typescript.  This API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.
+Lightweight Web Application State Management Built with RxJS and Typescript.  This API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.  The core API is tiny and the intention is to delegate DML (Data Manipulation Language) to pure javascript and RxJS.  If more advanced filtering capabilities are needed the entities can be saved to Indexeddb via Dexie.  We will be producing tutorials on how to do this soon.
 
 ## Features
 
