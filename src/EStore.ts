@@ -242,8 +242,8 @@ store.post(todo);
 ```
    */
   post(e: E) {
-    const guid:string = (<any>e)[this.config.guidKey]  ? (<any>e)[this.config.guidKey] : GUID();
-    (<any>e)[this.config.guidKey] = guid;
+    const guid:string = (<any>e)[this.GUID_KEY]  ? (<any>e)[this.GUID_KEY] : GUID();
+    (<any>e)[this.GUID_KEY] = guid;
     this.entries[guid] = e;
     this.updateIDEntry(e);
     values(this.slices).forEach(s => {
@@ -265,8 +265,8 @@ store.post(todo1, todo2);
    */
   postN(...e: E[]) {
     e.forEach(e => {
-      const guid:string = (<any>e)[this.config.guidKey]  ? (<any>e)[this.config.guidKey] : GUID();
-      (<any>e)[this.config.guidKey] = guid;
+      const guid:string = (<any>e)[this.GUID_KEY]  ? (<any>e)[this.GUID_KEY] : GUID();
+      (<any>e)[this.GUID_KEY] = guid;
       this.entries[guid] = e;
       this.updateIDEntry(e);
     });
@@ -300,7 +300,7 @@ store.put(todo1);
 ```
    */
   put(e: E) {
-    let id: string = (<any>e)[this.config.guidKey];
+    let id: string = (<any>e)[this.GUID_KEY];
     this.entries[id] = e;
     this.updateIDEntry(e);
     let v: E[] = [...values(this.entries)];
@@ -335,7 +335,7 @@ store.put([todo1, todo2]);
    */
   putA(e: E[]) {
     e.forEach(e => {
-      let guid: string = (<any>e)[this.config.guidKey];
+      let guid: string = (<any>e)[this.GUID_KEY];
       this.entries[guid] = e;
       this.updateIDEntry(e);
     });
@@ -358,7 +358,7 @@ store.delete(todo1]);
 ```
    */
   delete(e: E) {
-    const guid = (<any>e)[this.config.guidKey];
+    const guid = (<any>e)[this.GUID_KEY];
     delete this.entries[guid];
     this.deleteIDEntry(e);
     values(this.slices).forEach(s => {
@@ -395,7 +395,7 @@ store.delete(todo1, todo2);
    */
   deleteA(e: E[]) {
     e.forEach(e => {
-      const guid = (<any>e)[this.config.guidKey];
+      const guid = (<any>e)[this.GUID_KEY];
       delete this.entries[guid];
       this.deleteIDEntry(e);
       values(this.slices).forEach(s => {
@@ -424,7 +424,7 @@ store.delete(todo1, todo2);
     values(this.entries).forEach(e => {
       if (p(e)) {
         d.push(e);
-        const id = (<any>e)[this.config.guidKey];
+        const id = (<any>e)[this.GUID_KEY];
         delete this.entries[id];
         this.deleteIDEntry(e);
       }
@@ -445,8 +445,8 @@ store.delete(todo1, todo2);
    * @param e The element to be added to the `idEntries`.
    */
   private updateIDEntry(e: E) {
-    if ((<any>e)[this.config.idKey]) {
-      this.idEntries[(<any>e)[this.config.idKey]] = e;
+    if ((<any>e)[this.ID_KEY]) {
+      this.idEntries[(<any>e)[this.ID_KEY]] = e;
     }
   }
 
@@ -457,8 +457,8 @@ store.delete(todo1, todo2);
    * @param e The element to be added to the `idEntries`.
    */
   private deleteIDEntry(e: E) {
-    if ((<any>e)[this.config.idKey]) {
-      delete this.idEntries[(<any>e)[this.config.idKey]];
+    if ((<any>e)[this.ID_KEY]) {
+      delete this.idEntries[(<any>e)[this.ID_KEY]];
     }
   }
 
@@ -496,7 +496,7 @@ if (equalsByGUID(todo1, todo2)){...};
 ```
    */
   equalsByGUID(e1:any, e2:any) {
-    return e1[this.config.guidKey] == e2[this.config.guidKey];
+    return e1[this.GUID_KEY] == e2[this.GUID_KEY];
   }
 
   /**
@@ -510,6 +510,6 @@ if (equalsByID(todo1, todo2)){...};
 ```
    */
   equalsByID(e1:any, e2:any) {
-    return e1[this.config.idKey] == e2[this.config.idKey];
+    return e1[this.ID_KEY] == e2[this.ID_KEY];
   }
 }

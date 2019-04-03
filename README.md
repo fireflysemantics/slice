@@ -2,15 +2,22 @@
 
 # @fireflysemantics/slice
 
-Lightweight Angular state management
+Lightweight Web Application State Management Built with RxJS and Typescript.  This API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.
 
 ## Features
 
-- RESTful API for performing CRUD operations
+- Live Stackblitz demoes
+- Stream both Entity and Object Stores for UI Updates via RxJS
+- [Supports for Optimistic User Interfaces](https://medium.com/@ole.ersoy/optimistic-user-identity-management-with-slice-a2b66efe780c)
+- RESTful API for performing CRUD operations that stream both full and delta updates
 - Dynamic creation of both object and entity stores
 - Observable delta updates for Entities
-- Real time application of Slice `Predicate<E>` filtering
-- Predicate<E> Support for `EStore` (Entity Store) slice definitions
+- Real time application of Slice `Predicate<E>` filtering that is `Observable`
+- `Predicate` based snapshots of entities
+- Observable `count` of entities in the entity store.  The `count` feature can also be `Predicate` filtered.
+- Configurable global id (Client side id - `gid`) and server id (`id`) id property names for entities. 
+- The stream of entities can be sorted via an optional boolean expression passed to `observe`.
+- Typedoc
 
 ## Introduction
 

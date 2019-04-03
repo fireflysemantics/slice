@@ -1,4 +1,4 @@
-import { Predicate, Delta, IEntityIndex, ActionTypes } from "./types";
+import { Predicate, Delta, IEntityIndex } from "./types";
 import { ReplaySubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { StoreConfig } from "./StoreConfig";
@@ -90,11 +90,11 @@ export abstract class AbstractStore<E> {
    * Observe store state changes.
    * @param sort Optional sorting function yielding a sorted observable.
    * @example
-     <pre>
-    let todos$ = source.observe();
-    or with a sort function
-    let todos$ = source.observe((a, b)=>(a.title > b.title ? -1 : 1));
-    </pre>
+```
+let todos$ = source.observe();
+or with a sort function
+let todos$ = source.observe((a, b)=>(a.title > b.title ? -1 : 1));
+```
   */
   public observe(sort?: (a: any, b: any) => number): Observable<E[]> {
     if (sort) {
@@ -210,11 +210,10 @@ export abstract class AbstractStore<E> {
    * @param p The predicate used to query for the selection.
    * @return A snapshot array containing the entities that match the predicate.
    * 
-   * @example 
-   * @example 
-     <pre>
-     let todos:Todo[]=store.select(todo=>todo.title.length>100);
-     </pre>
+   * @example Select all the `Todo` instance where the `title` length is greater than 100. 
+```
+let todos:Todo[]=store.select(todo=>todo.title.length>100);
+```
    */
   select(p: Predicate<E>): E[] {
     const selected: E[] = [];
@@ -231,10 +230,10 @@ export abstract class AbstractStore<E> {
    * 
    * @return Snapshot array of all the elements the entities the store contains.
    * 
-   * @example
-     <pre>
-     let selectedTodos:Todo[] = source.selectAll();
-     </pre>
+   * @example Observe a snapshot of all the entities in the store.
+```
+let selectedTodos:Todo[] = source.selectAll();
+```
    */
   selectAll(): E[] {
     return values(this.entries);
