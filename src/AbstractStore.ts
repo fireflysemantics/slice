@@ -238,4 +238,32 @@ let selectedTodos:Todo[] = source.selectAll();
   selectAll(): E[] {
     return values(this.entries);
   }
+
+  /** 
+   * Compare entities by GUID 
+   * @param e1 The first entity
+   * @param e2 The second entity
+   * @return true if the two entities have equal GUID ids
+   * @example Compare `todo1` with `todo2` by `gid`.
+```
+if (equalsByGUID(todo1, todo2)){...};
+```
+   */
+  equalsByGUID(e1:any, e2:any) {
+    return e1[this.GUID_KEY] == e2[this.GUID_KEY];
+  }
+
+  /**
+   * Compare entities by ID 
+   * @param e1 The first entity
+   * @param e2 The second entity
+   * @return true if the two entities have equal ID ids
+   * @example Compare `todo1` with `todo2` by `id`.
+```
+if (equalsByID(todo1, todo2)){...};
+```
+   */
+  equalsByID(e1:any, e2:any) {
+    return e1[this.ID_KEY] == e2[this.ID_KEY];
+  }
 }
