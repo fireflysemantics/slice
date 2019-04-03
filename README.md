@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/fireflysemantics/slice.svg?branch=master)](https://travis-ci.org/fireflysemantics/slice)
 
-![Slice](slice.jpeg)
+![Slice](slice.jpg)
 
 # @fireflysemantics/slice
 
