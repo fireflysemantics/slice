@@ -4,7 +4,7 @@
   "description": "Lightweight Angular state management",
   "main": "index.ts",
   "scripts": {
-    "update": "ncu -a && npm i",
+    "update": "ncu -u && npm i",
     "clean": "del-cli target && del-cli dist && del-cli doc",
     "test": "jest",
     "doc": "typedoc --out doc --exclude **/*.spec.ts ./src/",
@@ -36,13 +36,13 @@
   "homepage": "https://github.com/fireflysemantics/slice#readme",
   "devDependencies": {
     "@types/jest": "^24.0.11",
-    "@types/node": "^11.12.2",
-    "cpy": "^7.1.0",
+    "@types/node": "^11.13.0",
+    "cpy": "^7.2.0",
     "del-cli": "^1.1.0",
-    "globby": "^9.1.0",
-    "jest": "^24.5.0",
+    "globby": "^9.2.0",
+    "jest": "^24.7.1",
     "mkdirp": "^0.5.1",
-    "npm-check-updates": "^3.1.3",
+    "npm-check-updates": "^3.1.4",
     "recursive-copy": "^2.0.10",
     "source-map-support": "^0.5.11",
     "ts-jest": "^24.0.1",
@@ -61,6 +61,6 @@
   },
   "requiredAngularVersion": ">=6.0.0 <7.0.0",
   "peerDependencies": {
-    "rxjs": "^6.0.0"
+    "rxjs": "^6.4.0"
   }
 }

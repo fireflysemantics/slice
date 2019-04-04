@@ -104,7 +104,9 @@ estore.toggle(todo);
   public active: Map<string,E> = new Map();
 
   /**
-   * Add multiple entity entities.
+   * Add multiple entity entities.  The entity is only added
+   * if it is contained in the store.  If it is not contained
+   * in the store the operation fails silently.
    * @example Add a `todo1` and `todo2` as active
 ```
 addActive(todo1);
@@ -112,8 +114,10 @@ addActive(todo2);
 ```
    */
   addActive(e: E) {
-    this.active.set((<any>e).gid, e);
-    this.notifyActive.next(this.active);
+    if (this.contains(e)) {
+      this.active.set((<any>e).gid, e);
+      this.notifyActive.next(this.active);
+    }
   }
 
   /**
@@ -358,6 +362,7 @@ store.delete(todo1]);
 ```
    */
   delete(e: E) {
+    this.deleteActive(e);
     const guid = (<any>e)[this.GUID_KEY];
     delete this.entries[guid];
     this.deleteIDEntry(e);
@@ -395,6 +400,7 @@ store.delete(todo1, todo2);
    */
   deleteA(e: E[]) {
     e.forEach(e => {
+      this.deleteActive(e);
       const guid = (<any>e)[this.GUID_KEY];
       delete this.entries[guid];
       this.deleteIDEntry(e);
@@ -426,6 +432,7 @@ store.delete(todo1, todo2);
         d.push(e);
         const id = (<any>e)[this.GUID_KEY];
         delete this.entries[id];
+        this.deleteActive(e);
         this.deleteIDEntry(e);
       }
     });

@@ -117,7 +117,7 @@ let todos$ = source.observe((a, b)=>(a.title > b.title ? -1 : 1));
   /**
    * Check whether the store is empty.
    * 
-   * @return A hot {@link Observable<boolean>} that indicates whether the store is empty.
+   * @return A hot {@link Observable} that indicates whether the store is empty.
    * 
    * @example
      <pre>
@@ -128,6 +128,20 @@ let todos$ = source.observe((a, b)=>(a.title > b.title ? -1 : 1));
     return this.notifyEmptyState.pipe(
       map((entries: E[]) => entries.length == 0)
     );
+  }
+
+  /**
+   * Check whether the store is empty.
+   * 
+   * @return A snapshot that indicates whether the store is empty.
+   * 
+   * @example
+     <pre>
+    source.isEmpty();
+    </pre>
+  */
+  isEmptySnapshot(): boolean {
+    return values(this.entries).length == 0;
   }
 
   /**
@@ -142,6 +156,18 @@ let todos$ = source.observe((a, b)=>(a.title > b.title ? -1 : 1));
     }
     return this.notifyEntryCount.pipe(map((entries: E[]) => entries.length));
   }
+
+  /**
+   * Returns a snapshto of the number of entries contained in the store.
+   * @param p The predicate to apply in order to filter the count
+   */
+  countSnapshot(p?: Predicate<E>): number {
+    if (p) {
+      return values(this.entries).filter(p).length;
+    }
+    return values(this.entries).length;
+  }
+
 
   /**
    * Returns true if the entries contain the identified instance.
