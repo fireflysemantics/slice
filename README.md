@@ -9,7 +9,7 @@ Lightweight Web Application State Management Built with RxJS and Typescript.  Th
 ## Features
 
 - Live Stackblitz demoes
-- [Typedoc](https://fireflysemantics.github.io/slice/doc/)
+- [Typedoc with inlined examples](https://fireflysemantics.github.io/slice/doc/)
 - [Well documented test cases run with Jest - Each file has a corresponding `.spec` file](https://github.com/fireflysemantics/slice/tree/master/src)
 - Stream both Entity and Object Stores for UI Updates via RxJS
 - [Supports for Optimistic User Interfaces](https://medium.com/@ole.ersoy/optimistic-user-identity-management-with-slice-a2b66efe780c)
