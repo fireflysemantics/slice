@@ -272,14 +272,88 @@ it("should return the right slice", () => {
   ).toEqual(2);
 });
 
+/**
+ * METHODS: isEmpty()
+ * DESIGN CONSIDERATIONS
+ * `isEmpty` and `count` should both 
+ * work on slices as well.  
+ */
+it("should reflect the stores empty state", () => {
+  let store: EStore<Todo> = new EStore<Todo>();
+  store.isEmpty().subscribe(empty => {
+    expect(empty).toBeTruthy();
+  });
+  store.count().subscribe(c => {
+    expect(c).toEqual(0);
+  });
+  store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
+  store
+    .getSlice(TodoSliceEnum.COMPLETE)
+    .isEmpty()
+    .subscribe(empty => {
+      expect(empty).toBeTruthy();
+    });
+  store
+    .getSlice(TodoSliceEnum.COMPLETE)
+    .count()
+    .subscribe(c => {
+      expect(c).toEqual(0);
+    });
+    store.isEmpty().subscribe(empty => {
+      expect(empty).toBeFalsy();
+    });
+    store.count().subscribe(c => {
+      expect(c).toEqual(2);
+    });
+    store.count(todo => todo.complete).subscribe(c => {
+      expect(c).toEqual(1);
+    });
+    
+    
+    store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
+    let s: Slice<Todo> = store.getSlice(TodoSliceEnum.COMPLETE);
+    s.isEmpty().subscribe(empty => {
+      expect(empty).toBeFalsy();
+    });
+});
+
+/**
+* METHODS: isEmptySnapshot()
+*/
+it("should be an empty store", () => {
+ let store: EStore<Todo> = new EStore<Todo>();
+ expect(store.isEmptySnapshot()).toBeTruthy();
+ let s = store.count().subscribe(c => {
+   expect(c).toEqual(0);
+ });
+ s.unsubscribe();
+ store.postA(todosFactory());
+ expect(store.isEmptySnapshot()).toBeFalsy();
+
+ store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
+ let slice = store.getSlice(TodoSliceEnum.COMPLETE);
+ expect(slice.isEmptySnapshot()).toBeFalsy();
+ store
+   .getSlice(TodoSliceEnum.COMPLETE)
+   .count()
+   .subscribe(c => {
+     expect(c).toEqual(1);
+   });
+});
 
 /**
  * CONCERN: Utility API
- * METHODS: `isEmpty`
- * DESIGN CONSIDERATIONS:
- * Removing a Slice does not remove entities from the cenral store.
+ * METHODS: `observe`
+ * DESIGN CONSIDERATIONS: 
+ * The `observe` function takes an optional 
+ * sort parameter.  The use case is demoed here. 
+ * 
+ * The same multicast capabilitiy is available on slices.
+ * 
+ * We are also demoing that put operations on items 
+ * in the store cascade to the slice.
  */
-it("should multicast the elements stored as observables", () => {
+it("should multicast and sort the todo entities", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
 
@@ -291,10 +365,8 @@ it("should multicast the elements stored as observables", () => {
   todos2$.subscribe(todos => {
     expect(todos.length).toEqual(2);
   });
-});
 
-it("should sort observed", () => {
-  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+  // Should sort the observed values
   let sort1: (a: Todo, b: Todo) => number = (a, b) =>
     a.title > b.title ? -1 : 1;
   let sort2: (a: Todo, b: Todo) => number = (a, b) =>
@@ -307,13 +379,9 @@ it("should sort observed", () => {
   todos4$.subscribe(todos => {
     expect(todos[0].complete).toBeFalsy();
   });
-});
 
-it("should multicast the slices", () => {
-  let todos = todosFactory();
-  let store: EStore<Todo> = new EStore<Todo>(todos);
+  //Multicast the slice
   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
-
   let todos1Slice$ = store.getSlice(TodoSliceEnum.COMPLETE).observe();
   let todos2Slice$ = store.getSlice(TodoSliceEnum.COMPLETE).observe();
   todos1Slice$.subscribe(todos => {
@@ -322,11 +390,13 @@ it("should multicast the slices", () => {
   todos2Slice$.subscribe(todos => {
     expect(todos.length).toEqual(1);
   });
-});
 
-it("should cascade put opertions to the slice", () => {
+  //Put operations cascade to the slice
+  //In this case the slice will be empty
+  //since we are setting complete to false
   let todos = todosFactory();
-  let store: EStore<Todo> = new EStore<Todo>(todos);
+  store.reset();
+  store.postA(todos);
   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
   todos.forEach(e => (e.complete = false));
   store.putA(todos);
@@ -336,12 +406,10 @@ it("should cascade put opertions to the slice", () => {
     .subscribe(todos => {
       expect(todos.length).toEqual(0);
     });
-});
-
-it("should put all store elements in the slice", () => {
-  let todos = todosFactory();
-  let store: EStore<Todo> = new EStore<Todo>(todos);
-  store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
+  //Put operations cascade to the slice
+  //In this case the slice will contain
+  //all store entities since we are setting
+  //complete to true
   todos.forEach(e => (e.complete = true));
   store.putA(todos);
   store
@@ -352,93 +420,26 @@ it("should put all store elements in the slice", () => {
     });
 });
 
-it("should return an update instance post patching", () => {
+/** 
+ * METHODS: `put`, `putN`, and `putA`
+ * DESIGN CONSIDERATIONS:
+ * After a put both slices, active state, and 
+ * the store itself should be updated.
+ */
+it("should reflect correct state after put operations", () => {
   let todos = todosFactory();
   let store: EStore<Todo> = new EStore<Todo>(todos);
   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
 
   let todo = todos[1];
+  store.addActive(todo);
   todo.title = "I just called to say I love you!";
+  let gid = todo.gid;
   store.put(todo);
-    expect(store.findOne(todo["gid"]).title).toContain("I love you!");
+  expect(store.findOne(todo["gid"]).title).toContain("I love you!");
   expect(store.contains(todo.gid)).toBeTruthy();
   expect(values(store.selectAll()).length).toEqual(2);
   let slice: Slice<Todo> = store.getSlice(TodoSliceEnum.COMPLETE);
   expect(slice.findOne(todo.gid).title).toContain("I love you!");
-});
-
-/**
- * METHODS: isEmpty()
- */
- it("should be an empty store", () => {
-   let store: EStore<Todo> = new EStore<Todo>();
-   store.isEmpty().subscribe(empty => {
-     expect(empty).toBeTruthy();
-   });
-   store.count().subscribe(c => {
-     expect(c).toEqual(0);
-   });
-   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
-   store
-     .getSlice(TodoSliceEnum.COMPLETE)
-     .isEmpty()
-     .subscribe(empty => {
-       expect(empty).toBeTruthy();
-     });
-   store
-     .getSlice(TodoSliceEnum.COMPLETE)
-     .count()
-     .subscribe(c => {
-       expect(c).toEqual(0);
-     });
- });
-
-/**
- * METHODS: isEmptySnapshot()
- */
-it("should be an empty store", () => {
-  let store: EStore<Todo> = new EStore<Todo>();
-  expect(store.isEmptySnapshot()).toBeTruthy();
-  let s = store.count().subscribe(c => {
-    expect(c).toEqual(0);
-  });
-  s.unsubscribe();
-  store.postA(todosFactory());
-  expect(store.isEmptySnapshot()).toBeFalsy();
-
-  store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
-  let slice = store.getSlice(TodoSliceEnum.COMPLETE);
-  expect(slice.isEmptySnapshot()).toBeFalsy();
-  store
-    .getSlice(TodoSliceEnum.COMPLETE)
-    .count()
-    .subscribe(c => {
-      expect(c).toEqual(1);
-    });
-});
-
-
- it("should not be an empty store", () => {
-  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
-  store.isEmpty().subscribe(empty => {
-    expect(empty).toBeFalsy();
-  });
-  store.count().subscribe(c => {
-    expect(c).toEqual(2);
-  });
-  store.count(todo => todo.complete).subscribe(c => {
-    expect(c).toEqual(1);
-  });
-});
-
-it("should not be an empty slice", () => {
-  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
-  store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
-  let s: Slice<Todo> = store.getSlice(TodoSliceEnum.COMPLETE);
-  s.isEmpty().subscribe(empty => {
-    expect(empty).toBeFalsy();
-  });
-  s.count().subscribe(c => {
-    expect(c).toEqual(1);
-  });
+  expect(store.active.get(gid).title).toContain("I love you!");
 });
