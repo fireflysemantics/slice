@@ -9,6 +9,8 @@ Lightweight Web Application State Management Built with RxJS and Typescript.  Th
 ## Features
 
 - Live Stackblitz demoes
+- [Typedoc](https://fireflysemantics.github.io/slice/doc/)
+- [Well documented test cases run with Jest - Each file has a corresponding `.spec` file](https://github.com/fireflysemantics/slice/tree/master/src)
 - Stream both Entity and Object Stores for UI Updates via RxJS
 - [Supports for Optimistic User Interfaces](https://medium.com/@ole.ersoy/optimistic-user-identity-management-with-slice-a2b66efe780c)
 - RESTful API for performing CRUD operations that stream both full and delta updates
@@ -19,7 +21,6 @@ Lightweight Web Application State Management Built with RxJS and Typescript.  Th
 - Observable `count` of entities in the entity store.  The `count` feature can also be `Predicate` filtered.
 - Configurable global id (Client side id - `gid`) and server id (`id`) id property names for entities. 
 - The stream of entities can be sorted via an optional boolean expression passed to `observe`.
-- Typedoc
 
 ## Introduction
 
