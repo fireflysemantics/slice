@@ -119,7 +119,7 @@ addActive(todo1);
 addActive(todo2);
 ```
    */
-  addActive(e: E) {
+  public addActive(e: E) {
     if (this.contains(e)) {
       this.active.set((<any>e).gid, e);
       this.notifyActive.next(new Map(this.active));
@@ -140,7 +140,7 @@ deleteActive(todo1);
 deleteActive(todo2);
   ```
    */
-  deleteActive(e: E) {
+  public deleteActive(e: E) {
     this.active.delete((<any>e).gid);
     this.notifyActive.next(new Map(this.active));
   }
