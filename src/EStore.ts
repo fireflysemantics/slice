@@ -107,6 +107,12 @@ estore.toggle(todo);
    * Add multiple entity entities.  The entity is only added
    * if it is contained in the store.  If it is not contained
    * in the store the operation fails silently.
+   * 
+   * Also we clone the map prior to broadcasting it with
+   * `notifyActive` to make sure we will trigger Angular 
+   * change detection in the event that it maintains 
+   * a reference to the `active` state `Map` instance.
+   * 
    * @example Add a `todo1` and `todo2` as active
 ```
 addActive(todo1);
@@ -116,12 +122,18 @@ addActive(todo2);
   addActive(e: E) {
     if (this.contains(e)) {
       this.active.set((<any>e).gid, e);
-      this.notifyActive.next(this.active);
+      this.notifyActive.next(new Map(this.active));
     }
   }
 
   /**
    * Delete an entity as active.
+   * 
+   * Also we clone the map prior to broadcasting it with
+   * `notifyActive` to make sure we will trigger Angular 
+   * change detection in the event that it maintains 
+   * a reference to the `active` state `Map` instance.
+   * 
    * @example Mark a `todo` instance as active
   ```
 deleteActive(todo1);
@@ -130,7 +142,7 @@ deleteActive(todo2);
    */
   deleteActive(e: E) {
     this.active.delete((<any>e).gid);
-    this.notifyActive.next(this.active);
+    this.notifyActive.next(new Map(this.active));
   }
 
 
