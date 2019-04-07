@@ -200,3 +200,12 @@ See the [test cases](https://github.com/fireflysemantics/slice/).
 ## API Documentation
 
 See [Typedoc API Documentation](https://fireflysemantics.github.io/slice/doc/)
+
+## Articles
+
+- [Monitoring the Currently Active Entity with Slice](https://medium.com/@ole.ersoy/monitoring-the-currently-active-entity-with-slice-ff7c9b7826e8)
+- [Optimistic Todo Identity Management with Slice](https://medium.com/@ole.ersoy/optimistic-user-identity-management-with-slice-a2b66efe780c)
+- [Reactive Log In State with Slice](Reactive Log In State with Slice)
+- [Observe Centralized Loading State with Slice](https://medium.com/@ole.ersoy/observe-centralized-loading-state-with-slice-3d7dda35d908)
+- [](https://medium.com/@ole.ersoy/storing-reactive-layout-state-in-slice-dbc7fb09850c)
+- [Reactive Layout State with Slice](https://medium.com/@ole.ersoy/storing-reactive-layout-state-in-slice-dbc7fb09850c)

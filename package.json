@@ -1,6 +1,6 @@
 {
   "name": "@fireflysemantics/slice",
-  "version": "6.5.11",
+  "version": "6.5.12",
   "description": "Lightweight Angular state management",
   "main": "index.ts",
   "scripts": {
