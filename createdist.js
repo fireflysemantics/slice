@@ -19,6 +19,12 @@ rc("target/src/", "dist", options).then(() => {
       paths.forEach(update);
     })
     .catch(e => console.log(e));
+
+    globby("./dist/**/*.ts")
+    .then(paths => {
+      paths.forEach(update);
+    })
+    .catch(e => console.log(e));    
 });
 
 function update(path) {
