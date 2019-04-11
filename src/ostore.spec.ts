@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 
-import { OStore } from "./OStore";
+import { OStore } from "@fs/OStore";
 
 const { values } = Object;
 

@@ -1,7 +1,7 @@
-import { Predicate, Delta, IEntityIndex } from "./types";
+import { StoreConfig } from "@fs/StoreConfig";
+import { Predicate, Delta, IEntityIndex } from "@fs/types";
 import { ReplaySubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { StoreConfig } from "./StoreConfig";
 
 const { values, freeze } = Object;
 

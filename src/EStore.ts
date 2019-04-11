@@ -1,6 +1,6 @@
-import { AbstractStore } from "./AbstractStore";
-import { StoreConfig } from './StoreConfig';
-import { GUID } from './utilities';
+import { AbstractStore } from "@fs/AbstractStore";
+import { StoreConfig } from '@fs/StoreConfig';
+import { GUID } from '@fs/utilities';
 
 import {
   ActionTypes,

@@ -1,5 +1,5 @@
 import v1 from "uuid/v1";
-import { ESTORE_CONFIG_DEFAULT } from "./AbstractStore";
+import { ESTORE_CONFIG_DEFAULT } from "@fs/AbstractStore";
 
 /**
  * Returns all the entities are distinct by the 

@@ -1,5 +1,5 @@
-import { Slice } from "./Slice";
-import { ESTORE_CONFIG_DEFAULT } from "./AbstractStore";
+import { Slice } from "@fs/Slice";
+import { ESTORE_CONFIG_DEFAULT } from "@fs/AbstractStore";
 import { TodoSliceEnum } from "@test/setup";
 import { Todo, todosFactory } from "@test/setup";
 import { attachGUIDs, attachGUID } from '@fs/utilities';

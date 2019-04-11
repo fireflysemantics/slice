@@ -1,8 +1,7 @@
-import { Delta, ActionTypes, IEntityIndex, Predicate } from "./types";
-import { ESTORE_CONFIG_DEFAULT } from "./AbstractStore";
-import { AbstractStore } from "./AbstractStore";
-import { StoreConfig } from './StoreConfig';
-import { combineLatest } from 'rxjs';
+import { Delta, ActionTypes, IEntityIndex, Predicate } from "@fs/types";
+import { ESTORE_CONFIG_DEFAULT } from "@fs/AbstractStore";
+import { AbstractStore } from "@fs/AbstractStore";
+import { StoreConfig } from '@fs/StoreConfig';
 
 const { values, freeze } = Object;
 

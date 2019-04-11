@@ -1,4 +1,4 @@
-import { IKeyValue, IReplaySubjectIndex } from './types';
+import { IKeyValue, IReplaySubjectIndex } from '@fs/types';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators'
 

@@ -1,4 +1,4 @@
-import { distinct, unique, GUID } from "./utilities";
+import { distinct, unique } from "@fs/utilities";
 
 type Todo = {
   id: any;
