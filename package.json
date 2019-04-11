@@ -1,7 +1,7 @@
 {
   "name": "@fireflysemantics/slice",
-  "version": "6.5.16",
-  "description": "Lightweight Angular state management",
+  "version": "6.5.19",
+  "description": "Lightweight Web Application State management",
   "main": "index.ts",
   "scripts": {
     "update": "ncu -u && npm i",
@@ -36,20 +36,20 @@
   "homepage": "https://github.com/fireflysemantics/slice#readme",
   "devDependencies": {
     "@types/jest": "^24.0.11",
-    "@types/node": "^11.13.0",
+    "@types/node": "^11.13.4",
     "cpy": "^7.2.0",
     "del-cli": "^1.1.0",
     "globby": "^9.2.0",
     "jest": "^24.7.1",
     "mkdirp": "^0.5.1",
-    "npm-check-updates": "^3.1.4",
+    "npm-check-updates": "^3.1.7",
     "recursive-copy": "^2.0.10",
-    "source-map-support": "^0.5.11",
-    "ts-jest": "^24.0.1",
+    "source-map-support": "^0.5.12",
+    "ts-jest": "^24.0.2",
     "ts-node": "^8.0.3",
     "tsconfig-paths": "^3.8.0",
     "typedoc": "^0.14.2",
-    "typescript": "^3.4.1",
+    "typescript": "^3.4.3",
     "typescript-transform-paths": "^1.0.0"
   },
   "dependencies": {

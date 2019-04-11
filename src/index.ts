@@ -1,4 +1,4 @@
-export { EStore } from '@fs/EStore';
-export { Slice } from '@fs/Slice';
-export { OStore } from '@fs/OStore';
-export * from '@fs/types';
+export { EStore } from './EStore';
+export { Slice } from './Slice';
+export { OStore } from './OStore';
+export * from './types';
