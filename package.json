@@ -1,6 +1,6 @@
 {
   "name": "@fireflysemantics/slice",
-  "version": "6.5.21",
+  "version": "6.5.22",
   "description": "Lightweight Web Application State management",
   "main": "index.ts",
   "scripts": {
