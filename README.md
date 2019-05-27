@@ -4,11 +4,17 @@
 
 # @fireflysemantics/slice
 
-Lightweight Web Application State Management Built with RxJS and Typescript.  This API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.  The core API is tiny and the intention is to delegate DML (Data Manipulation Language) to pure javascript and RxJS.  If more advanced filtering capabilities are needed the entities can be saved to Indexeddb via Dexie.  We will be producing tutorials on how to do this soon, but here's the first installment:
+Lightweight Web Application State Management Built with RxJS and Typescript.  This API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.  The core API is tiny and the intention is to delegate DML (Data Manipulation Language) to pure javascript, RxJS, and if more super powers are needed use something like [Sift](https://www.npmjs.com/package/sift).
+
+For example a snapshot of all entities can be retrieved via `store.selectAll()` and this array could then be processed by [Sift](https://www.npmjs.com/package/sift).  [Sift](https://www.npmjs.com/package/sift) could also complement real time capabilities provided by RxJS when used in a live stream context.
+
+For very large data sets, more advanced filtering, and persistance save tables to Indexeddb via Dexie.  We will be producing tutorials on how to do this soon, but here's the first installment:
 - [Many to Many Relationships with DexieJS](https://medium.com/@ole.ersoy/many-to-many-relationships-with-dexiejs-753b8e305d4e)
   
 As can be seen it is very easy to save and retrieve entities with DexieJS and no directly coupling to the Slice state manager is necessary.  For more Typescript one to many exmaples se the DexieJS Typescript documentation:
 - [DexieJS Typescript Documentation](https://dexie.org/docs/Typescript)
+
+
 
 ## Features
 
