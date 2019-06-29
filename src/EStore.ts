@@ -166,6 +166,9 @@ deleteActive(todo2);
 
   /**
    * Notifies observers when the store is loading.
+   * 
+   * This is a commond pattern found when implementing
+   * `Observable` data sources.
    */
   private notifyLoading = new ReplaySubject<boolean>(1);
 
