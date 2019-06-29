@@ -1,15 +1,10 @@
-import { AbstractStore } from "@fs/AbstractStore";
+import { AbstractStore } from '@fs/AbstractStore';
 import { StoreConfig } from '@fs/StoreConfig';
 import { GUID } from '@fs/utilities';
 
-import {
-  ActionTypes,
-  Predicate,
-  ISliceIndex,
-  Delta
-} from "./types";
-import { Slice } from "./Slice";
-import { ReplaySubject } from "rxjs";
+import { ActionTypes, Predicate, ISliceIndex, Delta } from './types';
+import { Slice } from './Slice';
+import { ReplaySubject } from 'rxjs';
 
 const { values } = Object;
 
@@ -65,6 +60,20 @@ let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   }
 
   /**
+   * Calls complete on all {@link BehaviorSubject} instances.
+   * 
+   * Call destroy when disposing of the store.
+   */
+  destroy() {
+    this.notify.complete();
+    this.notifyEmptyState.complete();
+    this.notifyLoading.complete();
+    this.notifyEntryCount.complete();
+    this.notifyDelta.complete();
+    this.notifyActive.complete();
+  }
+
+  /**
    * Toggles the entity:
    * 
    * If the store contains the entity
@@ -82,26 +91,25 @@ estore.toggle(todo);
 
 ```
    */
-  public toggle(e:E) {
+  public toggle(e: E) {
     if (this.contains(e)) {
       this.delete(e);
-    }
-    else {
+    } else {
       this.post(e);
     }
   }
-  
+
   /**
    * Notifies observers when the store is empty.
    */
-  private notifyActive = new ReplaySubject<Map<string,E>>(1);
+  private notifyActive = new ReplaySubject<Map<string, E>>(1);
 
-  /** 
+  /**
    * `Map` of active entties. The instance is public and can be used
    * directly to add and remove active entities, however we recommend
-   * using the {@link addActive} and {@link deleteActive} methods. 
-  */
-  public active: Map<string,E> = new Map();
+   * using the {@link addActive} and {@link deleteActive} methods.
+   */
+  public active: Map<string, E> = new Map();
 
   /**
    * Add multiple entity entities.  The entity is only added
@@ -145,7 +153,6 @@ deleteActive(todo2);
     this.notifyActive.next(new Map(this.active));
   }
 
-
   /**
    * Observe the active entity.
    * @example
@@ -162,10 +169,10 @@ deleteActive(todo2);
    */
   private notifyLoading = new ReplaySubject<boolean>(1);
 
-  /** 
-   * The current loading state.  Use loading when fetching new 
+  /**
+   * The current loading state.  Use loading when fetching new
    * data for the store.  The default loading state is `false`.
-   * 
+   *
    * Loading could be based on a composite response.  For example
    * when the stock and mutual funds have loaded, set loading to `false`.
    */
@@ -258,7 +265,9 @@ store.post(todo);
 ```
    */
   post(e: E) {
-    const guid:string = (<any>e)[this.GUID_KEY]  ? (<any>e)[this.GUID_KEY] : GUID();
+    const guid: string = (<any>e)[this.GUID_KEY]
+      ? (<any>e)[this.GUID_KEY]
+      : GUID();
     (<any>e)[this.GUID_KEY] = guid;
     this.entries[guid] = e;
     this.updateIDEntry(e);
@@ -281,7 +290,9 @@ store.post(todo1, todo2);
    */
   postN(...e: E[]) {
     e.forEach(e => {
-      const guid:string = (<any>e)[this.GUID_KEY]  ? (<any>e)[this.GUID_KEY] : GUID();
+      const guid: string = (<any>e)[this.GUID_KEY]
+        ? (<any>e)[this.GUID_KEY]
+        : GUID();
       (<any>e)[this.GUID_KEY] = guid;
       this.entries[guid] = e;
       this.updateIDEntry(e);
