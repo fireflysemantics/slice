@@ -33,6 +33,7 @@ As can be seen it is very easy to save and retrieve entities with DexieJS and no
 - Observable `count` of entities in the entity store.  The `count` feature can also be `Predicate` filtered.
 - Configurable global id (Client side id - `gid`) and server id (`id`) id property names for entities. 
 - The stream of entities can be sorted via an optional boolean expression passed to `observe`.
+- Easily integrates with services such as [AWS Amplify Hub API](https://aws-amplify.github.io/docs/js/hub)
 
 ## Introduction
 
