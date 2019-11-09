@@ -167,7 +167,7 @@ deleteActive(todo2);
   /**
    * Notifies observers when the store is loading.
    * 
-   * This is a commond pattern found when implementing
+   * This is a common pattern found when implementing
    * `Observable` data sources.
    */
   private notifyLoading = new ReplaySubject<boolean>(1);
@@ -207,6 +207,45 @@ deleteActive(todo2);
     return this.notifyLoading.asObservable();
   }
 
+
+  
+  /**
+   * Notifies observers of the store query.
+   */
+  private notifyQuery = new ReplaySubject<string>(1);
+
+  /**
+   * The current query state.
+   */
+  private _query: string = '';
+
+  /**
+   * Sets the current query state and notifies observers.
+   */
+  set query(query: string) {
+    this._query = query;
+    this.notifyQuery.next(this._query);
+  }
+
+  /**
+   * @return A snapshot of the query state.
+   */
+  get query() {
+    return this._query;
+  }
+
+  /**
+   * Observe the query.
+   * @example
+     <pre>
+    let query$ = source.observeQuery();
+    </pre>
+  */
+  public observeQuery() {
+    return this.notifyQuery.asObservable();
+  }
+
+  
   /**
    * Store slices
    */
