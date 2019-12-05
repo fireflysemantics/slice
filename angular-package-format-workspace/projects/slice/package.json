@@ -1,0 +1,37 @@
+{
+  "name": "@fireflysemantics/slice",
+  "version": "9.0.0",
+  "description": "Lightweight Reactive Application State Management",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fireflysemantics/slice.git"
+  },
+  "keywords": [
+    "Typescript",
+    "Angular",
+    "State",
+    "Query",
+    "Reactive",
+    "RxJS",
+    "Observables",
+    "Multicasting"
+  ],
+  "author": "Ole Ersoy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fireflysemantics/slice/issues"
+  },
+  "homepage": "https://github.com/fireflysemantics/slice#readme",
+  "devDependencies": {
+    "typedoc": "^0.14.2"
+  },
+  "peerDependencies": {
+    "rxjs": "^6.x"
+  },
+  "dependencies": {
+    "@fireflysemantics/collections": "^1.0.4",
+    "@fireflysemantics/is": "^1.8.21",
+    "@types/uuid": "^3.4.5",
+    "uuid": "^3.3.2"
+  }            
+}

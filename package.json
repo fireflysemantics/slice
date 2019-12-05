@@ -1,0 +1,68 @@
+{
+  "name": "@fireflysemantics/slice",
+  "version": "6.6.8",
+  "description": "Lightweight Web Application State management",
+  "main": "index.ts",
+  "scripts": {
+    "update": "ncu -u && npm i",
+    "clean": "del-cli target && del-cli dist && del-cli doc",
+    "test": "jest",
+    "doc": "typedoc --out doc --exclude **/*.spec.ts ./src/",
+    "compile": "del-cli target && ttsc",
+    "dist": "npm run compile && del-cli dist && node createdist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fireflysemantics/slice.git"
+  },
+  "keywords": [
+    "Typescript",
+    "Angular",
+    "State",
+    "Query",
+    "Reactive",
+    "RxJS",
+    "Observables",
+    "Multicasting"
+  ],
+  "_moduleAliases": {
+    "@fireflysemantics/*": ".target/src/*"
+  },
+  "author": "Ole Ersoy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fireflysemantics/slice/issues"
+  },
+  "homepage": "https://github.com/fireflysemantics/slice#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.6.1",
+    "cpy": "^7.3.0",
+    "del-cli": "^2.0.0",
+    "globby": "^10.0.1",
+    "jest": "^24.8.0",
+    "mkdirp": "^0.5.1",
+    "npm-check-updates": "^3.1.18",
+    "recursive-copy": "^2.0.10",
+    "source-map-support": "^0.5.12",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.3.0",
+    "tsconfig-paths": "^3.8.0",
+    "ttypescript": "^1.5.7",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.5.3",
+    "typescript-transform-paths": "^1.1.6"
+  },
+  "dependencies": {
+    "@fireflysemantics/collections": "^1.0.4",
+    "@fireflysemantics/is": "^1.8.21",
+    "@types/uuid": "^3.4.5",
+    "rxjs": "^6.5.2",
+    "typescript-logging": "^0.6.3",
+    "uuid": "^3.3.2"
+  },
+  "requiredAngularVersion": ">=6.0.0 <7.0.0",
+  "peerDependencies": {
+    "rxjs": "^6.5.2"
+  }
+}
