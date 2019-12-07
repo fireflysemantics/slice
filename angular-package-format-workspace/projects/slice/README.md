@@ -1,3 +1,12 @@
+# Install
+
+User version 6.6.8 and below.
+
+Waiting on this issues before version 9 packaged in the Angular Package Format can be used:
+
+https://github.com/angular/angular-cli/issues/16378
+
+
 [![Build Status](https://travis-ci.org/fireflysemantics/slice.svg?branch=master)](https://travis-ci.org/fireflysemantics/slice)
 
 ![Slice](slice.jpg)
