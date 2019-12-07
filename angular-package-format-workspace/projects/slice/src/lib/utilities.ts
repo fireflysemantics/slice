@@ -1,4 +1,4 @@
-import v1 from "uuid/v1";
+import * as v1 from "uuid/v1";
 import { ESTORE_CONFIG_DEFAULT } from "@fs/AbstractStore";
 
 /**
