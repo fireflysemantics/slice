@@ -6,6 +6,9 @@
     "type": "git",
     "url": "git+https://github.com/fireflysemantics/slice.git"
   },
+  "scripts": {
+    "test": "npx jest"
+  },
   "keywords": [
     "Typescript",
     "Angular",
@@ -23,15 +26,16 @@
   },
   "homepage": "https://github.com/fireflysemantics/slice#readme",
   "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.2.0",
     "typedoc": "^0.14.2"
   },
   "peerDependencies": {
-    "rxjs": "^6.x"
+    "rxjs": "^6.x",
+    "@types/uuid": "^3.x",
+    "uuid": "^3.x"
   },
   "dependencies": {
-    "@fireflysemantics/collections": "^1.0.4",
-    "@fireflysemantics/is": "^1.8.21",
-    "@types/uuid": "^3.4.5",
-    "uuid": "^3.3.2"
-  }            
+  }
 }

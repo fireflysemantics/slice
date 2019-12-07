@@ -1,8 +1,6 @@
 import { ReplaySubject, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-let { values } = Object;
-
 export class OStore {
 
     /**
