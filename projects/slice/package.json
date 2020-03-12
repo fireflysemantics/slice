@@ -1,0 +1,31 @@
+{
+  "name": "@fireflysemantics/slice",
+  "version": "10.0.0",
+  "author": "Ole Ersoy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fireflysemantics/slice/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fireflysemantics/slice.git"
+  },
+  "keywords": [
+    "Typescript",
+    "Angular",
+    "State",
+    "Query",
+    "Reactive",
+    "RxJS",
+    "Observables",
+    "Multicasting"
+  ],    
+  "dependencies": {
+  },  
+  "peerDependencies": {
+    "rxjs": "*",
+    "tslib": "^1.10.0",
+    "@types/uuid": "^7.0.0",
+    "uuid": "^7.0.2"
+  }
+}
