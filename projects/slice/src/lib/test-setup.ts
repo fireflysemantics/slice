@@ -1,5 +1,3 @@
-import { v1 } from 'uuid'
-
 export const enum TodoSliceEnum {
   COMPLETE = "Complete",
   INCOMPLETE = "Incomplete"

@@ -5,6 +5,8 @@ import { GUID } from './utilities';
 import { ActionTypes, Predicate, Delta } from './types';
 import { Slice } from './Slice';
 import { ReplaySubject } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
+
 
 /**
  * This `todoFactory` code will be used to illustrate the API examples.  The following
@@ -182,7 +184,7 @@ deleteActive(todo2);
     </pre>
   */
   public observeActive() {
-    return this.notifyActive.asObservable();
+    return this.notifyActive.asObservable()
   }
 
   /**
@@ -227,9 +229,19 @@ deleteActive(todo2);
      <pre>
     let active$ = source.observeActive();
     </pre>
+
+    Note that this obverable piped through
+    `takeWhile(v->v, true), such that it will 
+    complete when the store is done loading.
+
+    See:
+    https://medium.com/@ole.ersoy/waiting-on-estore-to-load-8dcbe161613c
+
+    For more details.
   */
   public observeLoading() {
-    return this.notifyLoading.asObservable();
+    return this.notifyLoading.asObservable().
+    pipe(takeWhile(v=>v, true));
   }
 
   /**

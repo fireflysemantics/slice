@@ -1,8 +1,8 @@
-import { v1 } from 'uuid';
 import { ESTORE_CONFIG_DEFAULT } from "./AbstractStore";
 import { Observable, fromEvent, of } from 'rxjs'
 import { switchMap, pairwise, debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
 import { scrollPosition } from './types'
+import { cuid } from "@fireflysemantics/cuid"
 /**
  * Returns all the entities are distinct by the 
  * `property` value argument.  
@@ -73,7 +73,7 @@ export function unique<E>(entities: E[], property: keyof E) {
  * let e.guid = GUID();
  */
 export function GUID() {
-  return v1();
+  return cuid();
 }
 
 /**
@@ -83,10 +83,10 @@ export function GUID() {
  * @param gid The name of the `gid` property.  If not specified it defaults to `gid`.
  */
 export function attachGUID<E>(e: E, gid?: string): string {
-  const guid = gid ? gid : ESTORE_CONFIG_DEFAULT.guidKey;
-  let id: string = v1();
-  (<any>e)[guid] = id;
-  return id;
+  const guid = gid ? gid : ESTORE_CONFIG_DEFAULT.guidKey
+  let id: string = cuid();
+  (<any>e)[guid] = id
+  return id
 }
 
 /**
