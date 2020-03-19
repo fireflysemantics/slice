@@ -10,8 +10,7 @@ Slice must be installed along with it's peer dependencies:
 
 ```
 npm i -S @fireflysemantics/slice
-npm i -S uuid
-npm i -S @types/uuid
+npm i -S @fireflysemantics/cuid
 npm i -S rxjs
 
 ```
