@@ -4,16 +4,21 @@
 
 # @fireflysemantics/slice
 
-Lightweight Web Application State Management Built with `RxJS` and `Typescript` for creating central updates / `Observable` notifcations for Javascript applications.  This API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.
+Lightweight Web Application State Management Built with `RxJS` and `Typescript` for creating central updates / `Observable` notifcations for Javascript applications.  
 
-It offers two types of observable stores for your data:
+The API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.
+
+It offers two types of observable data stores:
 - Entity stores for structured entity like data (Customer, Product, User, ...)
 - Object store (Key value store) for unstructured data
+
 
 Even though we will be using Angular for prototype applications, it should work well for:
 - Single page applications
 - Progressive web applications
 - React applications
+- Node applications / Pure Javascript Applications
+- Mobile Applications
 
 ### Entity Stores
 
