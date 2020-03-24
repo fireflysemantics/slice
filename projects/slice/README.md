@@ -4,12 +4,7 @@
 
 # @fireflysemantics/slice
 
-Lightweight Web Application State Management Built with RxJS and Typescript.  This API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.
-
-
-## Introduction
-
-This is a lightweight minimal API built on top of `RxJS` for creating central updates / `Observable` notifcations for Javascript applications.  
+Lightweight Web Application State Management Built with `RxJS` and `Typescript` for creating central updates / `Observable` notifcations for Javascript applications.  This API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.
 
 It offers two types of observable stores for your data:
 - Entity stores for structured entity like data (Customer, Product, User, ...)
@@ -22,9 +17,9 @@ Even though we will be using Angular for prototype applications, it should work 
 
 ### Entity Stores
 
-A demo was just add for a [Todo application here](https://stackblitz.com/edit/slice-todo).
+[Todo application Demo](https://stackblitz.com/edit/slice-todo).
 
-For `Entity` data (Structured class based types such as `Product` or `Customer`) Slice provides a `EStore<E>` type.  
+For `Entity` data (Structured class based types such as `Todo`,  `Product` or `Customer`) Slice provides a `EStore<E>` type.  
 
 Add all the Entity instances that you wish to track to the store and retrieve `Observable<E[]>` instances by calling `EStore.observe()` or `EStore.observe(sortFn)`.  
 
