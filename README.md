@@ -15,6 +15,12 @@ npm i -S rxjs
 
 ```
 
+We also recommend `ngx-take-until-destroy` as we use it in almost all our demoes:
+
+```
+npm i -S ngx-take-until-destroy
+```
+
 ## Build
 
 Run `npm run c` to build the project. The build artifacts will be stored in the `dist/` directory.
