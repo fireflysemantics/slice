@@ -536,3 +536,32 @@ it("should reactively search Todo instances", () => {
     expect(result.length).toEqual(2)
   })
 });
+
+/**
+ * CONCERN: Core API
+ * METHODS: `post`. 
+ */
+it("should post correctly", () => {
+  let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
+  let todoOrNot = new Todo(false, "This is definitely not in the store", '2');
+  todoOrNotTodo.id = '1';
+  todoOrNot.id = '2';
+  let store: EStore<Todo> = new EStore<Todo>();
+
+
+  const INCOMPLETE = 'INCOMPLETE'
+  const COMPLETE = 'COMPLETE'
+
+
+  store.addSlice((todo:Todo)=>todo.complete==true, COMPLETE);
+  store.addSlice((todo:Todo)=>todo.complete==false, INCOMPLETE);
+
+  store.post(todoOrNotTodo);
+  store.post(todoOrNot)
+  const complete$:Observable<Todo[]> = store.getSlice(COMPLETE).observe()
+  const incomplete$:Observable<Todo[]> = store.getSlice(INCOMPLETE).observe()
+  
+  complete$.subscribe(t=>expect(t.length).toEqual(0))
+  incomplete$.subscribe(t=>expect(t.length).toEqual(2))
+
+});
