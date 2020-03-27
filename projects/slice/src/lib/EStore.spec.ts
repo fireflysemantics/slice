@@ -464,8 +464,12 @@ it("should reflect correct state after put operations", () => {
  * we want to allow subscribers to wait
  * for the store to be completely initialized
  * before setting it to false.
+ * 
+ * In order to trigger the loading complete
+ * notification,
+ * we have to set store.loading = false.
  */
-it("should constructor initialize the store", () => {
+it("should notify loading", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   const loading$ = store.observeLoading()
   loading$.subscribe(v=>{
@@ -502,9 +506,9 @@ it("should findByID after loading is false", () => {
 
 /**
  * CONCERN: Utility API
- * METHODS: `findOneByID`. 
+ * METHODS: `search`. 
  */
-it("should reactivelysearch Todo instances", () => {
+it("should reactively search Todo instances", () => {
   let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
   let todoOrNot = new Todo(false, "This is definitely not in the store", '2');
   todoOrNotTodo.id = '1';
@@ -520,6 +524,10 @@ it("should reactivelysearch Todo instances", () => {
   let results1$ = combineLatest(query1$, todos$, (query, todos)=>{
     return search(query, todos)
   })
+  results1$.subscribe( result =>{
+    expect(result.length).toEqual(1)
+  })
+
   let results2$ = combineLatest(query2$, todos$, (query, todos)=>{
     return search(query, todos)
   })

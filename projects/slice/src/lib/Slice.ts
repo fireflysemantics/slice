@@ -61,9 +61,8 @@ export class Slice<E> extends AbstractStore<E> {
     if (this.predicate(e)) {
       const id = (<any>e)[this.sc.guidKey];
       this.entries.set(id, e);
-      this.notify.next([...Array.from(this.entries.values())]);
       const delta: Delta<E> = { type: ActionTypes.POST, entries: [e] };
-      this.notifyAll([...values(this.entries)], delta);
+      this.notifyAll([...Array.from(this.entries.values())], delta);
     }
   }
 
@@ -93,9 +92,8 @@ export class Slice<E> extends AbstractStore<E> {
       }
     });
     if (d.length > 0) {
-      this.notify.next([...Array.from(this.entries.values())]);
       const delta: Delta<E> = { type: ActionTypes.POST, entries: d };
-      this.notifyAll(d, delta);
+      this.notifyAll([...Array.from(this.entries.values())], delta);
     }
   }
 
@@ -141,7 +139,7 @@ export class Slice<E> extends AbstractStore<E> {
   /**
    * Update the slice when an Entity instance mutates.
    *
-   * @param e The element to be deleted or added depending on predicate test result
+   * @param e The element to be added or deleted depending on predicate reevaluation
    */
   put(e: E) {
     const id = (<any>e)[this.sc.guidKey];
@@ -170,7 +168,7 @@ export class Slice<E> extends AbstractStore<E> {
   }
 
   /**
-   * @param e The elements to be deleted if they satisfy the predicate
+   * @param e The elements to be put
    */
   putA(e: E[]) {
     const d: E[] = []; //instances to delete
@@ -205,7 +203,6 @@ export class Slice<E> extends AbstractStore<E> {
 
   /**
    * Resets the slice to empty.
-   * 
    */
   reset() {
     let delta: Delta<E> = {
