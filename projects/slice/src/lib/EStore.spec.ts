@@ -548,10 +548,8 @@ it("should post correctly", () => {
   todoOrNot.id = '2';
   let store: EStore<Todo> = new EStore<Todo>();
 
-
   const INCOMPLETE = 'INCOMPLETE'
   const COMPLETE = 'COMPLETE'
-
 
   store.addSlice((todo:Todo)=>todo.complete==true, COMPLETE);
   store.addSlice((todo:Todo)=>todo.complete==false, INCOMPLETE);
