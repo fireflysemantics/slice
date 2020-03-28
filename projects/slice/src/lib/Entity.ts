@@ -3,6 +3,11 @@ import { cuid, cuidSlug as slug } from '@fireflysemantics/cuid'
 /**
  * Abstract Entity containing `gid` and `id` parameters
  * for use with Slice.
+ * 
+ * The global id is assigned to `gid` on creation.
+ * 
+ * This has the added benefit of making the entity globally
+ * unique from the point of creation.
  */
 export abstract class Entity {
    public gid?:string;
