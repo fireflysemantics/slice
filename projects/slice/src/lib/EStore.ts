@@ -4,8 +4,8 @@ import { GUID } from './utilities';
 
 import { ActionTypes, Predicate, Delta } from './types';
 import { Slice } from './Slice';
-import { ReplaySubject } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import { ReplaySubject, of } from 'rxjs';
+import { takeWhile, filter, switchMap } from 'rxjs/operators';
 
 
 /**
@@ -224,15 +224,15 @@ deleteActive(todo2);
   }
 
   /**
-   * Observe the active entity.
+   * Observe loading.
    * @example
      <pre>
-    let active$ = source.observeActive();
+    let loading$ = source.observeLoading();
     </pre>
 
     Note that this obverable piped through
     `takeWhile(v->v, true), such that it will 
-    complete when the store is done loading.
+    complete after each emission.
 
     See:
     https://medium.com/@ole.ersoy/waiting-on-estore-to-load-8dcbe161613c
@@ -243,6 +243,16 @@ deleteActive(todo2);
     return this.notifyLoading.asObservable().
     pipe(takeWhile(v=>v, true));
   }
+
+  /**
+   * Notfiies when loading has completed.
+   */
+  public observeLoadingComplete() {
+    return this.observeLoading().pipe(
+      filter(loading => loading == false),  
+      switchMap(()=>of(true)))      
+  }
+
 
   /**
    * Store slices

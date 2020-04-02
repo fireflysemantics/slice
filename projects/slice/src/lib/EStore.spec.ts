@@ -469,10 +469,37 @@ it("should reflect correct state after put operations", () => {
  * notification,
  * we have to set store.loading = false.
  */
-it("should notify loading", () => {
+it("should notify loading true", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   const loading$ = store.observeLoading()
   loading$.subscribe(v=>{
+    expect(v).toBe(true)
+  })
+});
+
+/**
+ * METHODS: `notifyLoading`
+ * DESIGN CONSIDERATIONS:
+ * Notify loading should emit true on
+ * for the first observation, since
+ * we want to allow subscribers to wait
+ * for the store to be completely initialized
+ * before setting it to false.
+ * 
+ * In order to trigger the loading complete
+ * notification,
+ * we have to set store.loading = false.
+ */
+it("should notify loading false", () => {
+  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+  const loading$ = store.observeLoading()
+  store.loading = false;
+  loading$.subscribe(v=>{
+    expect(v).toBe(false)
+  })
+
+  const loadingComplete$ = store.observeLoadingComplete()
+  loadingComplete$.subscribe(v=>{
     expect(v).toBe(true)
   })
 });
