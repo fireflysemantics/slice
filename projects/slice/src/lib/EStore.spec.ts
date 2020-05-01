@@ -15,6 +15,7 @@ it("should constructor initialize the store", () => {
   expect(store.entries.size).toEqual(2);
 });
 
+
 /**
  * CONCERN: Utility API
  * PROPERTY: `loading`

@@ -1,46 +1,54 @@
 import { ReplaySubject, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-export interface OStoreInitReset {
-    i:any
-    r?:any
+/**
+ * OStore Key Value Reset
+ */
+export interface OStoreKeyValueReset {
+    key?:string
+    value:any
+    reset?:any
 }
 
 export interface OStoreStart {
-    [key: string]: OStoreInitReset
+    [key: string]: OStoreKeyValueReset
 }
 
-
 export class OStore {
-
     /**
      * Start keys and values
      * passed in via constructor.
      */
-    public start:OStoreStart
+    public S:OStoreStart
 
     constructor(start?:OStoreStart) {
         if (start) {
-            this.start = start;
+            this.S = start;
             const keys = Object.keys(start)
-
-            keys.forEach((k,i)=>{
-                this.post(k, start[k].i)
-            })
-        }
-    }
-
-    public reset() {
-        if(this.start) {
-            const keys = Object.keys(this.start)
-            keys.forEach((k,i)=>{
-                this.put(k, this.start[k].r ? this.start[k].r : this.start[k].i)
+            keys.forEach((k)=>{
+                const kvr = start[k]
+                this.post(kvr.key, kvr.value)
             })
         }
     }
 
     /**
-     * Key Value pair entries
+     * Reset the state of the OStore to the
+     * values or resest provided in the constructor
+     * {@link OStoreStart} instance.
+     */
+    public reset() {
+        if(this.S) {
+            const keys = Object.keys(this.S)
+            keys.forEach((k)=>{
+                const kvr = this.S[k]
+                this.put(kvr.key, kvr.reset ? kvr.reset : kvr.value)
+            })
+        }
+    }
+
+    /**
+     * Map of Key Value pair entries
      * containing values store in this store.
      */
     private entries:Map<any, any> = new Map()
