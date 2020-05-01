@@ -3,6 +3,7 @@ import { Observable, fromEvent, of } from 'rxjs'
 import { switchMap, pairwise, debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
 import { scrollPosition } from './types'
 import { cuid } from "@fireflysemantics/cuid"
+import { OStoreStart } from './OStore';
 /**
  * Returns all the entities are distinct by the 
  * `property` value argument.  
@@ -224,4 +225,18 @@ export function mapEntity(keys:string[], entity:any) {
     result[k] = entity[k]
   })
   return result
+}
+
+/**
+ * Assign the key index on {@param start}
+ * to the `key` property on the corresponding
+ * {@link OStoreKeyValueReset } instance.
+ * @param start 
+ * 
+ */
+export function assignStartKeys(start:OStoreStart) {
+  const keys = Object.keys(start)
+  keys.forEach(k=>{
+    start[k].key = k
+  })
 }
