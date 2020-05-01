@@ -2,6 +2,10 @@
 
 ![Slice](logo/slicelogo.png)
 
+# Live Demo
+
+https://help-service-parts.fireflysemantics.com/
+
 # @fireflysemantics/slice
 
 Lightweight Web Application State Management Built with `RxJS` and `Typescript` for creating central updates / `Observable` notifcations for Javascript applications.  

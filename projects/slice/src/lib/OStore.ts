@@ -1,18 +1,54 @@
 import { ReplaySubject, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
+export interface OStoreInitReset {
+    i:any
+    r?:any
+}
+
+export interface OStoreStart {
+    [key: string]: OStoreInitReset
+}
+
+
 export class OStore {
+
+    /**
+     * Start keys and values
+     * passed in via constructor.
+     */
+    public start:OStoreStart
+
+    constructor(start?:OStoreStart) {
+        if (start) {
+            this.start = start;
+            const keys = Object.keys(start)
+
+            keys.forEach((k,i)=>{
+                this.post(k, start[k].i)
+            })
+        }
+    }
+
+    public reset() {
+        if(this.start) {
+            const keys = Object.keys(this.start)
+            keys.forEach((k,i)=>{
+                this.put(k, this.start[k].r ? this.start[k].r : this.start[k].i)
+            })
+        }
+    }
 
     /**
      * Key Value pair entries
      * containing values store in this store.
      */
-    private entries:Map<string, any> = new Map()
+    private entries:Map<any, any> = new Map()
 
     /**
      * Map of replay subject id to `ReplaySubject` instance.
      */
-    private subjects: Map<string, ReplaySubject<any>> = new Map()
+    private subjects: Map<any, ReplaySubject<any>> = new Map()
 
     /**
      * Set create a key value pair entry and creates a 
@@ -22,7 +58,7 @@ export class OStore {
      * @param key The key identifying the value
      * @param value The value
      */
-    public post(key:string, value:any) {
+    public post(key: any, value:any) {
         this.entries.set(key, value)
         this.subjects.set(key,  new ReplaySubject(1))
         //Emit immediately so that Observers can receive 
@@ -36,7 +72,7 @@ export class OStore {
      * @param key 
      * @param value 
      */
-    public put(key:string, value:any) {
+    public put(key:any, value:any) {
         this.entries.set(key, value)
         this.subjects.get(key).next(value)
     }
@@ -48,7 +84,7 @@ export class OStore {
      *  
      * @param key 
      */
-    public delete(key:string) {
+    public delete(key:any) {
         this.entries.delete(key)
         this.subjects.get(key).unsubscribe()
         this.subjects.delete(key)
@@ -60,7 +96,7 @@ export class OStore {
      * @param key 
      * @return An {@link Observable} of the value
      */
-    public observe(key:string) {
+    public observe(key:any) {
         return this.subjects.get(key).asObservable()
     }
 
@@ -70,7 +106,7 @@ export class OStore {
      * @param key 
      * @return An {@link Observable<boolean>} indicating whether the value exists.
      */
-    public exists(key:string):Observable<boolean> {
+    public exists(key:any):Observable<boolean> {
         if (!this.subjects.get(key)) {
             throw new Error(`No subject exists for the key ${key}`)
         }
@@ -84,7 +120,7 @@ export class OStore {
      * @param key 
      * @return A snapshot of the value corresponding to the key.
      */
-    public snapshot(key:string):any {
+    public snapshot(key:any):any {
         return this.entries.get(key)
     }
 
