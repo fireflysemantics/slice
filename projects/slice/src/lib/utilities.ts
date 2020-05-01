@@ -239,4 +239,5 @@ export function assignStartKeys(start:OStoreStart) {
   keys.forEach(k=>{
     start[k].key = k
   })
+  return start
 }
