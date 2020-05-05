@@ -4,16 +4,11 @@
 
 # Install
 
-## Slice
+Install Slice with peer dependencies:
 
 ```
-npm i @fireflysemantics/slice 
+npm i @fireflysemantics/slice tslib rxjs @fireflysemantics/cuid
 ```
-## With Peer Dependencies
-```
-npm i @fireflysemantics/slice tslib rxjs @fireflysemantics/cuid 
-```
-
 
 # Use
 
