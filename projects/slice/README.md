@@ -2,6 +2,50 @@
 
 ![Slice](logo/slicelogo.png)
 
+# Install
+
+## Slice
+
+```
+npm i @fireflysemantics/slice 
+```
+## With Peer Dependencies
+```
+npm i @fireflysemantics/slice tslib rxjs @fireflysemantics/cuid 
+```
+
+
+# Use
+
+## OStore
+
+```
+import { OStore, assignStartKeys } from '@fireflysemantics/slice';
+
+//assignStartKeys maps the object key to the 
+//key property corresponding to the value
+const START = assignStartKeys({
+  K1: { value: "V1", key:'' },
+  K2: { value: "V2", key:'' },
+  K3: { value: "V3", reset: "V4", key: '' }
+});
+
+const os:OStore = new OStore(START)
+
+//Observe the value corresponding to key K1
+const o$ = os.observe(START.K1.key)
+
+o$.subscribe( value=>console.log(`The value keyed by K1 is ${value}`))
+//This will cause 'WADDUPPPPP!!' to be logged.
+os.put(START.K1.key, 'WADDUPPPPP!!')
+//Reset the store to the initial or reset values
+os.reset()
+
+const snapshotOfK3 = os.snapshot(START.K3.key)
+
+//Logs "V4" because that's the reset value
+console.log(snapshotOfK3)
+```
 # Live Demo
 
 https://help-service-parts.fireflysemantics.com/
