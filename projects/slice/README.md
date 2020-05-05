@@ -19,6 +19,8 @@ npm i @fireflysemantics/slice tslib rxjs @fireflysemantics/cuid
 
 ## OStore
 
+[Stackblitz Demo](https://stackblitz.com/edit/slice-ostore-readme-demo)
+
 ```
 import { OStore, assignStartKeys } from '@fireflysemantics/slice';
 
