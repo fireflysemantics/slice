@@ -8,6 +8,7 @@ export interface OStoreKeyValueReset {
     key?:string
     value:any
     reset?:any
+    observable?: any
 }
 
 export interface OStoreStart {
@@ -28,6 +29,7 @@ export class OStore {
             keys.forEach((k)=>{
                 const kvr = start[k]
                 this.post(kvr.key, kvr.value)
+                kvr.observable=this.observe(kvr.key)
             })
         }
     }

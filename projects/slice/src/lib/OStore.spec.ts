@@ -46,6 +46,11 @@ test('the observable ', done => {
   
   K1$.subscribe(v=>{
     expect(v).toEqual('V1')
-  })  
+  })
+  
+  const K1ObservableFromStore = START.K1.observable
+  K1ObservableFromStore.subscribe(v=>{
+    expect(v).toEqual('V1')
+  })
   done();
 })
