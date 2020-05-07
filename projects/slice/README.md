@@ -30,7 +30,13 @@ const START = assignStartKeys({
 const os:OStore = new OStore(START)
 
 //Observe the value corresponding to key K1
+//creating a variable
 const o$ = os.observe(START.K1.key)
+
+//Or just observe the value using START
+//The store will create this observable for you
+//by calling observe internally during instantation.
+START.K2.observable.subscribe(v=>{ console.log(`The K2 Obserable value is ${v}`)}) 
 
 o$.subscribe( value=>console.log(`The value keyed by K1 is ${value}`))
 //This will cause 'WADDUPPPPP!!' to be logged.

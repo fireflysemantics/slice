@@ -13,7 +13,8 @@
     "c": "ng build slice",
     "u": "cd projects/slice && ncu -u && npm i && npm-install-peers",
     "bp": "cd projects/slice && bump patch",
-    "p": "npm run u && npm run bp && npm run c && cd dist/slice/ && npm publish",
+    "p": "npm run cp && npm run u && npm run bp && npm run c && cd dist/slice/ && npm publish",
+    "cp": "cp projects/slice/README.md .",
     "d": "typedoc --out doc --exclude **/*.spec.ts ./projects/slice/src/lib"
   },
   "private": true,
