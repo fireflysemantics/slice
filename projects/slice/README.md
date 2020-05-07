@@ -49,6 +49,24 @@ const snapshotOfK3 = os.snapshot(START.K3.key)
 //Logs "V4" because that's the reset value
 console.log(snapshotOfK3)
 ```
+
+## EStore
+
+Variable free access to the observable via EStore.observable:
+
+```
+test('the observable reference works', done => {
+
+  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+  expect(store.entries.size).toEqual(2);
+  store.observable.subscribe(todos=>{
+    expect(todos.length).toEqual(2);  
+  })  
+  done();
+})
+
+```
+
 # Live Demo
 
 https://help-service-parts.fireflysemantics.com/

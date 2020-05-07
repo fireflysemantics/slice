@@ -6,6 +6,7 @@ import { Observable, combineLatest } from "rxjs"
 import { of } from 'rxjs'
 
 const { values } = Object;
+
 /**
  * CONCERN: Store Initialization
  * METHODs: `constructor`
@@ -15,6 +16,16 @@ it("should constructor initialize the store", () => {
   expect(store.entries.size).toEqual(2);
 });
 
+
+test('the observable reference works', done => {
+
+  let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+  expect(store.entries.size).toEqual(2);
+  store.observable.subscribe(todos=>{
+    expect(todos.length).toEqual(2);  
+  })  
+  done();
+})
 
 /**
  * CONCERN: Utility API

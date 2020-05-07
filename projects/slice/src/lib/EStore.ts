@@ -4,7 +4,7 @@ import { GUID } from './utilities';
 
 import { ActionTypes, Predicate, Delta } from './types';
 import { Slice } from './Slice';
-import { ReplaySubject, of } from 'rxjs';
+import { ReplaySubject, of, Observable } from 'rxjs';
 import { takeWhile, filter, switchMap } from 'rxjs/operators';
 
 
@@ -98,9 +98,16 @@ estore.toggle(todo);
   }
 
   /**
+   * An Observable<E[]> reference so that 
+   * 
+   */
+  public observable:Observable<E[]> = this.observe()
+
+  /**
    * Notifies observers when the store is empty.
    */
   private notifyActive = new ReplaySubject<Map<string, E>>(1);
+
 
   /**
    * `Map` of active entties. The instance is public and can be used
