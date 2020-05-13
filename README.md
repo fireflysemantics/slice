@@ -67,9 +67,25 @@ test('the observable reference works', done => {
 
 ```
 
-# Live Demo
+# Live Demos
+
+## FS ALPHA
+
+Slice Drives the Authentication, Stepper, and all
+other UI state:
+
+https://fsalpha.fireflysemantics.com/welcome
+
+## Documentation Center
+
+Documentation categories (Concepts, Tasks, Guides) 
+are stored in slices:
 
 https://help-service-parts.fireflysemantics.com/
+
+## Stackblitz Todo Entity Store Demo
+
+https://stackblitz.com/edit/slice-todo
 
 # @fireflysemantics/slice
 
@@ -77,12 +93,11 @@ Lightweight Web Application State Management Built with `RxJS` and `Typescript` 
 
 The API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.
 
-It offers two types of observable data stores:
+It offers two types of reactive data stores:
 - Entity stores for structured entity like data (Customer, Product, User, ...)
 - Object store (Key value store) for unstructured data
 
-
-Even though we will be using Angular for prototype applications, it should work well for:
+Even though Angular is used for prototype applications, it should work well for:
 - Single page applications
 - Progressive web applications
 - React applications
@@ -121,19 +136,7 @@ For the full API see the [Slice Typedoc API Documentation](https://fireflysemant
 Related blog articles:
 - [Storing Reactive Layout State in Slice](https://medium.com/@ole.ersoy/storing-reactive-layout-state-in-slice-dbc7fb09850c)
 
-
-## Install
-
-Slice must be installed along with it's peer dependencies:
-
-```
-npm i -S @fireflysemantics/slice
-npm i -S @fireflysemantics/cuid
-npm i -S rxjs
-
-```
-
-## Usage
+## Blog
 
 - [Recreating the Ngrx Demo with Slice](https://medium.com/@ole.ersoy/recreating-the-ngrx-demo-app-with-the-firefly-semantics-slice-state-manager-f2e4e4b30ec0)
 
