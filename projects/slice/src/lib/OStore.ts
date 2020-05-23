@@ -8,23 +8,23 @@ export interface OStoreKeyValueReset {
     key?:string
     value:any
     reset?:any
-    observable?: any
+    obs?: Observable<any>
 }
 
 export interface OStoreStart {
     [key: string]: OStoreKeyValueReset
 }
 
-export class OStore {
+export class OStore<E> {
     /**
      * Start keys and values
      * passed in via constructor.
      */
-    public S:OStoreStart
+    public S:E
 
     constructor(start?:OStoreStart, initializeKeys:boolean=true) {
         if (start) {
-            this.S = start;
+            this.S = <any> start;
             const keys = Object.keys(start)
             keys.forEach((k)=>{
                 const kvr = start[k]
@@ -32,7 +32,8 @@ export class OStore {
                     kvr.key = k
                 }
                 this.post(kvr.key, kvr.value)
-                kvr.observable=this.observe(kvr.key)
+                kvr.obs=this.observe(kvr.key)
+                start[k]=kvr
             })
         }
     }

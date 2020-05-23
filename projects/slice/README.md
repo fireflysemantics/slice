@@ -14,41 +14,10 @@ npm i @fireflysemantics/slice tslib rxjs @fireflysemantics/cuid
 
 ## OStore
 
-[Stackblitz Demo](https://stackblitz.com/edit/slice-ostore-readme-demo)
+https://medium.com/@ole.ersoy/slice-ostore-observables-bound-to-ostore-keys-aa3c56a76c8c
 
-```
-import { OStore, assignStartKeys } from '@fireflysemantics/slice';
+New documentation coming soon.
 
-//assignStartKeys maps the object key to the 
-//key property corresponding to the value
-const START = assignStartKeys({
-  K1: { value: "V1", key:'' },
-  K2: { value: "V2", key:'' },
-  K3: { value: "V3", reset: "V4", key: '' }
-});
-
-const os:OStore = new OStore(START)
-
-//Observe the value corresponding to key K1
-//creating a variable
-const o$ = os.observe(START.K1.key)
-
-//Or just observe the value using START
-//The store will create this observable for you
-//by calling observe internally during instantation.
-START.K2.observable.subscribe(v=>{ console.log(`The K2 Obserable value is ${v}`)}) 
-
-o$.subscribe( value=>console.log(`The value keyed by K1 is ${value}`))
-//This will cause 'WADDUPPPPP!!' to be logged.
-os.put(START.K1.key, 'WADDUPPPPP!!')
-//Reset the store to the initial or reset values
-os.reset()
-
-const snapshotOfK3 = os.snapshot(START.K3.key)
-
-//Logs "V4" because that's the reset value
-console.log(snapshotOfK3)
-```
 
 ## EStore
 
