@@ -22,12 +22,15 @@ export class OStore {
      */
     public S:OStoreStart
 
-    constructor(start?:OStoreStart) {
+    constructor(start?:OStoreStart, initializeKeys:boolean=true) {
         if (start) {
             this.S = start;
             const keys = Object.keys(start)
             keys.forEach((k)=>{
                 const kvr = start[k]
+                if (initializeKeys) {
+                    kvr.key = k
+                }
                 this.post(kvr.key, kvr.value)
                 kvr.observable=this.observe(kvr.key)
             })
