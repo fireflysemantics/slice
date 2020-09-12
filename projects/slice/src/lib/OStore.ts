@@ -4,15 +4,14 @@ import { map } from 'rxjs/operators'
 /**
  * OStore Key Value Reset
  */
-export interface OStoreKeyValueReset {
-    key?:string
+export interface ObsValueReset {
     value:any
     reset?:any
     obs?: Observable<any>
 }
 
 export interface OStoreStart {
-    [key: string]: OStoreKeyValueReset
+    [key: string]: ObsValueReset
 }
 
 export class OStore<E> {
@@ -22,33 +21,29 @@ export class OStore<E> {
      */
     public S:E
 
-    constructor(start?:OStoreStart, initializeKeys:boolean=true) {
+    constructor(start?:OStoreStart) {
         if (start) {
             this.S = <any> start;
             const keys = Object.keys(start)
             keys.forEach((k)=>{
-                const kvr = start[k]
-                if (initializeKeys) {
-                    kvr.key = k
-                }
-                this.post(kvr.key, kvr.value)
-                kvr.obs=this.observe(kvr.key)
-                start[k]=kvr
+                const ovr = start[k]
+                this.post(ovr, ovr.value)
+                ovr.obs=this.observe(ovr)
             })
         }
     }
 
     /**
      * Reset the state of the OStore to the
-     * values or resest provided in the constructor
+     * values or reset provided in the constructor
      * {@link OStoreStart} instance.
      */
     public reset() {
         if(this.S) {
             const keys = Object.keys(this.S)
             keys.forEach((k)=>{
-                const kvr = this.S[k]
-                this.put(kvr.key, kvr.reset ? kvr.reset : kvr.value)
+                const ovr = this.S[k]
+                this.put(ovr, ovr.reset ? ovr.reset : ovr.value)
             })
         }
     }
