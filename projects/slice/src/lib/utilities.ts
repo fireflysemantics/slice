@@ -2,7 +2,7 @@ import { ESTORE_CONFIG_DEFAULT } from "./AbstractStore";
 import { Observable, fromEvent, of } from 'rxjs'
 import { switchMap, pairwise, debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
 import { scrollPosition } from './types'
-import { cuid } from "@fireflysemantics/cuid"
+import { nanoid} from "nanoid"
 
 /**
  * Returns all the entities are distinct by the 
@@ -74,7 +74,7 @@ export function unique<E>(entities: E[], property: keyof E) {
  * let e.guid = GUID();
  */
 export function GUID() {
-  return cuid();
+  return nanoid();
 }
 
 /**
@@ -85,7 +85,7 @@ export function GUID() {
  */
 export function attachGUID<E>(e: E, gid?: string): string {
   const guid = gid ? gid : ESTORE_CONFIG_DEFAULT.guidKey
-  let id: string = cuid();
+  let id: string = nanoid();
   (<any>e)[guid] = id
   return id
 }

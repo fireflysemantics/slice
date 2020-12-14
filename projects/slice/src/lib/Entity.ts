@@ -1,5 +1,4 @@
-import { cuid, cuidSlug as slug } from '@fireflysemantics/cuid'
-
+import { nanoid } from 'nanoid'
 /**
  * Abstract Entity containing `gid` and `id` parameters
  * for use with Slice.
@@ -14,16 +13,11 @@ export abstract class Entity {
    public id?:string;
 
    /**
-    * @param slugID Whether to use {@link cuidSlug} to generate
-    * the global ID. 
+    * The entity is assigned a global id by default
+    * on construction.
     */
-   constructor(slugID:boolean = false) {
-     if (!slugID) {
-       this.gid = cuid();
-     }
-     else {
-       this.gid = slug();
-     }
+   constructor() {
+       this.gid = nanoid();
    }
    
    /**

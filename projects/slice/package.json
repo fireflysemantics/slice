@@ -1,6 +1,6 @@
 {
   "name": "@fireflysemantics/slice",
-  "version": "13.0.2",
+  "version": "13.0.3",
   "author": "Ole Ersoy",
   "license": "MIT",
   "bugs": {
@@ -28,6 +28,7 @@
   "peerDependencies": {
     "rxjs": "*",
     "tslib": "*",
-    "@fireflysemantics/cuid": "*"
+    "@types/nanoid": "*",
+    "nanoid": "*"
   }
 }
