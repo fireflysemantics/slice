@@ -7,7 +7,7 @@
 Install Slice with peer dependencies:
 
 ```
-npm i @fireflysemantics/slice tslib rxjs @fireflysemantics/cuid
+npm i @fireflysemantics/slice tslib rxjs nanoid
 ```
 
 # Use
