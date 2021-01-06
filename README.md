@@ -43,7 +43,7 @@ test('the observable reference works', done => {
 Slice Drives the Authentication, Stepper, and all
 other UI state:
 
-https://fsalpha.fireflysemantics.com/welcome
+https://fsalpha.fireflysemantics.com/
 
 ## Documentation Center
 
