@@ -7,7 +7,6 @@ import { Slice } from './Slice';
 import { ReplaySubject, of, Observable } from 'rxjs';
 import { takeWhile, filter, switchMap } from 'rxjs/operators';
 
-
 /**
  * This `todoFactory` code will be used to illustrate the API examples.  The following
  * utilities are used in the tests and the API Typedoc examples contained here.
@@ -47,12 +46,16 @@ let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   constructor(private entities?: E[], config?: StoreConfig) {
     super(config);
     if (entities) {
+      //This calls notifyAll
+      //also constructing the delta so we don't need to do it again ...
       this.postA(entities);
+      /*
       const delta: Delta<E> = {
         type: ActionTypes.INTIALIZE,
         entries: entities
       };
-      this.notifyAll(entities, delta);
+      */
+      //    this.notifyAll(entities, delta);
     } else {
       const delta: Delta<E> = { type: ActionTypes.INTIALIZE, entries: [] };
       this.notifyAll([], delta);
@@ -68,7 +71,7 @@ let store: EStore<Todo> = new EStore<Todo>(todosFactory());
     super.destroy()
     this.notifyLoading.complete()
     this.notifyActive.complete()
-    this.slices.forEach(slice=>slice.destroy())
+    this.slices.forEach(slice => slice.destroy())
   }
 
   /**
@@ -101,7 +104,7 @@ estore.toggle(todo);
    * An Observable<E[]> reference so that 
    * 
    */
-  public observable:Observable<E[]> = this.observe()
+  public observable: Observable<E[]> = this.observe()
 
   /**
    * Notifies observers when the store is empty.
@@ -194,6 +197,15 @@ deleteActive(todo2);
     return this.notifyActive.asObservable()
   }
 
+
+
+
+
+
+  //================================================
+  // LOADING
+  //================================================
+
   /**
    * Notifies observers when the store is loading.
    * 
@@ -248,7 +260,7 @@ deleteActive(todo2);
   */
   public observeLoading() {
     return this.notifyLoading.asObservable().
-    pipe(takeWhile(v=>v, true));
+      pipe(takeWhile(v => v, true));
   }
 
   /**
@@ -256,9 +268,106 @@ deleteActive(todo2);
    */
   public observeLoadingComplete() {
     return this.observeLoading().pipe(
-      filter(loading => loading == false),  
-      switchMap(()=>of(true)))      
+      filter(loading => loading == false),
+      switchMap(() => of(true)))
   }
+
+
+
+
+
+
+  //================================================
+  // SEARCHING
+  //================================================
+
+  /**
+   * Notifies observers that a search is in progress.
+   * 
+   * This is a common pattern found when implementing
+   * `Observable` data sources.
+   */
+  private notifySearching = new ReplaySubject<boolean>(1);
+
+  /**
+   * The current `searching` state.  Use `searching`
+   * for example to display a spinnner 
+   * when performing a search.  
+   * The default `searching` state is `false`.
+   */
+  private _searching: boolean = false;
+
+  /**
+   * Sets the current searching state and notifies observers.
+   */
+  set searching(searching: boolean) {
+    this._searching = searching;
+    this.notifySearching.next(this._searching);
+  }
+
+  /**
+   * @return A snapshot of the searching state.
+   */
+  get searching() {
+    return this._searching;
+  }
+
+  /**
+   * Observe searching.
+   * @example
+     <pre>
+    let searching$ = source.observeSearching();
+    </pre>
+  
+    Note that this obverable piped through
+    `takeWhile(v->v, true), such that it will 
+    complete after each emission.
+  
+    See:
+    https://medium.com/@ole.ersoy/waiting-on-estore-to-load-8dcbe161613c
+  
+    For more details.
+  */
+  public observeSearching() {
+    return this.notifySearching.asObservable().
+      pipe(takeWhile(v => v, true));
+  }
+
+  /**
+   * Notfiies when searching has completed.
+   */
+  public observeSearchingComplete() {
+    return this.observeSearching().pipe(
+      filter(searching => searching == false),
+      switchMap(() => of(true)))
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   /**
@@ -443,10 +552,10 @@ store.delete(todo1]);
   delete(e: E) {
     this.deleteActive(e);
     const guid = (<any>e)[this.GUID_KEY];
-     this.entries.delete(guid);
+    this.entries.delete(guid);
     this.deleteIDEntry(e);
     Array.from(this.slices.values()).forEach(s => {
-       s.entries.delete(guid);
+      s.entries.delete(guid);
     });
     //Create a new array reference to trigger Angular change detection.
     let v: E[] = [...Array.from(this.entries.values())];
