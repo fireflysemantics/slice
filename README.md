@@ -2,6 +2,11 @@
 
 ![Slice](logo/slicelogo.png)
 
+# Development Center
+
+- [Recreating the Ngrx Demo with Slice](https://developer.fireflysemantics.com/guides/guides--recreating-the-ngrx-demo-app-with-firefly-semantics-slice-state-manager)
+
+
 # Install
 
 Install Slice with peer dependencies:
