@@ -207,6 +207,11 @@ deleteActive(todo2);
   //================================================
 
   /**
+   * Observable of errors occurred during a load request.
+   */
+  public loadingError:Observable<any>;
+
+  /**
    * Notifies observers when the store is loading.
    * 
    * This is a common pattern found when implementing
@@ -280,6 +285,10 @@ deleteActive(todo2);
   //================================================
   // SEARCHING
   //================================================
+  /**
+   * Observable of errors occurred during a search request.
+   */
+  public searchError:Observable<any>;
 
   /**
    * Notifies observers that a search is in progress.

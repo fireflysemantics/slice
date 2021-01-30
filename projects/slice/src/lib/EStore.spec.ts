@@ -44,6 +44,26 @@ it("should toggle the loading indicator and make it observable", () => {
   });
 });
 
+
+/**
+ * CONCERN: Utility API
+ * PROPERTY: `searching`
+ */
+it("should toggle the searching indicator and make it observable", () => {
+  let store: EStore<Todo> = new EStore<Todo>();
+  store.searching = true;
+  expect(store.searching).toBeTruthy();
+  store.searching = false;
+  expect(store.searching).toBeFalsy();
+  store.searching = true;
+  let l:Observable<boolean> = store.observeSearching(); 
+  l.subscribe(searching=> {
+    expect(searching).toEqual(true);
+  });
+});
+
+
+
 /**
  * CONCERN: Active State
  * METHODS: `addActive` and `deleteActive`. 
