@@ -48,6 +48,14 @@ export class OStore<E> {
         }
     }
 
+   /**
+    * Clear all entries
+    */
+    public clear() {
+        this.entries.clear()
+    }
+
+
     /**
      * Map of Key Value pair entries
      * containing values store in this store.
