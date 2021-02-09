@@ -33,6 +33,14 @@ it.only("should constructor initialize the OStore instance", () => {
   expect(os.snapshot(START.K3)).toEqual(START.K3.value)  
 });
 
+test('exists', () => { 
+  let os:OStore<ISTART> = new OStore(START)
+  expect(os.exists(os.S.K1)).toBeTruthy()
+  expect(os.exists("NOTKEYED")).toBeFalsy()
+  os.put(os.S.K1, null)
+  expect(os.exists(os.S.K1)).toBeFalsy()
+})
+
 test('the observable ', done => {
 
   let os:OStore<ISTART> = new OStore(START)
