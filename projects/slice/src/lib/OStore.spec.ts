@@ -23,7 +23,7 @@ interface ISTART {
  * CONCERN: OStore Initialization
  * METHODs: `constructor`
  */
-it.only("should constructor initialize the OStore instance", () => { 
+it("should constructor initialize the OStore instance", () => { 
   
   let os:OStore<ISTART> = new OStore(START)
 
@@ -38,6 +38,8 @@ test('exists', () => {
   expect(os.exists(os.S.K1)).toBeTruthy()
   expect(os.exists("NOTKEYED")).toBeFalsy()
   os.put(os.S.K1, null)
+  expect(os.exists(os.S.K1)).toBeFalsy()
+  os.put(os.S.K1, undefined)
   expect(os.exists(os.S.K1)).toBeFalsy()
 })
 

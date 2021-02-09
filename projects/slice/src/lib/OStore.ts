@@ -116,7 +116,7 @@ export class OStore<E> {
       * @return True if the entry exists ( Is not null or undefined ) and false otherwise.
       */
     public exists(key: any): boolean {
-        return this.entries.get(key) == null
+        return this.entries.get(key) != null
     }
 
     /**
