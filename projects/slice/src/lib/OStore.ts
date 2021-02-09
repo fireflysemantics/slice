@@ -52,7 +52,7 @@ export class OStore<E> {
      * Map of Key Value pair entries
      * containing values store in this store.
      */
-    private entries: Map<any, any> = new Map()
+    public entries: Map<any, any> = new Map()
 
     /**
      * Map of replay subject id to `ReplaySubject` instance.
