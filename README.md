@@ -4,6 +4,7 @@
 
 # Development Center
 
+- [A Guide to the Firefly Semantics Slice Reactive Object Store](https://developer.fireflysemantics.com/guides/guides--a-guide-to-the-firefly-semantics-slice-object-store)
 - [Recreating the Ngrx Demo with Slice](https://developer.fireflysemantics.com/guides/guides--recreating-the-ngrx-demo-app-with-firefly-semantics-slice-state-manager)
 
 
