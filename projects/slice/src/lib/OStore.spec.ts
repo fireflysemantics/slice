@@ -33,6 +33,13 @@ it("should constructor initialize the OStore instance", () => {
   expect(os.snapshot(START.K3)).toEqual(START.K3.value)  
 });
 
+test('clear', () => { 
+  let os:OStore<ISTART> = new OStore(START)
+  expect(os.isEmpty()).toBeFalsy()
+  os.clear()
+  expect(os.isEmpty()).toBeTruthy()
+})
+
 test('exists', () => { 
   let os:OStore<ISTART> = new OStore(START)
   expect(os.exists(os.S.K1)).toBeTruthy()
