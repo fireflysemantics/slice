@@ -1,5 +1,5 @@
-export class StoreConfig {
-    idKey: string = 'id';
-    guidKey: string = 'guid';
+export interface StoreConfig {
+    idKey: string;
+    guidKey: string;
 };
   
