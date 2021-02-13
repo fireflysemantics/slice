@@ -23,7 +23,7 @@ Install Slice with peer dependencies:
 npm i @fireflysemantics/slice tslib rxjs nanoid
 ```
 
-# Features
+# Overview
 
 Lightweight Reactive Server, Mobile, and Web Application State Management Built with `RxJS` and `Typescript`.  
 
