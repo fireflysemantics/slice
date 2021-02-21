@@ -8,6 +8,8 @@
 - [Introduction to the Firefly Semantics Slice Reactive Entity Store ](https://developer.fireflysemantics.com/guides/guides--introduction-to-the-firefly-semantics-slice-reactive-entity-store)
 - [Recreating the Ngrx Demo with Slice](https://developer.fireflysemantics.com/guides/guides--recreating-the-ngrx-demo-app-with-firefly-semantics-slice-state-manager)
 - [Changing the Firefly Semantics Slice EStore Default Configuration](https://developer.fireflysemantics.com/tasks/tasks--slice--changing-the-fireflysemantics-slice-estore-default-configuration)
+- [Observing the Currently Active Entities with Slice](https://developer.fireflysemantics.com/tasks/tasks--slice--observing-currently-active-entities-with-slice) 
+
 
 # API Documentation
 
