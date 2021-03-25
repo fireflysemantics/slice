@@ -2,21 +2,6 @@
 
 ![Slice](logo/slicelogo.png)
 
-# Firefly Semantics Slice Development Center Documentation
-
-- [A Guide to the Firefly Semantics Slice Reactive Object Store](https://developer.fireflysemantics.com/guides/guides--a-guide-to-the-firefly-semantics-slice-object-store)
-- [Introduction to the Firefly Semantics Slice Reactive Entity Store ](https://developer.fireflysemantics.com/guides/guides--introduction-to-the-firefly-semantics-slice-reactive-entity-store)
-- [Recreating the Ngrx Demo with Slice](https://developer.fireflysemantics.com/guides/guides--recreating-the-ngrx-demo-app-with-firefly-semantics-slice-state-manager)
-- [Changing the Firefly Semantics Slice EStore Default Configuration](https://developer.fireflysemantics.com/tasks/tasks--slice--changing-the-fireflysemantics-slice-estore-default-configuration)
-- [Observing the Currently Active Entities with Slice](https://developer.fireflysemantics.com/tasks/tasks--slice--observing-currently-active-entities-with-slice) 
-
-
-# API Documentation
-
-See [Typedoc API Documentation](https://fireflysemantics.github.io/slice/doc/)
-
-The documentation for the API includes simple examples of how to apply the API to a use case.
-
 # Install
 
 Install Slice with peer dependencies:
@@ -24,6 +9,33 @@ Install Slice with peer dependencies:
 ```
 npm i @fireflysemantics/slice tslib rxjs nanoid
 ```
+
+# Firefly Semantics Slice Development Center Documentation
+
+## Guides
+
+- [A Guide to the Firefly Semantics Slice Reactive Object Store](https://developer.fireflysemantics.com/guides/guides--a-guide-to-the-firefly-semantics-slice-object-store)
+- [Introduction to the Firefly Semantics Slice Reactive Entity Store ](https://developer.fireflysemantics.com/guides/guides--introduction-to-the-firefly-semantics-slice-reactive-entity-store)
+- [Recreating the Ngrx Demo with Slice](https://developer.fireflysemantics.com/guides/guides--recreating-the-ngrx-demo-app-with-firefly-semantics-slice-state-manager)
+
+## Tasks
+
+- [Changing the Firefly Semantics Slice EStore Default Configuration](https://developer.fireflysemantics.com/tasks/tasks--slice--changing-the-fireflysemantics-slice-estore-default-configuration)
+- [Observing the Currently Active Entities with Slice](https://developer.fireflysemantics.com/tasks/tasks--slice--observing-currently-active-entities-with-slice) 
+- [Derived Reactive Observable State with Slice](https://developer.fireflysemantics.com/tasks/tasks--slice--derived-reactive-observable-state-with-slice)
+- [Reactive Event Driven Actions with Firefly Semantics Slice](https://developer.fireflysemantics.com/tasks/tasks--slice--reactive-event-driven-actions-with-firefly-semantics-slice)
+- [Unsubscribing From Firefly Semantics Slice Object Store Observables in Angular](https://developer.fireflysemantics.com/tasks/tasks--slice--unsubscribing-from-firefly-semantics-slice-object-store-observables-in-angular)
+
+## Examples
+
+- [Minimal Slice Object Store](https://developer.fireflysemantics.com/examples/examples--slice--minimal-slice-object-store)
+- [Minimal Angular Slice Object Store State Service](https://developer.fireflysemantics.com/examples/examples--slice--minial-angular-slice-object-store-state-service)
+
+# API Documentation
+
+See [Typedoc API Documentation](https://fireflysemantics.github.io/slice/doc/)
+
+The documentation for the API includes simple examples of how to apply the API to a use case.
 
 # Overview
 
