@@ -1,0 +1,280 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@fireflysemantics/slice</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@fireflysemantics/slice</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>@fireflysemantics/slice</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<p><a href="https://travis-ci.org/fireflysemantics/slice"><img src="https://travis-ci.org/fireflysemantics/slice.svg?branch=master" alt="Build Status"></a></p>
+				<p><img src="logo/slicelogo.png" alt="Slice"></p>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h1>Install</h1>
+				</a>
+				<p>Install Slice with peer dependencies:</p>
+				<pre><code><span class="hljs-built_in">npm</span> i @fireflysemantics/slice tslib rxjs nanoid</code></pre>
+				<a href="#firefly-semantics-slice-development-center-documentation" id="firefly-semantics-slice-development-center-documentation" style="color: inherit; text-decoration: none;">
+					<h1>Firefly Semantics Slice Development Center Documentation</h1>
+				</a>
+				<a href="#guides" id="guides" style="color: inherit; text-decoration: none;">
+					<h2>Guides</h2>
+				</a>
+				<ul>
+					<li><a href="https://developer.fireflysemantics.com/guides/guides--a-guide-to-the-firefly-semantics-slice-object-store">A Guide to the Firefly Semantics Slice Reactive Object Store</a></li>
+					<li><a href="https://developer.fireflysemantics.com/guides/guides--introduction-to-the-firefly-semantics-slice-reactive-entity-store">Introduction to the Firefly Semantics Slice Reactive Entity Store </a></li>
+					<li><a href="https://developer.fireflysemantics.com/guides/guides--recreating-the-ngrx-demo-app-with-firefly-semantics-slice-state-manager">Recreating the Ngrx Demo with Slice</a></li>
+				</ul>
+				<a href="#tasks" id="tasks" style="color: inherit; text-decoration: none;">
+					<h2>Tasks</h2>
+				</a>
+				<ul>
+					<li><a href="https://developer.fireflysemantics.com/tasks/tasks--slice--changing-the-fireflysemantics-slice-estore-default-configuration">Changing the Firefly Semantics Slice EStore Default Configuration</a></li>
+					<li><a href="https://developer.fireflysemantics.com/tasks/tasks--slice--observing-currently-active-entities-with-slice">Observing the Currently Active Entities with Slice</a> </li>
+					<li><a href="https://developer.fireflysemantics.com/tasks/tasks--slice--derived-reactive-observable-state-with-slice">Derived Reactive Observable State with Slice</a></li>
+					<li><a href="https://developer.fireflysemantics.com/tasks/tasks--slice--reactive-event-driven-actions-with-firefly-semantics-slice">Reactive Event Driven Actions with Firefly Semantics Slice</a></li>
+					<li><a href="https://developer.fireflysemantics.com/tasks/tasks--slice--unsubscribing-from-firefly-semantics-slice-object-store-observables-in-angular">Unsubscribing From Firefly Semantics Slice Object Store Observables in Angular</a></li>
+					<li><a href="https://developer.fireflysemantics.com/tasks/tasks--slice--creating-proxies-to-slice-object-store-observables">Creating Proxies to Slice Object Store Observables</a></li>
+				</ul>
+				<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+					<h2>Examples</h2>
+				</a>
+				<ul>
+					<li><a href="https://developer.fireflysemantics.com/examples/examples--slice--minimal-slice-object-store">Minimal Slice Object Store</a></li>
+					<li><a href="https://developer.fireflysemantics.com/examples/examples--slice--minial-angular-slice-object-store-state-service">Minimal Angular Slice Object Store State Service</a></li>
+				</ul>
+				<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
+					<h1>API Documentation</h1>
+				</a>
+				<p>See <a href="https://fireflysemantics.github.io/slice/doc/">Typedoc API Documentation</a></p>
+				<p>The documentation for the API includes simple examples of how to apply the API to a use case.</p>
+				<a href="#overview" id="overview" style="color: inherit; text-decoration: none;">
+					<h1>Overview</h1>
+				</a>
+				<p>Lightweight Reactive Server, Mobile, and Web Application State Management Built with <code>RxJS</code> and <code>Typescript</code>.  </p>
+				<p>The API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.</p>
+				<p>It offers two types of reactive data stores:</p>
+				<ul>
+					<li>Entity stores (EStore<E>) for structured entity like data (Customer, Product, User, ...)</li>
+					<li>Entity stores can be &quot;Live filtered&quot; by adding slices.  For example separating Todo entities into complete and incomplete compartments.  Slices are also obserable.</li>
+					<li>Object store (Key value store) for unstructured data</li>
+				</ul>
+				<p>Even though Angular is used for prototype applications, it should work well for:</p>
+				<ul>
+					<li>Single page applications</li>
+					<li>Progressive web applications</li>
+					<li>React applications</li>
+					<li>Node applications / Pure Javascript Applications</li>
+					<li>Mobile Applications</li>
+				</ul>
+				<a href="#build" id="build" style="color: inherit; text-decoration: none;">
+					<h2>Build</h2>
+				</a>
+				<p>Run <code>npm run c</code> to build the project. The build artifacts will be stored in the <code>dist/</code> directory.</p>
+				<a href="#running-unit-tests" id="running-unit-tests" style="color: inherit; text-decoration: none;">
+					<h2>Running unit tests</h2>
+				</a>
+				<p>Run <code>ng test</code> to execute the unit tests via <a href="https://jestjs.io/">Jest</a>.</p>
+				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+					<h2>Features</h2>
+				</a>
+				<ul>
+					<li>Live Stackblitz demoes</li>
+					<li><a href="https://fireflysemantics.github.io/slice/doc/">Typedoc with inlined examples</a></li>
+					<li><a href="https://github.com/fireflysemantics/slice/tree/master/src">Well documented test cases run with Jest - Each file has a corresponding <code>.spec</code> file</a></li>
+					<li>Stream both Entity and Object Stores for UI Updates via RxJS</li>
+					<li>Define entities using Typescript classes, interfaces, or types</li>
+					<li><a href="https://medium.com/@ole.ersoy/monitoring-the-currently-active-entity-with-slice-ff7c9b7826e8">Active state tracking</a></li>
+					<li><a href="https://medium.com/@ole.ersoy/optimistic-user-identity-management-with-slice-a2b66efe780c">Supports for Optimistic User Interfaces</a></li>
+					<li>RESTful API for performing CRUD operations that stream both full and delta updates</li>
+					<li>Dynamic creation of both object and entity stores</li>
+					<li>Observable delta updates for Entities</li>
+					<li>Real time application of Slice <code>Predicate&lt;E&gt;</code> filtering that is <code>Observable</code></li>
+					<li><code>Predicate</code> based snapshots of entities</li>
+					<li>Observable <code>count</code> of entities in the entity store.  The <code>count</code> feature can also be <code>Predicate</code> filtered.</li>
+					<li>Configurable global id (Client side id - <code>gid</code>) and server id (<code>id</code>) id property names for entities. </li>
+					<li>The stream of entities can be sorted via an optional boolean expression passed to <code>observe</code>.</li>
+				</ul>
+				<a href="#stackblitz-todo-entity-store-demo" id="stackblitz-todo-entity-store-demo" style="color: inherit; text-decoration: none;">
+					<h1>Stackblitz Todo Entity Store Demo</h1>
+				</a>
+				<p><a href="https://stackblitz.com/edit/slice-todo-1329">https://stackblitz.com/edit/slice-todo-1329</a></p>
+				<a href="#tests" id="tests" style="color: inherit; text-decoration: none;">
+					<h2>Tests</h2>
+				</a>
+				<p>See the <a href="https://github.com/fireflysemantics/slice/">test cases</a>.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_abstractstore_.html">&quot;<wbr>Abstract<wbr>Store&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_estore_.html">&quot;EStore&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_entity_.html">&quot;<wbr>Entity&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_ostore_.html">&quot;OStore&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_slice_.html">&quot;<wbr>Slice&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_storeconfig_.html">&quot;<wbr>Store<wbr>Config&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_constants_.html">&quot;constants&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_index_.html">&quot;index&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_setup_.html">&quot;test-<wbr>setup&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_types_.html">&quot;types&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_utilities_.html">&quot;utilities&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
