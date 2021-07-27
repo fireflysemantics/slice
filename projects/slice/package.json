@@ -1,6 +1,6 @@
 {
   "name": "@fireflysemantics/slice",
-  "version": "13.0.43",
+  "version": "13.0.48",
   "author": "Ole Ersoy",
   "license": "MIT",
   "bugs": {
@@ -24,11 +24,10 @@
     "Observables",
     "Multicasting"
   ],
-  "dependencies": {},
   "peerDependencies": {
-    "rxjs": "*",
-    "tslib": "*",
     "@types/nanoid": "*",
-    "nanoid": "*"
+    "nanoid": "*",
+    "rxjs": "*",
+    "tslib": "*"
   }
 }

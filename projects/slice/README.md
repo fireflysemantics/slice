@@ -26,6 +26,9 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 - [Reactive Event Driven Actions with Firefly Semantics Slice](https://developer.fireflysemantics.com/tasks/tasks--slice--reactive-event-driven-actions-with-firefly-semantics-slice)
 - [Unsubscribing From Firefly Semantics Slice Object Store Observables in Angular](https://developer.fireflysemantics.com/tasks/tasks--slice--unsubscribing-from-firefly-semantics-slice-object-store-observables-in-angular)
 - [Creating Proxies to Slice Object Store Observables](https://developer.fireflysemantics.com/tasks/tasks--slice--creating-proxies-to-slice-object-store-observables)
+- [Getting a Snapshot of a Slice Object Store Value](https://developer.fireflysemantics.com/tasks/tasks--slice--getting-a-snapshot-of-a-slice-object-store-value)
+- [Accessing Slice Object Store Observables In Angular Templates](https://developer.fireflysemantics.com/tasks/tasks--slice--accessing-slice-object-store-observables-in-angular-templates)
+
 
 ## Examples
 
