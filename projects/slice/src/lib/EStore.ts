@@ -263,7 +263,7 @@ deleteActive(todo2);
 
     For more details.
   */
-  public observeLoading() {
+  public observeLoading():Observable<boolean> {
     return this.notifyLoading.asObservable().
       pipe(takeWhile(v => v, true));
   }
