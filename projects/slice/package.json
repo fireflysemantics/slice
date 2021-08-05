@@ -1,11 +1,33 @@
 {
-  "name": "slice",
-  "version": "0.0.1",
-  "peerDependencies": {
-    "@angular/common": "^12.1.0",
-    "@angular/core": "^12.1.0"
+  "name": "@fireflysemantics/slice",
+  "version": "14.0.3",
+  "author": "Ole Ersoy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fireflysemantics/slice/issues"
   },
-  "dependencies": {
-    "tslib": "^2.2.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fireflysemantics/slice.git"
+  },
+  "keywords": [
+    "Light Weight",
+    "Javascript",
+    "Typescript",
+    "Angular",
+    "React",
+    "Vue",
+    "State",
+    "Query",
+    "Reactive",
+    "RxJS",
+    "Observables",
+    "Multicasting"
+  ],
+  "peerDependencies": {
+    "@types/nanoid": "*",
+    "nanoid": "*",
+    "rxjs": "*",
+    "tslib": "*"
   }
 }

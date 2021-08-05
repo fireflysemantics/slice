@@ -1,27 +1,95 @@
-# Slice
+[![Build Status](https://travis-ci.org/fireflysemantics/slice.svg?branch=master)](https://travis-ci.org/fireflysemantics/slice)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.2.
+![Slice](slicelogo.png)
 
-## Development server
+# Install
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Install Slice with peer dependencies:
 
-## Code scaffolding
+```
+npm i @fireflysemantics/slice tslib rxjs nanoid
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Firefly Semantics Slice Development Center Documentation
+
+## Guides
+
+- [A Guide to the Firefly Semantics Slice Reactive Object Store](https://developer.fireflysemantics.com/guides/guides--a-guide-to-the-firefly-semantics-slice-object-store)
+- [Introduction to the Firefly Semantics Slice Reactive Entity Store ](https://developer.fireflysemantics.com/guides/guides--introduction-to-the-firefly-semantics-slice-reactive-entity-store)
+- [Recreating the Ngrx Demo with Slice](https://developer.fireflysemantics.com/guides/guides--recreating-the-ngrx-demo-app-with-firefly-semantics-slice-state-manager)
+
+## Tasks
+
+- [Changing the Firefly Semantics Slice EStore Default Configuration](https://developer.fireflysemantics.com/tasks/tasks--slice--changing-the-fireflysemantics-slice-estore-default-configuration)
+- [Observing the Currently Active Entities with Slice](https://developer.fireflysemantics.com/tasks/tasks--slice--observing-currently-active-entities-with-slice) 
+- [Derived Reactive Observable State with Slice](https://developer.fireflysemantics.com/tasks/tasks--slice--derived-reactive-observable-state-with-slice)
+- [Reactive Event Driven Actions with Firefly Semantics Slice](https://developer.fireflysemantics.com/tasks/tasks--slice--reactive-event-driven-actions-with-firefly-semantics-slice)
+- [Unsubscribing From Firefly Semantics Slice Object Store Observables in Angular](https://developer.fireflysemantics.com/tasks/tasks--slice--unsubscribing-from-firefly-semantics-slice-object-store-observables-in-angular)
+- [Creating Proxies to Slice Object Store Observables](https://developer.fireflysemantics.com/tasks/tasks--slice--creating-proxies-to-slice-object-store-observables)
+- [Getting a Snapshot of a Slice Object Store Value](https://developer.fireflysemantics.com/tasks/tasks--slice--getting-a-snapshot-of-a-slice-object-store-value)
+- [Accessing Slice Object Store Observables In Angular Templates](https://developer.fireflysemantics.com/tasks/tasks--slice--accessing-slice-object-store-observables-in-angular-templates)
+
+
+## Examples
+
+- [Minimal Slice Object Store](https://developer.fireflysemantics.com/examples/examples--slice--minimal-slice-object-store)
+- [Minimal Angular Slice Object Store State Service](https://developer.fireflysemantics.com/examples/examples--slice--minial-angular-slice-object-store-state-service)
+
+# API Documentation
+
+See [Typedoc API Documentation](https://fireflysemantics.github.io/slice/doc/)
+
+The documentation for the API includes simple examples of how to apply the API to a use case.
+
+# Overview
+
+Lightweight Reactive Server, Mobile, and Web Application State Management Built with `RxJS` and `Typescript`.  
+
+The API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.
+
+It offers two types of reactive data stores:
+- Entity stores (EStore<E>) for structured entity like data (Customer, Product, User, ...)
+- Entity stores can be "Live filtered" by adding slices.  For example separating Todo entities into complete and incomplete compartments.  Slices are also obserable.
+- Object store (Key value store) for unstructured data
+
+Even though Angular is used for prototype applications, it should work well for:
+- Single page applications
+- Progressive web applications
+- React applications
+- Node applications / Pure Javascript Applications
+- Mobile Applications
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run c` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test` to execute the unit tests via [Jest](https://jestjs.io/).
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Features
 
-## Further help
+- Live Stackblitz demoes
+- [Typedoc with inlined examples](https://fireflysemantics.github.io/slice/doc/)
+- [Well documented test cases run with Jest - Each file has a corresponding `.spec` file](https://github.com/fireflysemantics/slice/tree/master/src)
+- Stream both Entity and Object Stores for UI Updates via RxJS
+- Define entities using Typescript classes, interfaces, or types
+- [Active state tracking](https://medium.com/@ole.ersoy/monitoring-the-currently-active-entity-with-slice-ff7c9b7826e8)
+- [Supports for Optimistic User Interfaces](https://medium.com/@ole.ersoy/optimistic-user-identity-management-with-slice-a2b66efe780c)
+- RESTful API for performing CRUD operations that stream both full and delta updates
+- Dynamic creation of both object and entity stores
+- Observable delta updates for Entities
+- Real time application of Slice `Predicate<E>` filtering that is `Observable`
+- `Predicate` based snapshots of entities
+- Observable `count` of entities in the entity store.  The `count` feature can also be `Predicate` filtered.
+- Configurable global id (Client side id - `gid`) and server id (`id`) id property names for entities. 
+- The stream of entities can be sorted via an optional boolean expression passed to `observe`.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Stackblitz Todo Entity Store Demo
+
+https://stackblitz.com/edit/slice-todo-1329
+
+## Tests
+
+See the [test cases](https://github.com/fireflysemantics/slice/).
