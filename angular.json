@@ -3,5 +3,35 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "slice": {
+      "projectType": "library",
+      "root": "projects/slice",
+      "sourceRoot": "projects/slice/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/slice/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/slice/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/slice/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "tsConfig": "projects/slice/tsconfig.spec.json"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "slice"
 }
