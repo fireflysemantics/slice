@@ -2,6 +2,12 @@
 
 ![Slice](slicelogo.png)
 
+# @fireflysemantics/slice
+
+Lightweight Javascript Reactive State Management for Web Applications.
+
+If you like the [@fireflysemantics/slice API](https://fireflysemantics.github.io/slice/doc/) please star our [Github Repository](https://github.com/fireflysemantics/slice).
+
 # Install
 
 Install Slice with peer dependencies:
@@ -16,6 +22,7 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 
 - [An Introduction to the Firefly Semantics Slice Reactive Object Store](https://developer.fireflysemantics.com/guides/guides--introduction-to-the-firefly-semantics-slice-reactive-object-store)
 - [Introduction to the Firefly Semantics Slice Reactive Entity Store ](https://developer.fireflysemantics.com/guides/guides--introduction-to-the-firefly-semantics-slice-reactive-entity-store)
+- [Creating a Reactive Todo Application With the Firefly Semantics Slice State Manager](https://developer.fireflysemantics.com/guides/guides--slice--creating-a-reactive-todo-application-with-the-firefly-semantics-slice-state-manager)
 - [Recreating the Ngrx Demo with Slice](https://developer.fireflysemantics.com/guides/guides--recreating-the-ngrx-demo-app-with-firefly-semantics-slice-state-manager)
 
 ## Tasks

@@ -34,7 +34,7 @@ export class OStore<E extends KeyObsValueReset> {
 
     constructor(start: OStoreStart) {
         if (start) {
-            this.S = <any>start;
+            this.S = <E>start;
             const keys = Object.keys(start)
             keys.forEach((k) => {
                 const ovr = start[k] as ObsValueReset
