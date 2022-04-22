@@ -18,14 +18,52 @@ it("should constructor initialize the store", () => {
   expect(store.entries.size).toEqual(2);
 });
 
-test('the observable reference works', done => {
+it('should show that the observable reference works', done => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   expect(store.entries.size).toEqual(2);
-  store.observable.subscribe(todos => {
+  store.obs.subscribe(todos => {
     expect(todos.length).toEqual(2);
     done();
   })
 })
+
+/**
+ * CONCERN: Utility API
+ * METHODS: `findOne`. 
+ */
+ it("should findOne", () => {
+  let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
+  let store: EStore<Todo> = new EStore<Todo>();
+  store.post(todoOrNotTodo);
+  expect(store.findOne('1')!.complete).toBeFalsy();
+  expect(store.findOne('1')!.gid).toEqual('1');
+});
+
+/**
+ * CONCERN: Utility API
+ * METHODS: `findOneByID`. 
+ */
+it("should findByID", () => {
+  let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
+  let todoOrNot = new Todo(false, "This is not in the store", '2');
+  todoOrNotTodo.id = '1';
+  todoOrNot.id = '2';
+  let store: EStore<Todo> = new EStore<Todo>();
+  store.post(todoOrNotTodo);
+  expect(store.findOneByID('1')!.complete).toBeFalsy();
+  expect(store.findOneByID('1')!.id).toEqual('1');
+  store = new EStore<Todo>();
+  store.postA([todoOrNotTodo, todoOrNot]);
+  expect(store.findOneByID('1')!.complete).toBeFalsy();
+  expect(store.findOneByID('1')!.id).toEqual('1');
+  expect(store.findOneByID('2')!.id).toEqual('2');
+  store = new EStore<Todo>();
+  store.postN(todoOrNotTodo, todoOrNot);
+  expect(store.findOneByID('1')!.complete).toBeFalsy();
+  expect(store.findOneByID('1')!.id).toEqual('1');
+  expect(store.findOneByID('2')!.id).toEqual('2');
+});
+
 
 /**
  * CONCERN: Utility API
@@ -64,8 +102,6 @@ it("should toggle the searching indicator and make it observable", (done) => {
   });
 });
 
-
-
 /**
  * CONCERN: Active State
  * METHODS: `addActive` and `deleteActive`. 
@@ -96,37 +132,6 @@ it("should add and delete active state", () => {
   expect(store.entries.size).toEqual(2);
 });
 
-
-/**
- * CONCERN: Active State
- * METHODS: `addActive` and `deleteActive`. 
- */
-it("should add and delete active state", (done) => {
-  let store: EStore<Todo> = new EStore<Todo>();
-  expect(store.active.size).toEqual(0);
-  let todo1: Todo = new Todo(false, "The first Todo!", GUID());
-  let todo2: Todo = new Todo(false, "The first Todo!", GUID());
-  //Will add the entity if it's not contained in the store.
-  store.addActive(todo1);
-  expect(store.active.size).toEqual(1);
-  store.post(todo1);
-  store.post(todo2);
-  store.addActive(todo1);
-  expect(store.active.size).toEqual(1);
-  store.addActive(todo2);
-  let a: Observable<Map<string, Todo>> = store.observeActive();
-  let s = a.subscribe(active => {
-    expect(active.get(todo1.gid!)).toEqual(todo1);
-    expect(active.get(todo2.gid!)).toEqual(todo2);
-    done()
-  });
-  s.unsubscribe();
-  store.deleteActive(todo1);
-  expect(store.active.size).toEqual(1);
-  store.deleteActive(todo2);
-  expect(store.active.size).toEqual(0);
-  expect(store.entries.size).toEqual(2);
-});
 
 /**
  * CONCERN: Utility API
@@ -263,49 +268,13 @@ it("should show that two entities are using both equalsByGUID and equalsByID", (
   expect(store.equalsByID(todoOrNotTodo1, todoOrNotTodo2)).toBeTruthy();
 });
 
-/**
- * CONCERN: Utility API
- * METHODS: `findOne`. 
- */
-it("should findOne", () => {
-  let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
-  let store: EStore<Todo> = new EStore<Todo>();
-  store.post(todoOrNotTodo);
-  expect(store.findOne('1')!.complete).toBeFalsy();
-  expect(store.findOne('1')!.gid).toEqual('1');
-});
-
-/**
- * CONCERN: Utility API
- * METHODS: `findOneByID`. 
- */
-it("should findByID", () => {
-  let todoOrNotTodo = new Todo(false, "This is not in the store", '1');
-  let todoOrNot = new Todo(false, "This is not in the store", '2');
-  todoOrNotTodo.id = '1';
-  todoOrNot.id = '2';
-  let store: EStore<Todo> = new EStore<Todo>();
-  store.post(todoOrNotTodo);
-  expect(store.findOneByID('1')!.complete).toBeFalsy();
-  expect(store.findOneByID('1')!.id).toEqual('1');
-  store = new EStore<Todo>();
-  store.postA([todoOrNotTodo, todoOrNot]);
-  expect(store.findOneByID('1')!.complete).toBeFalsy();
-  expect(store.findOneByID('1')!.id).toEqual('1');
-  expect(store.findOneByID('2')!.id).toEqual('2');
-  store = new EStore<Todo>();
-  store.postN(todoOrNotTodo, todoOrNot);
-  expect(store.findOneByID('1')!.complete).toBeFalsy();
-  expect(store.findOneByID('1')!.id).toEqual('1');
-  expect(store.findOneByID('2')!.id).toEqual('2');
-});
 
 
 /**
  * CONCERN: Utility API
  * METHODS: `findOneByID`. 
  */
-it("should add a slice to the storebe created with 1 complete todo element", () => {
+it("should add a slice to the store be created with 1 complete todo element", () => {
   let store: EStore<Todo> = new EStore<Todo>(todosFactory());
   store.addSlice(todo => todo.complete, TodoSliceEnum.COMPLETE);
   expect(

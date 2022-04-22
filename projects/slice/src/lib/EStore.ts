@@ -91,7 +91,7 @@ estore.toggle(todo);
    * An Observable<E[]> reference so that 
    * 
    */
-  public observable: Observable<E[]> = this.observe()
+  public obs: Observable<E[]> = this.observe()
 
   /**
    * Notifies observers when the store is empty.
@@ -339,12 +339,6 @@ deleteActive(todo2);
       filter(searching => searching == false),
       switchMap(() => of(true)))
   }
-
-
-
-
-
-
 
   /**
    * Store slices
