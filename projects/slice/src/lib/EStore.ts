@@ -88,12 +88,6 @@ estore.toggle(todo);
   }
 
   /**
-   * An Observable<E[]> reference so that 
-   * 
-   */
-  public obs: Observable<E[]> = this.observe()
-
-  /**
    * Notifies observers when the store is empty.
    */
   private notifyActive = new ReplaySubject<Map<string, E>>(1);

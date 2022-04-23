@@ -130,6 +130,16 @@ let todos$ = source.observe((a, b)=>(a.title > b.title ? -1 : 1));
   }
 
   /**
+   * An Observable<E[]> reference
+   * to the entities in the store or
+   * Slice instance.
+   * 
+   */
+   public obs: Observable<E[]> = this.observe()
+
+
+
+  /**
    * Observe delta updates.
    * @example
      <pre>
