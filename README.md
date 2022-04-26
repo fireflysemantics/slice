@@ -16,7 +16,7 @@ Install Slice with peer dependencies:
 npm i @fireflysemantics/slice tslib rxjs nanoid
 ```
 
-# Firefly Semantics Slice Development Center Documentation
+# Firefly Semantics Slice Development Center Media and Documentation
 
 ## Concepts
 
@@ -39,6 +39,14 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 - [Creating Proxies to Slice Object Store Observables](https://developer.fireflysemantics.com/tasks/tasks--slice--creating-proxies-to-slice-object-store-observables)
 - [Getting a Snapshot of a Slice Object Store Value](https://developer.fireflysemantics.com/tasks/tasks--slice--getting-a-snapshot-of-a-slice-object-store-value)
 - [Accessing Slice Object Store Observables In Angular Templates](https://developer.fireflysemantics.com/tasks/tasks--slice--accessing-slice-object-store-observables-in-angular-templates)
+
+## Youtube
+
+- [What is Reactive State Management](https://youtu.be/kEta1LBVw0c)
+- [An Introduction to the Firefly Semantics Slice Reactive Object Store](https://youtu.be/_3_mEKw3bM0)
+- [Introduction to the Firefly Semantics Slice Reactive Entity Store ](https://youtu.be/Boj3-va-TKk)
+- [Creating a Reactive Todo Application With the Firefly Semantics Slice State Manager](https://youtu.be/Y3AxSIiBdWg)
+- [Recreating the Ngrx Demo with Slice](https://youtu.be/4t95RvJSY_8)
 
 
 ## Examples
