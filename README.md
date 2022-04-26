@@ -18,13 +18,16 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 
 # Firefly Semantics Slice Development Center Documentation
 
+## Concepts
+
+- [What is Reactive State Management](https://developer.fireflysemantics.com/concepts/concepts--slice--what-is-reactive-state-management)
+
 ## Guides
 
 - [An Introduction to the Firefly Semantics Slice Reactive Object Store](https://developer.fireflysemantics.com/guides/guides--introduction-to-the-firefly-semantics-slice-reactive-object-store)
 - [Introduction to the Firefly Semantics Slice Reactive Entity Store ](https://developer.fireflysemantics.com/guides/guides--introduction-to-the-firefly-semantics-slice-reactive-entity-store)
 - [Creating a Reactive Todo Application With the Firefly Semantics Slice State Manager](https://developer.fireflysemantics.com/guides/guides--slice--creating-a-reactive-todo-application-with-the-firefly-semantics-slice-state-manager)
 - [Recreating the Ngrx Demo with Slice](https://developer.fireflysemantics.com/guides/guides--recreating-the-ngrx-demo-app-with-firefly-semantics-slice-state-manager)
-- [What is Reactive State Management](https://developer.fireflysemantics.com/concepts/concepts--slice--what-is-reactive-state-management)
 
 ## Tasks
 
