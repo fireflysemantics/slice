@@ -114,6 +114,7 @@ it("should add and delete active state", () => {
   //Will add the entity if it's not contained in the store.
   store.addActive(todo1);
   expect(store.active.size).toEqual(1);
+  expect(store.activeSnapshot().length).toEqual(1)
   store.post(todo1);
   store.post(todo2);
   store.addActive(todo1);

@@ -178,6 +178,17 @@ deleteActive(todo2);
     return this.notifyActive.asObservable()
   }
 
+  /**
+   * Observe the active entity.
+   * @example
+     <pre>
+    let active$ = source.activeSnapshot();
+    </pre>
+  */
+    public activeSnapshot() {
+      return Array.from(this.active.values())
+  }
+
 
   //================================================
   // LOADING
