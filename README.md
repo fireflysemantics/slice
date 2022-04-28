@@ -39,6 +39,8 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 - [Creating Proxies to Slice Object Store Observables](https://developer.fireflysemantics.com/tasks/tasks--slice--creating-proxies-to-slice-object-store-observables)
 - [Getting a Snapshot of a Slice Object Store Value](https://developer.fireflysemantics.com/tasks/tasks--slice--getting-a-snapshot-of-a-slice-object-store-value)
 - [Accessing Slice Object Store Observables In Angular Templates](https://developer.fireflysemantics.com/tasks/tasks--slice--accessing-slice-object-store-observables-in-angular-templates)
+- [Observing the Count of Items in a Firefly Semantics Slice Entity Store](https://developer.fireflysemantics.com/tasks/tasks--slice--observing-the-count-of-items-in-a-firefly-semantics-slice-entity-store)
+- [Setting and Observing Firefly Semantics Slice Entity Store Queries](https://developer.fireflysemantics.com/tasks/tasks--slice--setting-and-observing-firefly-semantics-slice-entity-store-queries)
 
 ## Youtube
 
@@ -47,7 +49,8 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 - [Introduction to the Firefly Semantics Slice Reactive Entity Store ](https://youtu.be/Boj3-va-TKk)
 - [Creating a Reactive Todo Application With the Firefly Semantics Slice State Manager](https://youtu.be/Y3AxSIiBdWg)
 - [Recreating the Ngrx Demo with Slice](https://youtu.be/4t95RvJSY_8)
-
+- [Setting and Observing the Firefly Semantics Slice Entity Store Query](https://youtu.be/_L5ya1CWaYU)
+- [Observing the Count of Items in a Firefly Semantics Slice Entity Store](https://youtu.be/5kqr_XW2QuI)
 
 ## Examples
 
