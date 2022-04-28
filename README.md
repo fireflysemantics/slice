@@ -108,10 +108,6 @@ Run `ng test` to execute the unit tests via [Jest](https://jestjs.io/).
 - Configurable global id (Client side id - `gid`) and server id (`id`) id property names for entities. 
 - The stream of entities can be sorted via an optional boolean expression passed to `observe`.
 
-# Stackblitz Todo Entity Store Demo
-
-https://stackblitz.com/edit/slice-todo-1329
-
 ## Tests
 
 See the [test cases](https://github.com/fireflysemantics/slice/).
