@@ -42,6 +42,9 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 - [Observing the Count of Items in a Firefly Semantics Slice Entity Store](https://developer.fireflysemantics.com/tasks/tasks--slice--observing-the-count-of-items-in-a-firefly-semantics-slice-entity-store)
 - [Setting and Observing Firefly Semantics Slice Entity Store Queries](https://developer.fireflysemantics.com/tasks/tasks--slice--setting-and-observing-firefly-semantics-slice-entity-store-queries)
 - [Taking a Count Snapshot of a Firefly Semantics Slice Entity Store](https://developer.fireflysemantics.com/tasks/tasks--slice--taking-a-count-snapshot-of-a-firefly-semantics-slice-entity-store)
+- [Taking a Query Snapshot of a Firefly Semantics Slice Entity Store](https://developer.fireflysemantics.com/tasks/tasks--slice--taking-a-query-snapshot-of-a-firefly-semantics-slice-entity-store)
+- [Adding Slices to an Firefly Semantics Slice Entity Store](https://developer.fireflysemantics.com/tasks/tasks--slice--adding-slices-to-the-firefly-semantics-entity-store)
+- [Adding Search To the Firefly Semantics Slice Angular Todo Application](https://developer.fireflysemantics.com/tasks/tasks--slice--adding-search-to-the-firefly-semantics-slice-angular-todo-application)
 
 ## Youtube
 
@@ -53,6 +56,11 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 - [Setting and Observing the Firefly Semantics Slice Entity Store Query](https://youtu.be/_L5ya1CWaYU)
 - [Observing the Count of Items in a Firefly Semantics Slice Entity Store](https://youtu.be/5kqr_XW2QuI)
 - [Taking a Count Snapshot of a Firefly Semantics Slice Entity Store](https://youtu.be/n37sz4LPV08)
+- [Taking a Query Snapshot of a Firefly Semantics Slice Entity Store](https://youtu.be/AFk5p0pNxSk)
+- [Adding Slices to an Firefly Semantics Slice Entity Store](https://youtu.be/z2U6OTAsc4I)
+- [Adding Search To the Firefly Semantics Slice Angular Todo Application](https://youtu.be/OkiBnU3Q6RU)
+- [Converting the Angular Todo Application From Materialize to Angular Material](https://youtu.be/GPfF31hwxQk)
+ 
 
 ## Examples
 
