@@ -31,6 +31,8 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 
 ## Tasks
 
+- [Creating a Minimal Slice Object Store](https://developer.fireflysemantics.com/examples/examples--slice--minimal-slice-object-store)
+- [Creating a Minimal Angular Slice Object Store Angular State Service ](https://developer.fireflysemantics.com/examples/examples--slice--minial-angular-slice-object-store-state-service)
 - [Changing the Firefly Semantics Slice EStore Default Configuration](https://developer.fireflysemantics.com/tasks/tasks--slice--changing-the-fireflysemantics-slice-estore-default-configuration)
 - [Observing the Currently Active Entities with Slice](https://developer.fireflysemantics.com/tasks/tasks--slice--observing-currently-active-entities-with-slice) 
 - [Derived Reactive Observable State with Slice](https://developer.fireflysemantics.com/tasks/tasks--slice--derived-reactive-observable-state-with-slice)
@@ -45,6 +47,9 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 - [Taking a Query Snapshot of a Firefly Semantics Slice Entity Store](https://developer.fireflysemantics.com/tasks/tasks--slice--taking-a-query-snapshot-of-a-firefly-semantics-slice-entity-store)
 - [Adding Slices to an Firefly Semantics Slice Entity Store](https://developer.fireflysemantics.com/tasks/tasks--slice--adding-slices-to-the-firefly-semantics-entity-store)
 - [Adding Search To the Firefly Semantics Slice Angular Todo Application](https://developer.fireflysemantics.com/tasks/tasks--slice--adding-search-to-the-firefly-semantics-slice-angular-todo-application)
+- [Firefly Semantics Slice Entity Store Active API Guide](https://developer.fireflysemantics.com/guides/guides--slice--managing-active-entities-with-firefly-semantics-slice)
+
+
 
 ## Youtube
 
@@ -60,6 +65,7 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 - [Adding Slices to an Firefly Semantics Slice Entity Store](https://youtu.be/z2U6OTAsc4I)
 - [Adding Search To the Firefly Semantics Slice Angular Todo Application](https://youtu.be/OkiBnU3Q6RU)
 - [Converting the Angular Todo Application From Materialize to Angular Material](https://youtu.be/GPfF31hwxQk)
+- [Firefly Semantics Slice Entity Store Active API Guide](https://youtu.be/fInpMcZ9Ry8)
  
 
 ## Examples
