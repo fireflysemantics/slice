@@ -28,6 +28,8 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 - [Introduction to the Firefly Semantics Slice Reactive Entity Store ](https://developer.fireflysemantics.com/guides/guides--introduction-to-the-firefly-semantics-slice-reactive-entity-store)
 - [Creating a Reactive Todo Application With the Firefly Semantics Slice State Manager](https://developer.fireflysemantics.com/guides/guides--slice--creating-a-reactive-todo-application-with-the-firefly-semantics-slice-state-manager)
 - [Recreating the Ngrx Demo with Slice](https://developer.fireflysemantics.com/guides/guides--recreating-the-ngrx-demo-app-with-firefly-semantics-slice-state-manager)
+- [Firefly Semantics Slice Entity Store Active API Guide](https://developer.fireflysemantics.com/guides/guides--slice--managing-active-entities-with-firefly-semantics-slice)
+
 
 ## Tasks
 
@@ -47,8 +49,8 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 - [Taking a Query Snapshot of a Firefly Semantics Slice Entity Store](https://developer.fireflysemantics.com/tasks/tasks--slice--taking-a-query-snapshot-of-a-firefly-semantics-slice-entity-store)
 - [Adding Slices to an Firefly Semantics Slice Entity Store](https://developer.fireflysemantics.com/tasks/tasks--slice--adding-slices-to-the-firefly-semantics-entity-store)
 - [Adding Search To the Firefly Semantics Slice Angular Todo Application](https://developer.fireflysemantics.com/tasks/tasks--slice--adding-search-to-the-firefly-semantics-slice-angular-todo-application)
-- [Firefly Semantics Slice Entity Store Active API Guide](https://developer.fireflysemantics.com/guides/guides--slice--managing-active-entities-with-firefly-semantics-slice)
-
+- [Comparing Firefly Semantics Slice Entities](https://developer.fireflysemantics.com/tasks/tasks--slice--comparing-firefly-semantics-slice-entities)
+- [Filtering Firefly Semantics Slice Object Store Observables by Property Value](https://developer.fireflysemantics.com/tasks/tasks--slice--filtering-firefly-semantics-slice-object-store-observables-by-property-value)
 
 
 ## Youtube
@@ -66,7 +68,8 @@ npm i @fireflysemantics/slice tslib rxjs nanoid
 - [Adding Search To the Firefly Semantics Slice Angular Todo Application](https://youtu.be/OkiBnU3Q6RU)
 - [Converting the Angular Todo Application From Materialize to Angular Material](https://youtu.be/GPfF31hwxQk)
 - [Firefly Semantics Slice Entity Store Active API Guide](https://youtu.be/fInpMcZ9Ry8)
- 
+- [Comparing Firefly Semantics Slice Entities](https://youtu.be/AYc3Pf9fSKg) 
+- [Derived Reactive Observable State with Slice](https://youtu.be/eDJkSgYhFIM)
 
 ## Examples
 

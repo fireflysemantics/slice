@@ -1,6 +1,6 @@
 import { ESTORE_CONFIG_DEFAULT } from "./AbstractStore";
 import { Observable, fromEvent, of } from 'rxjs'
-import { switchMap, pairwise, debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
+import { switchMap, pairwise, debounceTime, distinctUntilChanged, map, filter } from 'rxjs/operators'
 import { nanoid} from "nanoid"
 import { scrollPosition } from "./models/scrollPosition";
 
@@ -154,7 +154,7 @@ export function getActiveValue<E>(m: Map<any, E>) {
  * let keys = excludeKeys<Todo>(todo, ['id]);
  * // keys = ['description']
  */
-export function excludeKeys<E>(entity: E, exclude: string[]) {
+export function excludeKeys<E>(entity: any, exclude: string[]) {
   const keys: string[] = Object.keys(entity);
   return keys.filter((key) => {
     return exclude.indexOf(key) < 0;
@@ -233,4 +233,22 @@ export function mapEntity(keys:string[], entity:any) {
     result[k] = entity[k]
   })
   return result
+}
+
+/**
+ * Returns an `Observable<E>` instance that 
+ * filters for arguments where the property 
+ * value matches the provided value.
+ * 
+ * @param value The value targeted
+ * @param propertyName The name of the property to contain the value
+ * @param obs The Slice Object Store Observable
+ * @returns Observable<E>
+ */
+ export function onFilteredEvent<E>(
+  value: any,
+  propertyName: string,
+  obs: Observable<E>
+): Observable<E> {
+  return obs.pipe(filter((e:any) => !!(e && e[propertyName] === value)));
 }
