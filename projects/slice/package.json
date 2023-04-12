@@ -1,6 +1,6 @@
 {
   "name": "@fireflysemantics/slice",
-  "version": "15.0.19",
+  "version": "15.0.24",
   "dependencies": {
     "tslib": "^2.3.0"
   },
