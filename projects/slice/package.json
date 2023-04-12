@@ -1,6 +1,9 @@
 {
   "name": "@fireflysemantics/slice",
   "version": "15.0.19",
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
   "author": "Ole Ersoy",
   "license": "MIT",
   "bugs": {
@@ -29,5 +32,6 @@
     "nanoid": "*",
     "rxjs": "*",
     "tslib": "*"
-  }
+  },
+  "sideEffects": false
 }

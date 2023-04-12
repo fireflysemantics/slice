@@ -25,13 +25,16 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-builders/jest:run",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/slice/tsconfig.spec.json"
+            "tsConfig": "projects/slice/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }
     }
-  },
-  "defaultProject": "slice"
+  }
 }

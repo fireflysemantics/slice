@@ -8,7 +8,7 @@ export class Slice<E> extends AbstractStore<E> {
 
 
     /* The slice element entries */
-    public entries: Map<string, E> = new Map();
+    public override entries: Map<string, E> = new Map();
 
     /**
      * perform initial notification to all observers,

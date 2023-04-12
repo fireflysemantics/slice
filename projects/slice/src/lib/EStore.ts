@@ -54,7 +54,7 @@ let store: EStore<Todo> = new EStore<Todo>(todosFactory());
    * 
    * Call destroy when disposing of the store.
    */
-  destroy() {
+  override destroy() {
     super.destroy()
     this.notifyLoading.complete()
     this.notifyActive.complete()
@@ -677,7 +677,7 @@ store.reset();
    * @param v
    * @param delta
    */
-  protected notifyAll(v: E[], delta: Delta<E>) {
+  protected override notifyAll(v: E[], delta: Delta<E>) {
     super.notifyAll(v, delta);
     this.notifyLoading.next(this.loading);
   }
