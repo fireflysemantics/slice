@@ -1,5 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+/projects/slice/node_modules
+
 # compiled output
 /dist
 /tmp

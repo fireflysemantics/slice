@@ -2,6 +2,7 @@
   "name": "@fireflysemantics/slice",
   "version": "15.0.0",
   "scripts": {
+    "bootstrap": "npm run ig && npm i && cd projects/slice && npm-install-peers && npm i",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
