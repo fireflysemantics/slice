@@ -2,9 +2,7 @@
   "name": "@fireflysemantics/slice",
   "version": "15.2.1",
   "dependencies": {
-    "tslib": "^2.3.0",
-    "nanoid": "^5.0.3",
-    "@types/nanoid": "*"
+    "tslib": "^2.3.0"
   },
   "author": "Ole Ersoy",
   "license": "MIT",
@@ -28,6 +26,8 @@
     "Multicasting"
   ],
   "peerDependencies": {
+    "nanoid": "^5.0.3",
+    "@types/nanoid": "*"
   },
   "sideEffects": false
 }
