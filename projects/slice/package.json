@@ -1,8 +1,10 @@
 {
   "name": "@fireflysemantics/slice",
-  "version": "15.0.24",
+  "version": "15.2.1",
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "nanoid": "^5.0.3",
+    "@types/nanoid": "*"
   },
   "author": "Ole Ersoy",
   "license": "MIT",
@@ -18,8 +20,6 @@
     "Javascript",
     "Typescript",
     "Angular",
-    "React",
-    "Vue",
     "State",
     "Query",
     "Reactive",
@@ -28,10 +28,6 @@
     "Multicasting"
   ],
   "peerDependencies": {
-    "@types/nanoid": "*",
-    "nanoid": "*",
-    "rxjs": "*",
-    "tslib": "*"
   },
   "sideEffects": false
 }
