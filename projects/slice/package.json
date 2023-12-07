@@ -1,9 +1,9 @@
 {
-  "name": "slice",
-  "version": "0.0.1",
+  "name": "@fireflysemantics/slice",
+  "version": "16.2.10",
   "peerDependencies": {
-    "@angular/common": "^16.2.0",
-    "@angular/core": "^16.2.0"
+    "nanoid": "^5.0.4",
+    "@types/nanoid": "*"
   },
   "dependencies": {
     "tslib": "^2.3.0"
