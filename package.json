@@ -6,7 +6,13 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "ig": "npm install -g @jsdevtools/version-bump-prompt && npm install -g npm-check-updates && npm install -g npm-install-peers",
+    "c": "ng build slice",
+    "bp": "cd projects/slice && bump patch",
+    "p": "npm run cp && npm run bp && npm run c && cd dist/slice/ && npm publish",
+    "cp": "cp ./README.md projects/slice/",
+    "d": "typedoc --out doc --exclude **/*.spec.ts ./projects/slice/src/lib"
   },
   "private": true,
   "dependencies": {
