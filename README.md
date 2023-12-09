@@ -33,6 +33,8 @@ npm i @fireflysemantics/slice@lastest nanoid
 [Here is a link to the Stackblitz Demo](https://stackblitz.com/edit/typescript-9snt67?file=index.ts)
 containing all of the below examples. 
 
+In this demo we are using simple `string` values, but we could have used objects or essentially anything that can be referenced by Javascript.
+
 ```
 import {
   KeyObsValueReset,

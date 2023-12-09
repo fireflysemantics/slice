@@ -1,6 +1,6 @@
 {
   "name": "@fireflysemantics/slice",
-  "version": "17.0.3",
+  "version": "17.0.4",
   "peerDependencies": {
     "nanoid": "^5.0.4",
     "@types/nanoid": "*"
@@ -25,7 +25,7 @@
     "RxJS",
     "Observables",
     "Multicasting"
-  ],  
+  ],
   "dependencies": {
     "tslib": "^2.3.0"
   },
