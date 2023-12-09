@@ -71,7 +71,7 @@ it('should filter events', (done) => {
   const hildeEvents$: Observable<NamedEvent> = onFilteredEvent<NamedEvent>(
     'hilde',
     'name',
-    OS.S.event.obs
+    OS.S.event.obs!
   );
 
   OS.put(OS.S.event, { name: 'dagmar' });
