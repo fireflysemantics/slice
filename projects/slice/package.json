@@ -1,9 +1,10 @@
 {
   "name": "@fireflysemantics/slice",
-  "version": "17.0.4",
+  "version": "17.0.5",
   "peerDependencies": {
     "nanoid": "^5.0.4",
-    "@types/nanoid": "*"
+    "@types/nanoid": "*",
+    "rxjs": "*"
   },
   "author": "Ole Ersoy",
   "license": "MIT",
