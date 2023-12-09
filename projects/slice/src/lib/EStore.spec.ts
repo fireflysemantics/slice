@@ -2,10 +2,7 @@ import { Todo, TodoSliceEnum, todosFactory } from "./test-setup"
 import { GUID, search } from './utilities'
 import { EStore } from "./EStore"
 import { Slice } from "./Slice"
-import { Observable, combineLatest } from "rxjs"
-import { of } from 'rxjs'
-import { TestScheduler } from 'rxjs/testing';
-import { throttleTime } from 'rxjs/operators';
+import { Observable } from "rxjs"
 
 const { values } = Object;
 
