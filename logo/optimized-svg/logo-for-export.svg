@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100"
+   height="100"
+   viewBox="0 0 26.458333 26.458334"
+   version="1.1"
+   id="svg934"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="logo-for-export.svg">
+  <defs
+     id="defs928" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="92.499993"
+     inkscape:cy="7.8571429"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1853"
+     inkscape:window-height="1017"
+     inkscape:window-x="67"
+     inkscape:window-y="34"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata931">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-270.54165)">
+    <path
+       style="opacity:1;fill:#bdbdbd;fill-opacity:1;stroke:none;stroke-width:0.11224721;stroke-miterlimit:4;stroke-dasharray:0.22449442, 0.11224721;stroke-dashoffset:0;stroke-opacity:0.2956522"
+       d="m 0,270.54165 v 26.45833 h 26.458333 v -26.45833 z m 13.137529,6.24123 h 7.149729 v 1.83322 h -7.138989 c -1.437852,0 -2.652843,0.4997 -3.6449636,1.49901 -0.9993092,1.01368 -1.4988938,2.23223 -1.4988938,3.6557 0,1.43786 0.4995846,2.6564 1.4988938,3.65571 0.9921206,0.99931 2.2107726,1.499 3.6558156,1.499 h 7.128137 v 1.83323 h -7.128137 c -1.94829,0 -3.5982524,-0.67932 -4.9498369,-2.0381 -1.3587732,-1.36596 -2.0382065,-3.01592 -2.0382065,-4.94984 0,-1.92672 0.6794333,-3.57668 2.0382065,-4.94984 1.3372048,-1.35877 2.9799509,-2.03809 4.9282449,-2.03809 z m 0.01073,3.66645 h 7.138986 v 1.83333 h -7.128136 c -0.416977,0 -0.769239,0.14377 -1.056811,0.43134 -0.28757,0.29476 -0.431449,0.64702 -0.431449,1.05681 0,0.41698 0.143879,0.76924 0.431449,1.05681 0.287572,0.28758 0.639834,0.43135 1.056811,0.43135 h 7.128136 v 1.83333 h -7.138986 c -0.920227,0 -1.703798,-0.32362 -2.350835,-0.97065 -0.639845,-0.63266 -0.9597991,-1.41623 -0.9597991,-2.35084 0,-0.92023 0.3199541,-1.70391 0.9597991,-2.35094 0.639848,-0.64703 1.42342,-0.97054 2.350835,-0.97054 z"
+       id="rect839"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="768.00012"
+       inkscape:export-ydpi="768.00012"
+       inkscape:export-filename="/home/ole/Github/slice/logo/slicelogo.png" />
+  </g>
+</svg>

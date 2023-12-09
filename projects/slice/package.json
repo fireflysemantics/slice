@@ -1,0 +1,33 @@
+{
+  "name": "@fireflysemantics/slice",
+  "version": "17.0.0",
+  "peerDependencies": {
+    "nanoid": "^5.0.4",
+    "@types/nanoid": "*"
+  },
+  "author": "Ole Ersoy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fireflysemantics/slice/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fireflysemantics/slice.git"
+  },
+  "keywords": [
+    "Light Weight",
+    "Javascript",
+    "Typescript",
+    "Angular",
+    "State",
+    "Query",
+    "Reactive",
+    "RxJS",
+    "Observables",
+    "Multicasting"
+  ],  
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
