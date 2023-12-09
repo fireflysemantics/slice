@@ -4,16 +4,28 @@
 
 # @fireflysemantics/slice
 
-Lightweight Javascript Reactive State Management for Web Applications.
+Lightweight Javascript Reactive State Management for Angular Applications.
 
 If you like the [@fireflysemantics/slice API](https://fireflysemantics.github.io/slice/doc/) please star our [Github Repository](https://github.com/fireflysemantics/slice).
 
 # Install
 
-Install Slice with peer dependencies:
+
+Install Slice with the `nanoid` peer dependency:
+
+- `v17.0.x` for Angular 17
+- `v16.2.x` for Angular 16
+- `v15.2.x` for Angular 15
+
+So for example for an Angular 15 project run.
 
 ```
-npm i @fireflysemantics/slice tslib rxjs nanoid
+npm i @fireflysemantics/slice@15.2.x nanoid
+```
+For Angular 17 run.
+
+```
+npm i @fireflysemantics/slice@lastest nanoid
 ```
 
 # Firefly Semantics Slice Development Center Media and Documentation

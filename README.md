@@ -13,7 +13,7 @@ If you like the [@fireflysemantics/slice API](https://fireflysemantics.github.io
 
 Install Slice with the `nanoid` peer dependency:
 
-- `v17.1.x` for Angular 17
+- `v17.0.x` for Angular 17
 - `v16.2.x` for Angular 16
 - `v15.2.x` for Angular 15
 
@@ -21,6 +21,11 @@ So for example for an Angular 15 project run.
 
 ```
 npm i @fireflysemantics/slice@15.2.x nanoid
+```
+For Angular 17 run.
+
+```
+npm i @fireflysemantics/slice@lastest nanoid
 ```
 
 # Firefly Semantics Slice Development Center Media and Documentation
