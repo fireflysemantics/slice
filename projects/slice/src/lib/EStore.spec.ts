@@ -1,5 +1,5 @@
 import { Todo, TodoSliceEnum, todosFactory } from "./test-setup"
-import { GUID, search } from './utilities'
+import { GUID } from './utilities'
 import { EStore } from "./EStore"
 import { Slice } from "./Slice"
 import { Observable } from "rxjs"
