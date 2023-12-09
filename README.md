@@ -26,6 +26,109 @@ For Angular 17 run.
 npm i @fireflysemantics/slice@lastest nanoid
 ```
 
+# Usage
+
+## Object Store Core Use Cases
+
+[Here is a link to the Stackblitz Demo](https://stackblitz.com/edit/typescript-9snt67?file=index.ts)
+containing all of the below examples. 
+
+```
+import {
+  KeyObsValueReset,
+  ObsValueReset,
+  OStore,
+  OStoreStart,
+} from '@fireflysemantics/slice';
+const START: OStoreStart = {
+  K1: { value: 'V1', reset: 'ResetValue' },
+};
+interface ISTART extends KeyObsValueReset {
+  K1: ObsValueReset;
+}
+let OS: OStore<ISTART> = new OStore(START);
+
+//============================================
+// Log a snapshot the initial store value.
+// This will log
+// V1
+//============================================
+const v1Snapshot: string = OS.snapshot(OS.S.K1);
+console.log(`The value for the K1 key is ${v1Snapshot}`);
+
+//============================================
+// Observe the initial store value.
+// The subsription will log
+// V1
+//============================================
+OS.S.K1.obs.subscribe((v) => console.log(`The subscribed to value is ${v}`));
+
+//============================================
+// Update the initial store value
+// The subsription will log
+// New Value
+//============================================
+OS.put(OS.S.K1, 'New Value');
+
+//============================================
+// Log a count of the number of entries in the
+// object store.
+// This will log
+// 1
+//============================================
+const count: number = OS.count();
+console.log(
+  `The count of the number of entries in the Object Store is  ${count}`
+);
+
+//============================================
+// Reset the store
+// The subsription will log
+// ResetValue
+//
+// However if we had not specified a reset
+// value it would have logged in value
+// V1
+//============================================
+OS.reset();
+
+//============================================
+// Delete the K1 entry
+// The subsription will log and the snapshot
+// will also be
+// undefined
+//============================================
+OS.delete(OS.S.K1);
+const snapshot: string = OS.snapshot(OS.S.K1);
+console.log(`The deleted value snapshot for the K1 key is ${snapshot}`);
+
+//============================================
+// Clear the store.  First we will put a new
+// value back in the store to demonstrate it
+// being cleared.
+//============================================
+//============================================
+// Update the initial store value
+// The subsription will log
+// New Value
+//============================================
+OS.put(OS.S.K1, 'V2');
+
+OS.clear();
+//============================================
+// Count the number of values in the store
+// It will be zero.
+// The OS.clear() call will remove all the
+// entries and so the snapshot will be undefined
+// and the subscribed to value also undefined.
+// The count will be zero.
+//============================================
+console.log(`The count is ${OS.count()}`);
+console.log(`The snapshot is ${OS.snapshot(OS.S.K1)}`);
+```
+
+
+
 # Firefly Semantics Slice Development Center Media and Documentation
 
 ## Concepts
