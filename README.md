@@ -8,8 +8,9 @@ If you like the [@fireflysemantics/slice API](https://fireflysemantics.github.io
 
 - [Install](#install)
 - [Object Store Core Use Cases](#object-store-core-use-cases)
-- [Entity Store Core Use Cases]()
-- [Documentatino and Media]()
+- [Entity Store Core Use Cases](#entity-store-core-use-cases)
+- [Features](#features)
+- [Documentatino and Media](#firefly-semantics-slice-development-center-media-and-documentation)
 
 # Install
 
