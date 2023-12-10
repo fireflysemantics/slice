@@ -6,8 +6,8 @@ Lightweight Javascript Reactive State Management for Angular Applications.
 
 If you like the [@fireflysemantics/slice API](https://fireflysemantics.github.io/slice/doc/) please star our [Github Repository](https://github.com/fireflysemantics/slice).
 
-- [Install]()
-- [Object Store Core Use Cases]()
+- [Install](#install)
+- [Object Store Core Use Cases](#object-store-core-use-cases)
 - [Entity Store Core Use Cases]()
 - [Documentatino and Media]()
 
