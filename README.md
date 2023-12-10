@@ -6,6 +6,11 @@ Lightweight Javascript Reactive State Management for Angular Applications.
 
 If you like the [@fireflysemantics/slice API](https://fireflysemantics.github.io/slice/doc/) please star our [Github Repository](https://github.com/fireflysemantics/slice).
 
+- [Install](#install)
+- [Object Store Core Use Cases](#object-store-core-use-cases)
+- [Entity Store Core Use Cases]()
+- [Documentatino and Media]()
+
 # Install
 
 
@@ -129,7 +134,316 @@ console.log(`The count is ${OS.count()}`);
 console.log(`The snapshot is ${OS.snapshot(OS.S.K1)}`);
 ```
 
+## Entity Store Core Use Cases
 
+[Here is a link to the Stackblitz demo](https://stackblitz.com/edit/typescript-akqgqg?file=index.ts) containing the below demo code.  You may also wish to check out the [test cases](https://github.com/fireflysemantics/slice/blob/master/projects/slice/src/lib/EStore.spec.ts) for the entity store which also detail usage scenarios.
+
+```
+//============================================
+// Demo Utilities
+//============================================
+
+export const enum TodoSliceEnum {
+  COMPLETE = 'Complete',
+  INCOMPLETE = 'Incomplete',
+}
+
+export class Todo {
+  constructor(
+    public complete: boolean,
+    public title: string,
+    public gid?: string,
+    public id?: string
+  ) {}
+}
+
+export const extraTodo: Todo = new Todo(false, 'Do me later.');
+
+export let todos = [
+  new Todo(false, 'You complete me!'),
+  new Todo(true, 'You completed me!'),
+];
+
+export function todosFactory(): Todo[] {
+  return [
+    new Todo(false, 'You complete me!'),
+    new Todo(true, 'You completed me!'),
+  ];
+}
+
+export function todosClone(): Todo[] {
+  return todos.map((obj) => ({ ...obj }));
+}
+
+//============================================
+// API: constructor()
+//
+// Create a Todo Entity Store
+//============================================
+let store: EStore<Todo> = new EStore<Todo>(todosFactory());
+
+//============================================
+// API: post, put, delete
+//
+// Perform post (Create), put (Update), and delete opeartions
+// on the store.
+//============================================
+const todoLater: Todo = new Todo(false, 'Do me later.');
+todoLater.id = 'findMe';
+store.post(todoLater);
+const postedTodo = store.findOneByID('findMe');
+postedTodo.title = 'Do me sooner';
+store.put(postedTodo);
+store.delete(postedTodo);
+
+//============================================
+// API: allSnapshot()
+//
+// Take a snapshot of all the entities
+// in the store
+//============================================
+let snapshot: Todo[] = store.allSnapshot();
+
+//============================================
+// API: obs
+//
+// Create a subscription to the entities in
+// the store.
+//============================================
+let todosSubscription: Subscription = store.obs.subscribe((todos: Todo[]) => {
+  console.log(`The store todos ${todos}`);
+});
+
+//============================================
+// API: findOne()
+//
+// Find a Todo instance using the
+// Global ID (guid) property.
+//============================================
+const globalID: string = '1';
+let findThisTodo = new Todo(false, 'Find this Todo', globalID);
+
+store.post(findThisTodo);
+
+const todo = store.findOne(globalID);
+console.log(todo);
+
+//============================================
+// API: findOneByID()
+//
+// Find a Todo instance using the
+// ID (id) property.
+//============================================
+const ID: string = 'id';
+let todoWithID = new Todo(false, 'Find this Todo by ID');
+todoWithID.id = ID;
+
+store.post(todoWithID);
+const todoFoundByID = store.findOneByID(ID);
+
+console.log(`The Todo instance found by id is ${todoFoundByID}`);
+
+//============================================
+// API: observeLoading()
+//
+// Subscribe to the store loading indicator
+// and toggle it to see the values change.
+//============================================
+store.observeLoading().subscribe((loading) => {
+  console.log(`Is data loading: ${loading}`);
+});
+store.loading = true;
+store.loading = false;
+
+//============================================
+// API: observeSearching()
+//
+// Subscribe to the store searching indicator
+// and toggle it to see the values change.
+//============================================
+store.observeSearching().subscribe((searching) => {
+  console.log(`Is the store searching: ${searching}`);
+});
+store.searching = true;
+store.searching = false;
+
+//============================================
+// API: addActive()
+// Perform active state tracking.  Initially the
+// number of active entities will be zero.
+//============================================
+console.log(`The number of active Todo instances is ${store.active.size}`);
+let todo1: Todo = new Todo(false, 'The first Todo!', GUID());
+let todo2: Todo = new Todo(false, 'The first Todo!', GUID());
+store.addActive(todo1);
+console.log(`The number of active Todo instances is ${store.active.size}`);
+
+console.log(
+  `The number of active Todo instances by the activeSnapshot is ${
+    store.activeSnapshot().length
+  }`
+);
+
+//============================================
+// API: observeActive()
+//
+// Subscribing to the observeActive() observable
+// provides the map of active Todo instances.
+//============================================
+store.observeActive().subscribe((active) => {
+  console.log(`The active Todo instances are: ${active}`);
+});
+
+//============================================
+// API: deleteActive()
+// Delete the active Todo instance.
+// This will set the number of active
+// Todo instances back to zero.
+//============================================
+store.deleteActive(todo1);
+console.log(
+  `The number of active Todo instances by the activeSnapshot is ${
+    store.activeSnapshot().length
+  }`
+);
+
+//============================================
+// API: count()
+//
+// Dyanically count the Number of Entries in the Store.
+//============================================
+let countSubscription = store.count().subscribe((c) => {
+  console.log(`The number of Todo entities stored is ${c}`);
+});
+
+//============================================
+// API: toggle()
+//
+// When we post another todo using toggle
+// instance the subscribed to count
+// dynamically increases by 1.
+// When we call toggle again,
+// removing the instance the
+// count decreases by 1.
+//============================================
+store.toggle(extraTodo);
+store.toggle(extraTodo);
+
+//============================================
+// API: contains()
+//
+// When we post another todo using toggle
+// the store now contains it.
+//============================================
+console.log(
+  `Does the store contain the extraTodo ${store.contains(extraTodo)}`
+);
+store.toggle(extraTodo);
+console.log(
+  `Does the store contain the extraTodo ${store.contains(extraTodo)}`
+);
+store.toggle(extraTodo);
+console.log(
+  `Does the store contain the extraTodo ${store.contains(extraTodo)}`
+);
+
+//============================================
+// API: containsbyID()
+//
+// When we post another todo using toggle
+// the store now contains it.
+//
+// Note the containsByID() can be called with
+// both the id property or the entire instance.
+//============================================
+let todoByID = new Todo(false, 'This is not in the store', undefined, '1');
+store.post(todoByID);
+console.log(
+  `Does the store contain the todoByID ${store.containsById(todoByID.id)}`
+);
+console.log(
+  `Does the store contain the todoByID ${store.containsById(todoByID)}`
+);
+store.toggle(todoByID);
+console.log(
+  `Does the store contain the todoByID ${store.containsById(todoByID.id)}`
+);
+console.log(
+  `Does the store contain the todoByID ${store.containsById(todoByID)}`
+);
+
+//============================================
+// API: equalsByGUID and equalsByID
+//
+// Compare entities by ID and Global ID (guid).
+// We will assign the ID and the global ID
+// instead of allowing the global ID to be
+// assigned by the store on post.
+//============================================
+const guid = GUID();
+let todoOrNotTodo1 = new Todo(false, 'Apples to Apples', guid, '1');
+let todoOrNotTodo2 = new Todo(false, 'Apples to Apples', guid, '1');
+
+const equalByID: boolean = store.equalsByID(todoOrNotTodo1, todoOrNotTodo2);
+console.log(`Are the todos equal by id: ${equalByID}`);
+const equalByGUID: boolean = store.equalsByGUID(todoOrNotTodo1, todoOrNotTodo2);
+console.log(`Are the todos equal by global id: ${equalByGUID}`);
+
+//============================================
+// API: addSlice
+//
+// Add a slice for complete todo entities.
+//
+// We create a new store to demo with a
+// consistent count.
+//
+// When posting the extraTodo which is
+// incomplete, we see that the incomplete
+// count increments.
+//============================================
+store.destroy();
+store = new EStore<Todo>(todosFactory());
+store.addSlice((todo) => todo.complete, TodoSliceEnum.COMPLETE);
+store.addSlice((todo) => !todo.complete, TodoSliceEnum.INCOMPLETE);
+const completeSlice = store.getSlice(TodoSliceEnum.COMPLETE);
+const incompleteSlice = store.getSlice(TodoSliceEnum.INCOMPLETE);
+completeSlice.count().subscribe((c) => {
+  console.log(`The number of entries in the complete slice is ${c}`);
+});
+incompleteSlice.count().subscribe((c) => {
+  console.log(`The number of entries in the incomplete slice is ${c}`);
+});
+store.post(extraTodo);
+const incompleteTodos: Todo[] = incompleteSlice.allSnapshot();
+console.log(`The incomplete Todo entities are ${incompleteTodos}`);
+
+//============================================
+// API: isEmpty()
+//
+// Check whether the store is empty.
+//============================================
+store.isEmpty().subscribe((empty) => {
+  console.log(`Is the store empty?  ${empty}`);
+});
+```
+
+## Features
+
+- Live Stackblitz demoes
+- [Typedoc with inlined examples](https://fireflysemantics.github.io/slice/doc/)
+- [Well documented test cases run with Jest - Each file has a corresponding `.spec` file](https://github.com/fireflysemantics/slice/tree/master/src)
+- Stream both Entity and Object Stores for UI Updates via RxJS
+- Define entities using Typescript classes, interfaces, or types
+- [Active state tracking](https://medium.com/@ole.ersoy/monitoring-the-currently-active-entity-with-slice-ff7c9b7826e8)
+- [Supports for Optimistic User Interfaces](https://medium.com/@ole.ersoy/optimistic-user-identity-management-with-slice-a2b66efe780c)
+- RESTful API for performing CRUD operations that stream both full and delta updates
+- Dynamic creation of both object and entity stores
+- Observable delta updates for Entities
+- Real time application of Slice `Predicate<E>` filtering that is `Observable`
+- `Predicate` based snapshots of entities
+- Observable `count` of entities in the entity store.  The `count` feature can also be `Predicate` filtered.
+- Configurable global id (Client side id - `gid`) and server id (`id`) id property names for entities. 
+- The stream of entities can be sorted via an optional boolean expression passed to `observe`.
 
 # Firefly Semantics Slice Development Center Media and Documentation
 
@@ -221,26 +535,9 @@ Run `npm run c` to build the project. The build artifacts will be stored in the 
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Jest](https://jestjs.io/).
+Run `npm run test` to execute the unit tests via [Jest](https://jestjs.io/).
 
 
-## Features
-
-- Live Stackblitz demoes
-- [Typedoc with inlined examples](https://fireflysemantics.github.io/slice/doc/)
-- [Well documented test cases run with Jest - Each file has a corresponding `.spec` file](https://github.com/fireflysemantics/slice/tree/master/src)
-- Stream both Entity and Object Stores for UI Updates via RxJS
-- Define entities using Typescript classes, interfaces, or types
-- [Active state tracking](https://medium.com/@ole.ersoy/monitoring-the-currently-active-entity-with-slice-ff7c9b7826e8)
-- [Supports for Optimistic User Interfaces](https://medium.com/@ole.ersoy/optimistic-user-identity-management-with-slice-a2b66efe780c)
-- RESTful API for performing CRUD operations that stream both full and delta updates
-- Dynamic creation of both object and entity stores
-- Observable delta updates for Entities
-- Real time application of Slice `Predicate<E>` filtering that is `Observable`
-- `Predicate` based snapshots of entities
-- Observable `count` of entities in the entity store.  The `count` feature can also be `Predicate` filtered.
-- Configurable global id (Client side id - `gid`) and server id (`id`) id property names for entities. 
-- The stream of entities can be sorted via an optional boolean expression passed to `observe`.
 
 ## Tests
 
