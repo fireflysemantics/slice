@@ -7,11 +7,13 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --watch=false --browsers=ChromeHeadless",
-    "ig": "npm install -g @jsdevtools/version-bump-prompt && npm install -g npm-check-updates && npm install -g npm-install-peers",
+    "i": "npm install -g @jsdevtools/version-bump-prompt && npm install -g npm-check-updates && npm install -g npm-install-peers http-server && npm i -D gh-pages typedoc",
     "c": "ng build slice",
     "bp": "cd projects/slice && bump patch",
     "p": "npm run cp && npm run bp && npm run c && cd dist/slice/ && npm publish",
     "cp": "cp ./README.md projects/slice/",
+    "doc": "rm -fr doc && typedoc --entryPointStrategy expand ./projects/slice/src/lib --out doc --exclude **/*.spec.ts && cp slicelogo.png doc",
+    "sdoc": "npm run doc && http-server -o doc",
     "d": "typedoc --out doc --exclude **/*.spec.ts ./projects/slice/src/lib"
   },
   "private": true,
@@ -33,6 +35,7 @@
     "@angular/cli": "^17.0.6",
     "@angular/compiler-cli": "^17.0.0",
     "@types/jasmine": "~5.1.0",
+    "gh-pages": "^6.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -40,6 +43,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^17.0.0",
+    "typedoc": "^0.25.4",
     "typescript": "~5.2.2"
   }
 }

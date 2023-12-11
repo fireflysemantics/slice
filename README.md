@@ -34,6 +34,8 @@ npm i @fireflysemantics/slice@lastest nanoid
 
 # Usage
 
+The project [typedoc](https://fireflysemantics.github.io/slice/typedoc/), in addition to providing more detailed API insight, syntax highlights all the examples provided here, thus you may want to check it out for a richer reading experience.
+
 ## Object Store Core Use Cases
 
 [Here is a link to the Stackblitz Demo](https://stackblitz.com/edit/typescript-9snt67?file=index.ts)
@@ -508,7 +510,7 @@ store.isEmpty().subscribe((empty) => {
 
 # API Documentation
 
-See [Typedoc API Documentation](https://fireflysemantics.github.io/slice/doc/)
+See [Typedoc API Documentation](https://fireflysemantics.github.io/slice/typedoc/)
 
 The documentation for the API includes simple examples of how to apply the API to a use case.
 
