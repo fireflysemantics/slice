@@ -2,15 +2,35 @@
 
 # @fireflysemantics/slice
 
-Lightweight Javascript Reactive State Management for Angular Applications.
+## TOC
 
-If you like the [@fireflysemantics/slice API](https://fireflysemantics.github.io/slice/doc/) please star our [Github Repository](https://github.com/fireflysemantics/slice).
-
+- [Overview](#overview)
 - [Install](#install)
 - [Object Store Core Use Cases](#object-store-core-use-cases)
 - [Entity Store Core Use Cases](#entity-store-core-use-cases)
 - [Features](#features)
 - [Documentatino and Media](#firefly-semantics-slice-development-center-media-and-documentation)
+
+## Overview
+
+Lightweight Javascript Reactive State Management for Angular Applications.
+
+The API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.
+
+It offers two types of reactive data stores:
+- REST like API for performing state operations
+- Entity stores (EStore<E>) for structured entity like data (Customer, Product, User, ...)
+- Entity stores can be "Live filtered" by adding slices.  For example separating Todo entities into complete and incomplete compartments.  Slices are also obserable.
+- Object store (Key value store) for unstructured data
+
+Even though Angular is used for prototype applications, it should work well in general for:
+- Single page applications
+- Progressive web applications
+- Node applications / Pure Javascript Applications
+- Mobile Applications
+
+If you like the [@fireflysemantics/slice API](https://fireflysemantics.github.io/slice/doc/) please star our [Github Repository](https://github.com/fireflysemantics/slice).
+
 
 # Install
 
@@ -513,24 +533,6 @@ store.isEmpty().subscribe((empty) => {
 See [Typedoc API Documentation](https://fireflysemantics.github.io/slice/typedoc/)
 
 The documentation for the API includes simple examples of how to apply the API to a use case.
-
-# Overview
-
-Lightweight Reactive Server, Mobile, and Web Application State Management Built with `RxJS` and `Typescript`.  
-
-The API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.
-
-It offers two types of reactive data stores:
-- Entity stores (EStore<E>) for structured entity like data (Customer, Product, User, ...)
-- Entity stores can be "Live filtered" by adding slices.  For example separating Todo entities into complete and incomplete compartments.  Slices are also obserable.
-- Object store (Key value store) for unstructured data
-
-Even though Angular is used for prototype applications, it should work well for:
-- Single page applications
-- Progressive web applications
-- React applications
-- Node applications / Pure Javascript Applications
-- Mobile Applications
 
 ## Build
 
