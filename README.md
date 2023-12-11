@@ -18,7 +18,6 @@ Lightweight Javascript Reactive State Management for Angular Applications.
 The API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.
 
 It offers two types of reactive data stores:
-- REST like API for performing state operations
 - Entity stores (EStore<E>) for structured entity like data (Customer, Product, User, ...)
 - Entity stores can be "Live filtered" by adding slices.  For example separating Todo entities into complete and incomplete compartments.  Slices are also obserable.
 - Object store (Key value store) for unstructured data
