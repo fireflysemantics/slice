@@ -452,7 +452,7 @@ store.isEmpty().subscribe((empty) => {
 ## Features
 
 - Live Stackblitz demoes
-- [Typedoc with inlined examples](https://fireflysemantics.github.io/slice/doc/)
+- [Typedoc with inlined examples](https://fireflysemantics.github.io/slice/typedoc/)
 - [Well documented test cases run with Jest - Each file has a corresponding `.spec` file](https://github.com/fireflysemantics/slice/tree/master/src)
 - Stream both Entity and Object Stores for UI Updates via RxJS
 - Define entities using Typescript classes, interfaces, or types
