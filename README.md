@@ -5,6 +5,7 @@
 ## TOC
 
 - [Overview](#overview)
+- [Why Slice](#why-slice)
 - [Install](#install)
 - [Object Store Core Use Cases](#object-store-core-use-cases)
 - [Entity Store Core Use Cases](#entity-store-core-use-cases)
