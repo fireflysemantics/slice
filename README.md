@@ -34,7 +34,7 @@ If you like the [@fireflysemantics/slice API](https://fireflysemantics.github.io
 
 We built Slice to make sharing state between Angular components, services, and other directives simple and in the process we targeted common use cases that should be handled by a state manager, such as updating a shopping cart count, emitting a search query, tracking active state, etc. 
 
-For performing state CRUD operations Slice uses a REST like API, which should be a familiar paradigm for many developers.
+For performing state CRUD operations Slice uses a REST like API, which should be a familiar paradigm for most developers.
 
 For example a `Todo` entity store tracking todo entities can create, read, update, and delete `Todo` entities as follows (This is just a tiny example of all the capabilities Slice has).
 
