@@ -14,7 +14,7 @@ export interface ValueReset {
 export interface ObsValueReset {
   value: any;
   reset?: any;
-  obs?: Observable<any>;
+  obs: Observable<any>;
 }
 
 export interface KeyObsValueReset {
@@ -39,7 +39,7 @@ export class OStore<E extends KeyObsValueReset> {
       keys.forEach((k) => {
         const ovr = start[k] as ObsValueReset;
         this.post(ovr, ovr.value);
-        ovr.obs = this.observe(ovr);
+        ovr.obs = this.observe(ovr)!;
       });
     }
   }

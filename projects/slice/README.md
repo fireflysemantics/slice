@@ -5,6 +5,7 @@
 ## TOC
 
 - [Overview](#overview)
+- [Why Slice](#why-slice)
 - [Install](#install)
 - [Object Store Core Use Cases](#object-store-core-use-cases)
 - [Entity Store Core Use Cases](#entity-store-core-use-cases)
@@ -18,8 +19,7 @@ Lightweight Javascript Reactive State Management for Angular Applications.
 The API is designed to be as minimal as possible and should deliver the same features as other comparable frameworks with about 1/3 the lines of code.
 
 It offers two types of reactive data stores:
-- Entity stores (EStore<E>) for structured entity like data (Customer, Product, User, ...)
-- Entity stores can be "Live filtered" by adding slices.  For example separating Todo entities into complete and incomplete compartments.  Slices are also obserable.
+- Entity stores (EStore<E>) for structured entity like data (Customer, Product, User, ...).  Entity stores can be "Live filtered" by adding slices.  For example separating Todo entities into complete and incomplete compartments.  Slices are also obserable.
 - Object store (Key value store) for unstructured data
 
 Even though Angular is used for prototype applications, it should work well in general for:
@@ -30,6 +30,42 @@ Even though Angular is used for prototype applications, it should work well in g
 
 If you like the [@fireflysemantics/slice API](https://fireflysemantics.github.io/slice/doc/) please star our [Github Repository](https://github.com/fireflysemantics/slice).
 
+# Why Slice
+
+We built Slice to make sharing state between Angular components, services, and other directives simple and in the process we targeted common use cases that should be handled by a state manager, such as updating a shopping cart count, emitting a search query, tracking active state, etc. 
+
+For performing state CRUD operations Slice uses a REST like API, which should be a familiar paradigm for most developers.
+
+For example a `Todo` entity store tracking todo entities can create, read, update, and delete `Todo` entities as follows (This is just a tiny example of all the capabilities Slice has).
+
+```
+let store: EStore<Todo> = new EStore<Todo>();
+//============================================
+// Post (Create) a Todo instance in the store
+//============================================
+store.post(todo);
+//============================================
+// Snapshot of all the Todo entities in the 
+// store
+//============================================
+let snapshot: Todo[] = store.allSnapshot();
+//============================================
+// Observe the array of Todo instances in the
+// store
+//============================================
+store.obs.subscribe((todos: Todo[]) => {
+  console.log(`The store is initialized with these Todo entities ${todos}`);
+});
+//============================================
+// Delete a Todo instance in the store
+//============================================
+todo.complete = false;
+store.put(todo);
+//============================================
+// Delete a Todo instance in the store
+//============================================
+store.delete(todo);
+```
 
 # Install
 
