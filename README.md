@@ -11,6 +11,7 @@
 - [Entity Store Core Use Cases](#entity-store-core-use-cases)
 - [Features](#features)
 - [Documentatino and Media](#firefly-semantics-slice-development-center-media-and-documentation)
+- [Getting Help](#getting-help)
 
 ## Overview
 
