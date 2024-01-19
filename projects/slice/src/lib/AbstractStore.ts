@@ -285,10 +285,10 @@ let selectedTodos:Todo[] = source.allSnapshot();
    * @param p The predicate used to query for the selection.
    * @return A snapshot array containing the entities that match the predicate.
    * 
-   * @example Select all the `Todo` instance where the `title` length is greater than 100. 
-```
-let todos:Todo[]=store.select(todo=>todo.title.length>100);
-```
+   * @example Select all the Todo instances where the title length is greater than 100.
+   * ```
+   * let todos:Todo[]=store.select(todo=>todo.title.length>100);
+   * ```
    */
   select(p: Predicate<E>): E[] {
     const selected: E[] = [];
@@ -305,10 +305,11 @@ let todos:Todo[]=store.select(todo=>todo.title.length>100);
    * @param e1 The first entity
    * @param e2 The second entity
    * @return true if the two entities have equal GUID ids
-   * @example Compare `todo1` with `todo2` by `gid`.
-```
-if (equalsByGUID(todo1, todo2)){...};
-```
+   * 
+   * @example Compare todo1 with todo2 by gid.
+   * ```
+   * if (equalsByGUID(todo1, todo2)){...};
+   * ```
    */
   equalsByGUID(e1:any, e2:any) {
     return e1[this.GUID_KEY] == e2[this.GUID_KEY];
@@ -319,16 +320,18 @@ if (equalsByGUID(todo1, todo2)){...};
    * @param e1 The first entity
    * @param e2 The second entity
    * @return true if the two entities have equal ID ids
-   * @example Compare `todo1` with `todo2` by `id`.
-```
-if (equalsByID(todo1, todo2)){...};
-```
+   * 
+   * @example Compare todo1 with todo2 by id.
+   * 
+   * ```
+   * if (equalsByID(todo1, todo2)){...};
+   * ```
    */
   equalsByID(e1:any, e2:any) {
     return e1[this.ID_KEY] == e2[this.ID_KEY];
   }
   /**
-   * Calls complete on all {@link BehaviorSubject} instances.
+   * Calls complete on all {@link ReplaySubject} instances.
    * 
    * Call destroy when disposing of the store.
    */

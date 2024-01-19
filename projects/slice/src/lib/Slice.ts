@@ -1,6 +1,7 @@
 import { Delta, ActionTypes, Predicate } from "./models"
 import { AbstractStore } from "./AbstractStore"
 import { EStore } from "./EStore";
+import { combineLatest } from 'rxjs';
 
 const { isArray } = Array
 
@@ -20,15 +21,15 @@ export class Slice<E> extends AbstractStore<E> {
      * @param eStore The EStore instance containing the elements considered for slicing
      * 
      * @example 
-       <pre>
-       //Empty slice
-       new Slice<Todo>(Todo.COMPLETE, todo=>!todo.complete);
-  
-       //Initialized slice
-       let todos = [new Todo(false, "You complete me!"), 
-                    new Todo(true, "You completed me!")];
-       new Slice<Todo>(Todo.COMPLETE, todo=>!todo.complete, todos);
-       </pre>
+     * ```
+     *  //Empty slice
+     *  new Slice<Todo>(Todo.COMPLETE, todo=>!todo.complete);
+     *
+     *  //Initialized slice
+     *  let todos = [new Todo(false, "You complete me!"), 
+     *               new Todo(true, "You completed me!")];
+     *  new Slice<Todo>(Todo.COMPLETE, todo=>!todo.complete, todos);
+     *  ```
      */
     constructor(
         public label: string,

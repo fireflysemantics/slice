@@ -2,7 +2,7 @@
 
 # @fireflysemantics/slice
 
-## TOC
+## Table of Contents
 
 - [Overview](#overview)
 - [Why Slice](#why-slice)
@@ -580,9 +580,7 @@ Run `npm run c` to build the project. The build artifacts will be stored in the 
 
 ## Running unit tests
 
-Run `npm run test` to execute the unit tests via [Jest](https://jestjs.io/).
-
-
+Run `npm run test` to execute the unit tests.
 
 ## Tests
 
