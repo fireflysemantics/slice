@@ -14,7 +14,8 @@
     "cp": "cp ./README.md projects/slice/",
     "doc": "rm -fr doc && typedoc --entryPointStrategy expand ./projects/slice/src/lib --out doc --exclude **/*.spec.ts && cp slicelogo.png doc",
     "sdoc": "npm run doc && http-server -o doc",
-    "d": "typedoc --out doc --exclude **/*.spec.ts ./projects/slice/src/lib"
+    "d": "typedoc --out doc --exclude **/*.spec.ts ./projects/slice/src/lib",
+    "deploy-doc": "node deploy-doc"
   },
   "private": true,
   "dependencies": {

@@ -2,7 +2,7 @@
 
 # @fireflysemantics/slice
 
-## TOC
+## Table of Contents
 
 - [Overview](#overview)
 - [Why Slice](#why-slice)
@@ -11,6 +11,7 @@
 - [Entity Store Core Use Cases](#entity-store-core-use-cases)
 - [Features](#features)
 - [Documentatino and Media](#firefly-semantics-slice-development-center-media-and-documentation)
+- [Getting Help](#getting-help)
 
 ## Overview
 
@@ -569,15 +570,17 @@ See [Typedoc API Documentation](https://fireflysemantics.github.io/slice/typedoc
 
 The documentation for the API includes simple examples of how to apply the API to a use case.
 
+## Getting Help
+
+[Firefly Semantics Slice on Stackoverflow](https://stackoverflow.com/questions/tagged/fireflysemantics-slice)
+
 ## Build
 
 Run `npm run c` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Running unit tests
 
-Run `npm run test` to execute the unit tests via [Jest](https://jestjs.io/).
-
-
+Run `npm run test` to execute the unit tests.
 
 ## Tests
 
