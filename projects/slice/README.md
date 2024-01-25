@@ -7,10 +7,11 @@
 - [Overview](#overview)
 - [Why Slice](#why-slice)
 - [Install](#install)
+- [API Reference](#api-reference)
 - [Object Store Core Use Cases](#object-store-core-use-cases)
 - [Entity Store Core Use Cases](#entity-store-core-use-cases)
 - [Features](#features)
-- [Documentatino and Media](#firefly-semantics-slice-development-center-media-and-documentation)
+- [Help Center Documentatino and Media](#firefly-semantics-slice-development-center-media-and-documentation)
 - [Getting Help](#getting-help)
 
 ## Overview
@@ -195,7 +196,7 @@ console.log(`The snapshot is ${OS.snapshot(OS.S.K1)}`);
 
 ## Entity Store Core Use Cases
 
-[Here is a link to the Stackblitz demo](https://stackblitz.com/edit/typescript-akqgqg?file=index.ts) containing the below demo code.  You may also wish to check out the [test cases](https://github.com/fireflysemantics/slice/blob/master/projects/slice/src/lib/EStore.spec.ts) for the entity store which also detail usage scenarios.
+[Here is a link to the Stackblitz demo](https://stackblitz.com/edit/typescript-wayluo?file=index.ts) containing the below demo code.  You may also wish to check out the [test cases](https://github.com/fireflysemantics/slice/blob/master/projects/slice/src/lib/EStore.spec.ts) for the entity store which also detail usage scenarios.
 
 ```
 //============================================
@@ -367,13 +368,43 @@ console.log(
 );
 
 //============================================
-// API: count()
+// API: count() and snapshotCount()
 //
-// Dyanically count the Number of Entries in the Store.
+// Take snapshot and observable
+// the counts of store entities
 //============================================
-let countSubscription = store.count().subscribe((c) => {
-  console.log(`The number of Todo entities stored is ${c}`);
+
+const completePredicate: Predicate<Todo> = function pred(t: Todo) {
+  return t.complete;
+};
+
+const incompletePredicate: Predicate<Todo> = function pred(t: Todo) {
+  return !t.complete;
+};
+
+store.count().subscribe((c) => {
+  console.log(`The observed count of Todo entities is ${c}`);
 });
+store.count(incompletePredicate).subscribe((c) => {
+  console.log(`The observed count of incomplete Todo enttiies is ${c}`);
+});
+store.count(completePredicate).subscribe((c) => {
+  console.log(`The observed count of complete Todo enttiies is ${c}`);
+});
+
+const snapshotCount = store.countSnapshot(completePredicate);
+console.log(`The count is ${snapshotCount}`);
+
+const completeSnapshotCount = store.countSnapshot(completePredicate);
+console.log(
+  `The complete Todo Entity Snapshot count is ${completeSnapshotCount}`
+);
+
+const incompleteSnapshotCount = store.countSnapshot(incompletePredicate);
+console.log(
+  `The incomplete Todo Entity Snapshot count is ${incompleteSnapshotCount}`
+);
+
 
 //============================================
 // API: toggle()
@@ -564,11 +595,9 @@ store.isEmpty().subscribe((empty) => {
 - [Minimal Slice Object Store](https://developer.fireflysemantics.com/examples/examples--slice--minimal-slice-object-store)
 - [Minimal Angular Slice Object Store State Service](https://developer.fireflysemantics.com/examples/examples--slice--minial-angular-slice-object-store-state-service)
 
-# API Documentation
+# API Reference
 
-See [Typedoc API Documentation](https://fireflysemantics.github.io/slice/typedoc/)
-
-The documentation for the API includes simple examples of how to apply the API to a use case.
+The [Typedoc API Reference](https://fireflysemantics.github.io/slice/typedoc/) includes simple examples of how to apply the API for the various stores, methods, and classes included.
 
 ## Getting Help
 
