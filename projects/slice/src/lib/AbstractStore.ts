@@ -178,6 +178,27 @@ export abstract class AbstractStore<E> {
   /**
    * Returns the number of entries contained.
    * @param p The predicate to apply in order to filter the count
+   * 
+   * @example
+   * ```
+   * const completePredicate: Predicate<Todo> = function pred(t: Todo) {
+   *   return t.complete;
+   * };
+   * 
+   * const incompletePredicate: Predicate<Todo> = function pred(t: Todo) {
+   *   return !t.complete;
+   * };
+   * 
+   * store.count().subscribe((c) => {
+   *   console.log(`The observed count of Todo entities is ${c}`);
+   * });
+   * store.count(incompletePredicate).subscribe((c) => {
+   *   console.log(`The observed count of incomplete Todo enttiies is ${c}`);
+   * });
+   * store.count(completePredicate).subscribe((c) => {
+   *   console.log(`The observed count of complete Todo enttiies is ${c}`);
+   * });
+   * ```
    */
   count(p?: Predicate<E>): Observable<number> {
     if (p) {
@@ -194,7 +215,26 @@ export abstract class AbstractStore<E> {
    * 
    * @example
    * ```
+   * const completePredicate: Predicate<Todo> = function pred(t: Todo) {
+   *   return t.complete;
+   * };
    * 
+   * const incompletePredicate: Predicate<Todo> = function pred(t: Todo) {
+   *   return !t.complete;
+   * };
+   * 
+   * const snapshotCount = store.countSnapshot(completePredicate);
+   * console.log(`The count is ${snapshotCount}`);
+   * 
+   * const completeSnapshotCount = store.countSnapshot(completePredicate);
+   * console.log(
+   *   `The complete Todo Entity Snapshot count is ${completeSnapshotCount}`
+   * );
+   * 
+   * const incompleteSnapshotCount = store.countSnapshot(incompletePredicate);
+   * console.log(
+   *   `The incomplete Todo Entity Snapshot count is ${incompleteSnapshotCount}`
+   * );
    * ```
    */
   countSnapshot(p?: Predicate<E>): number {
@@ -210,9 +250,10 @@ export abstract class AbstractStore<E> {
    * @return Snapshot array of all the elements the entities the store contains.
    * 
    * @example Observe a snapshot of all the entities in the store.
-```
-let selectedTodos:Todo[] = source.allSnapshot();
-```
+   * 
+   * ```
+   * let selectedTodos:Todo[] = source.allSnapshot();
+   * ```
    */
   allSnapshot(): E[] {
     return Array.from(this.entries.values());
@@ -226,9 +267,9 @@ let selectedTodos:Todo[] = source.allSnapshot();
    * @returns true if the instance identified by the guid exists, false otherwise.
    * 
    * @example
-     <pre>
-     let contains:boolean = source.contains(guid);
-     </pre>
+   * ```
+   * let contains:boolean = source.contains(guid);
+   * ```
    */
   contains(target: E | string): boolean {
     if (typeof target === 'string') {
@@ -245,9 +286,9 @@ let selectedTodos:Todo[] = source.allSnapshot();
    * @returns true if the instance identified by the `id` exists, false otherwise.
    * 
    * @example
-     <pre>
-     let contains:boolean = source.contains(guid);
-     </pre>
+   * ```
+   * let contains:boolean = source.contains(guid);
+   * ```
    */
   containsById(target: E | string): boolean {
     if (typeof target === 'string') {
@@ -263,6 +304,14 @@ let selectedTodos:Todo[] = source.allSnapshot();
    *
    * @param guid
    * @return The entity instance if it exists, null otherwise
+   * 
+   * @example
+   * ```
+   * const globalID: string = '1';
+   * let findThisTodo = new Todo(false, 'Find this Todo', globalID);
+   * store.post(findThisTodo);
+   * const todo = store.findOne(globalID);
+   * ```
    */
   findOne(guid: string): E | undefined {
     return this.entries.get(guid);
@@ -274,6 +323,14 @@ let selectedTodos:Todo[] = source.allSnapshot();
    *
    * @param id
    * @return The entity instance if it exists, null otherwise
+   * 
+   * @example
+   * ```
+   * const todoLater: Todo = new Todo(false, 'Do me later.');
+   * todoLater.id = 'findMe';
+   * store.post(todoLater);
+   * const postedTodo = store.findOneByID('findMe');
+   * ```
    */
   findOneByID(id: string): E | undefined {
     return this.idEntries.get(id);
@@ -334,6 +391,11 @@ let selectedTodos:Todo[] = source.allSnapshot();
    * Calls complete on all {@link ReplaySubject} instances.
    *
    * Call destroy when disposing of the store.
+   * 
+   * @example
+   * ```
+   * store.destroy();
+   * ```
    */
   destroy() {
     this.notify.complete();

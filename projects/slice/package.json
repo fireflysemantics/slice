@@ -1,6 +1,6 @@
 {
   "name": "@fireflysemantics/slice",
-  "version": "17.0.19",
+  "version": "17.0.20",
   "peerDependencies": {
     "nanoid": "^5.0.4",
     "@types/nanoid": "*",

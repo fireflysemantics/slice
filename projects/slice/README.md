@@ -304,6 +304,20 @@ const todoFoundByID = store.findOneByID(ID);
 console.log(`The Todo instance found by id is ${todoFoundByID}`);
 
 //============================================
+// API: select()
+//
+// Select Todo instances where the title
+// includes the string Find.
+//============================================
+const selectLaterPredicate: Predicate<Todo> = (todo: Todo) => {
+  return todo.title.includes('Find');
+};
+const selections = store.select(selectLaterPredicate);
+console.log(
+  `The selected todo instances that contain Find are: ${selections.length}`
+);
+
+//============================================
 // API: observeLoading()
 //
 // Subscribe to the store loading indicator
