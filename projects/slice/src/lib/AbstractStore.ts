@@ -359,6 +359,7 @@ export abstract class AbstractStore<E> {
 
   /**
    * Compare entities by GUID
+   * 
    * @param e1 The first entity
    * @param e2 The second entity
    * @return true if the two entities have equal GUID ids
@@ -374,6 +375,7 @@ export abstract class AbstractStore<E> {
 
   /**
    * Compare entities by ID
+   * 
    * @param e1 The first entity
    * @param e2 The second entity
    * @return true if the two entities have equal ID ids
@@ -387,10 +389,10 @@ export abstract class AbstractStore<E> {
   equalsByID(e1: any, e2: any) {
     return e1[this.ID_KEY] == e2[this.ID_KEY];
   }
+
   /**
-   * Calls complete on all {@link ReplaySubject} instances.
-   *
-   * Call destroy when disposing of the store.
+   * Call destroy when disposing of the store, as it
+   * completes all {@link ReplaySubject} instances.
    * 
    * @example
    * ```

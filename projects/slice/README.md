@@ -11,7 +11,7 @@
 - [Object Store Core Use Cases](#object-store-core-use-cases)
 - [Entity Store Core Use Cases](#entity-store-core-use-cases)
 - [Features](#features)
-- [Help Center Documentatino and Media](#firefly-semantics-slice-development-center-media-and-documentation)
+- [Help Center Documentation and Media](#firefly-semantics-slice-development-center-media-and-documentation)
 - [Getting Help](#getting-help)
 
 ## Overview
