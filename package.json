@@ -15,7 +15,8 @@
     "doc": "rm -fr doc && typedoc --entryPointStrategy expand ./projects/slice/src/lib --out doc --exclude **/*.spec.ts && cp slicelogo.png doc",
     "sdoc": "npm run doc && http-server -o doc",
     "d": "typedoc --out doc --exclude **/*.spec.ts ./projects/slice/src/lib",
-    "deploy-doc": "node deploy-doc"
+    "deploy-doc": "node deploy-doc",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -37,6 +38,7 @@
     "@angular/compiler-cli": "^17.0.0",
     "@types/jasmine": "~5.1.0",
     "gh-pages": "^6.1.0",
+    "husky": "^9.0.11",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -44,6 +46,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^17.0.0",
+    "prettier": "^3.2.5",
     "typedoc": "^0.25.4",
     "typescript": "~5.2.2"
   }
