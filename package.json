@@ -16,7 +16,7 @@
     "sdoc": "npm run doc && http-server -o doc",
     "d": "typedoc --out doc --exclude **/*.spec.ts ./projects/slice/src/lib",
     "deploy-doc": "node deploy-doc",
-    "prepare": "husky"
+    "prepare": "husky && husky install"
   },
   "private": true,
   "dependencies": {
@@ -45,9 +45,13 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "lint-staged": "^15.2.2",
     "ng-packagr": "^17.0.0",
     "prettier": "^3.2.5",
     "typedoc": "^0.25.4",
     "typescript": "~5.2.2"
+  },
+  "lint-staged": {
+    "*.{js,ts,css,md}": "prettier --write"
   }
 }
